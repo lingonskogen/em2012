@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!-- Import service beans -->
+	<import resource="spring/service.xml"></import>
+
+	<!-- Allow annotations -->
+	<context:annotation-config />
+
+	<!-- mappa register.html to RegisterController class. -->
+	<bean name="/index.html" class="se.lingonskogen.em2012.controller.StartPageController" />
+	
+	<bean name="/register" class="se.lingonskogen.em2012.controller.RegisterController" />
+	
+	<bean
+		class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
+		<property name="caseSensitive" value="true" />
+	</bean>
+
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+		<property name="order" value="1" />
+	</bean>
+
+	<!-- FormController -->
+	<bean id="registerController" class="se.lingonskogen.em2012.controller.RegisterController">
+		<property name="registerService" ref="registerService"></property>
+		<property name="formView" value="registerForm"></property>
+		<property name="successView" value="registerSuccess"></property>
+	</bean>
+
+
+</beans>
