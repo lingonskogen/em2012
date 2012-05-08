@@ -1,3 +1,5 @@
 .project
 help.txt
 .classpath
+target/*
+.settings/*
