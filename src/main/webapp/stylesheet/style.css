@@ -1,0 +1,144 @@
+
+body
+{
+	font-family: 'Verdana', Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000;
+	background: #FFF;
+}
+
+table {
+	width: 100%;
+}
+
+#footerTable {
+	width: 60%!important;	
+}
+
+table tr td {	
+	padding: 5px;
+	padding-left: 10px;
+}
+
+#footerText {
+	padding: 8px 5px 5px 10px;
+}
+
+/** Links **/
+a { color: #900; text-decoration: none; }
+a:hover { color: #222; text-decoration: none; }
+
+/** Main Styles **/
+#contentContainer {	
+	width: 800px;
+	margin-left: 250px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 1px solid #83173F;
+}
+
+#headerer {
+	width: 800px;
+	margin-left: 250px;
+	margin-top: 20px;
+	height: 100px;
+	border: 1px solid #83173F;
+}
+	
+#contentContainer #menu {
+	width: 100%;
+	height: 30px;
+	color: #FFF;
+	background: #83173F;
+}
+
+#contentContainer #footer {
+	width: 100%;
+	height: 30px;
+	color: #FFF;
+	background: #83173F;
+	text-align: center;
+}
+
+
+#contentContainer #leftContent {
+	width: 150px;
+	float: left;
+	margin-top: 25px;
+}
+
+#contentContainer #rightContent {
+	width: 570px;
+	float: right;
+	margin-top: 10px;
+}
+
+#contentContainer #contentArea2 {
+	clear: both;
+	padding-top: 40px;	
+}
+
+#contentContainer #content {
+	font-size: 12px;
+	width: auto;
+	min-height: 400px;
+	height: auto !important;
+	margin: 10px 40px 10px 40px;
+}
+
+
+
+/** Countdown clock css **/
+/* jQuery Countdown styles 1.5.11. */
+.hasCountdown {
+	border: 1px solid #ccc;
+	background-color: #eee;
+}
+
+.countdown_rtl {
+	direction: rtl;
+}
+.countdown_holding span {
+	background-color: #ccc;
+}
+.countdown_row {
+	clear: both;
+	width: 100%;
+	padding: 0px 2px;
+	text-align: center;
+}
+.countdown_show1 .countdown_section {
+	width: 98%;
+}
+.countdown_show2 .countdown_section {
+	width: 48%;
+}
+.countdown_show3 .countdown_section {
+	width: 32.5%;
+}
+.countdown_show4 .countdown_section {
+	width: 24.5%;
+}
+.countdown_show5 .countdown_section {
+	width: 19.5%;
+}
+.countdown_show6 .countdown_section {
+	width: 16.25%;
+}
+.countdown_show7 .countdown_section {
+	width: 14%;
+}
+.countdown_section {
+	display: block;
+	float: left;
+	font-size: 75%;
+	text-align: center;
+}
+.countdown_amount {
+	font-size: 200%;
+}
+.countdown_descr {
+	display: block;
+	width: 100%;
+}
+#defaultCountdown { width: 240px; height: 45px; }

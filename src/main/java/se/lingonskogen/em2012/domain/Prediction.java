@@ -1,97 +1,82 @@
 package se.lingonskogen.em2012.domain;
 
-public class Prediction extends Bean
-{
-    public static final String TOURNAMENT = "tournament";
+public class Prediction extends Bean {
+	public static final String TOURNAMENT = "tournament";
 
-    public static final String HOMESCORE = "homeScore";
-    
-    public static final String AWAYSCORE = "awayScore";
+	public static final String HOMESCORE = "homeScore";
 
-    public static final String GAME = "game";
-    
-    private String groupId;
-    
-    private String userId;
-    
-    private String couponId;
-    
-    private String tournamentId;
+	public static final String AWAYSCORE = "awayScore";
 
-    private String gameId;
-    
-    private Integer homeScore;
-    
-    private Integer awayScore;
+	public static final String GAME = "game";
 
-    public String getGroupId()
-    {
-        return groupId;
-    }
+	private String groupId;
 
-    public void setGroupId(String groupId)
-    {
-        this.groupId = groupId;
-    }
+	private String userId;
 
-    public String getUserId()
-    {
-        return userId;
-    }
+	private String couponId;
 
-    public void setUserId(String userId)
-    {
-        this.userId = userId;
-    }
+	private String tournamentId;
 
-    public String getCouponId()
-    {
-        return couponId;
-    }
+	private String gameId;
 
-    public void setCouponId(String couponId)
-    {
-        this.couponId = couponId;
-    }
+	private Integer homeScore;
 
-    public String getTournamentId()
-    {
-        return tournamentId;
-    }
+	private Integer awayScore;
 
-    public void setTournamentId(String tournamentId)
-    {
-        this.tournamentId = tournamentId;
-    }
+	public String getGroupId() {
+		return groupId;
+	}
 
-    public String getGameId()
-    {
-        return gameId;
-    }
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
 
-    public void setGameId(String gameId)
-    {
-        this.gameId = gameId;
-    }
+	public String getUserId() {
+		return userId;
+	}
 
-    public Integer getHomeScore()
-    {
-        return homeScore;
-    }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    public void setHomeScore(Integer homeScore)
-    {
-        this.homeScore = homeScore;
-    }
+	public String getCouponId() {
+		return couponId;
+	}
 
-    public Integer getAwayScore()
-    {
-        return awayScore;
-    }
+	public void setCouponId(String couponId) {
+		this.couponId = couponId;
+	}
 
-    public void setAwayScore(Integer awayScore)
-    {
-        this.awayScore = awayScore;
-    }
-    
+	public String getTournamentId() {
+		return tournamentId;
+	}
+
+	public void setTournamentId(String tournamentId) {
+		this.tournamentId = tournamentId;
+	}
+
+	public String getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(String gameId) {
+		this.gameId = gameId;
+	}
+
+	public Integer getHomeScore() {
+		return homeScore;
+	}
+
+	public void setHomeScore(Integer homeScore) {
+		this.homeScore = homeScore;
+	}
+
+	public Integer getAwayScore() {
+		return awayScore;
+	}
+
+	public void setAwayScore(Integer awayScore) {
+		this.awayScore = awayScore;
+	}
+
 }

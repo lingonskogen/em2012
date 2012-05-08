@@ -1,43 +1,36 @@
 package se.lingonskogen.em2012.domain;
 
-public class Coupon extends Bean
-{
-    public static final String TOURNAMENT = "tournament";
-    
-    private String groupId;
-    
-    private String userId;
-    
-    private String tournamentId;
+public class Coupon extends Bean {
+	public static final String TOURNAMENT = "tournament";
 
-    public String getGroupId()
-    {
-        return groupId;
-    }
+	private String groupId;
 
-    public void setGroupId(String groupId)
-    {
-        this.groupId = groupId;
-    }
+	private String userId;
 
-    public String getUserId()
-    {
-        return userId;
-    }
+	private String tournamentId;
 
-    public void setUserId(String userId)
-    {
-        this.userId = userId;
-    }
+	public String getGroupId() {
+		return groupId;
+	}
 
-    public String getTournamentId()
-    {
-        return tournamentId;
-    }
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
 
-    public void setTournamentId(String tournamentId)
-    {
-        this.tournamentId = tournamentId;
-    }
-    
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getTournamentId() {
+		return tournamentId;
+	}
+
+	public void setTournamentId(String tournamentId) {
+		this.tournamentId = tournamentId;
+	}
+
 }
