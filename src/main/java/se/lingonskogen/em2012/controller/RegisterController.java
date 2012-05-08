@@ -1,62 +1,96 @@
 package se.lingonskogen.em2012.controller;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
-import se.lingonskogen.em2012.form.Register;
+import se.lingonskogen.em2012.domain.Group;
+import se.lingonskogen.em2012.domain.GroupType;
+import se.lingonskogen.em2012.domain.User;
+import se.lingonskogen.em2012.form.RegisterForm;
 import se.lingonskogen.em2012.services.RegisterService;
+import se.lingonskogen.em2012.validator.RegistrationValidator;
 
 @Controller
-@SessionAttributes
+@RequestMapping("/register.html")
 public class RegisterController {
 
-	private RegisterService registerService;
-		
-	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String addContact(@ModelAttribute("register")
-                            Register register, BindingResult result) {
- 
-        //System.out.println("First Name:" + contact.getFirstname() +
-          //          "Last Name:" + contact.getLastname());
- 
-        return "redirect:registers.html";
-    }
- 
-    @RequestMapping("/registers")
-    public ModelAndView showContacts() {
- 
-        return new ModelAndView("register", "command", new Register());
-    }
-	
-	
-	
+	private RegistrationValidator validator;
+    private RegisterService registerService;
 
-	/*public ModelAndView handleRequest(HttpServletRequest arg0,
-			HttpServletResponse arg1) throws Exception {
+	@RequestMapping(method = RequestMethod.GET)
+	public String initForm(ModelMap model) {
+
+		RegisterForm register = new RegisterForm();
+
+		Map<String, String> groups = getGroups();
 		
-		registerService.registerUser();
-		
-		return new ModelAndView("register", "register",  null);
+		// command object
+		model.addAttribute("register", register);
+		model.addAttribute("groupList", groups);
+
+		// return form view
+		return "userRegisterForm";
 	}
 
+	private Map<String,String> getGroups() {
+		Map<String, String> groups = new LinkedHashMap<String, String>();
+		
+		for (Group group : registerService.getAvailableGroups()) {
+			groups.put(group.getName(), group.getId());
+		}
+
+		return groups;
+	}
+	
+	// Process the form.
+	@RequestMapping(method = RequestMethod.POST)
+	public String processForm(@ModelAttribute(value="register") @Valid RegisterForm register, BindingResult result, ModelMap model) {
+		// set custom Validation by user
+		validator.validate(register, result);
+		if (result.hasErrors()) {
+			Map<String, String> groups = getGroups();			
+			
+			// command object
+			model.addAttribute("register", register);			
+			model.addAttribute("groupList", groups);
+			
+			return "userRegisterForm";
+		}
+		
+		// Register new User
+		User user = registerService.newInstance(register.getDisplayName(), register.getUserName(), 
+																		register.getPassword(), register.getGroup());
+		try {
+			registerService.registerUser(user);
+		} catch (Exception e) {
+			// Error when creating user
+			Map<String, String> groups = getGroups();
+			model.addAttribute("register", register);			
+			model.addAttribute("groupList", groups);
+			return "userRegisterForm";
+		}
+	
+		model.addAttribute("message","Vänkommen till EM-tipset 2012");
+		return "start";
+	}
+	
+	public void setValidator(final RegistrationValidator validator) {
+		this.validator = validator;
+	}
+	
+	public RegistrationValidator getValidator() {
+		return validator;
+	}
+	
 	public void setRegisterService(final RegisterService registerService) {
 		this.registerService = registerService;
 	}
-
-	public Class<? extends Annotation> annotationType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String value() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-*/
-
 }

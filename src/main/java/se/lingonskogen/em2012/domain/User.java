@@ -1,59 +1,51 @@
 package se.lingonskogen.em2012.domain;
 
-public class User extends Bean
-{
-    public static final String REALNAME = "realname";
-    
-    public static final String USERNAME = "username";
-    
-    public static final String PASSWORD = "password";
-    
-    private String groupId;
-    
-    private String realname;
-    
-    private String username;
-    
-    private String password;
+public class User extends Bean {
+	public static final String REALNAME = "realName";
 
-    public String getGroupId()
-    {
-        return groupId;
-    }
+	// Username is email
+	public static final String USERNAME = "userName"; 
 
-    public void setGroupId(String groupId)
-    {
-        this.groupId = groupId;
-    }
+	public static final String PASSWORD = "password";
 
-    public String getRealname()
-    {
-        return realname;
-    }
+	private String groupId;
 
-    public void setRealname(String realname)
-    {
-        this.realname = realname;
-    }
+	private String realName;
 
-    public String getUsername()
-    {
-        return username;
-    }
+	private String userName;
 
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
+	private String password;
 
-    public String getPassword()
-    {
-        return password;
-    }
+	public String getGroupId() {
+		return groupId;
+	}
 
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-    
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 }

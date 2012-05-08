@@ -7,67 +7,56 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyFactory.Builder;
 
-public class GroupDao extends AbstractDao<Group>
-{
-    @Override
-    protected void populateEntity(Entity entity, Group bean)
-    {
-        entity.setProperty(Group.NAME, bean.getName());
-    }
-    
-    @Override
-    protected Group createBean(Entity entity)
-    {
-        Group group = new Group();
-        group.setId(entity.getKey().getName());
-        group.setName((String) entity.getProperty(Group.NAME));
-        return group;
-    }
+public class GroupDao extends AbstractDao<Group> {
+	@Override
+	protected void populateEntity(Entity entity, Group bean) {
+		entity.setProperty(Group.NAME, bean.getName());
+	}
 
-    public String create(Group group) throws DaoException
-    {
-        String groupId = createId(group);
-        Key key = createKey(groupId);
-        super.create(key, group);
-        return groupId;
-    }
+	@Override
+	protected Group createBean(Entity entity) {
+		Group group = new Group();
+		group.setId(entity.getKey().getName());
+		group.setName((String) entity.getProperty(Group.NAME));
+		return group;
+	}
 
-    public void update(Group group) throws DaoException
-    {
-        String groupId = createId(group);
-        Key key = createKey(groupId);
-        super.update(key, group);
-    }
+	public String create(Group group) throws DaoException {
+		String groupId = createId(group);
+		Key key = createKey(groupId);
+		super.create(key, group);
+		return groupId;
+	}
 
-    public void delete(Group group) throws DaoException
-    {
-        String groupId = createId(group);
-        Key key = createKey(groupId);
-        super.delete(key);
-    }
-    
-    public Group find(String groupId) throws DaoException
-    {
-        Key key = createKey(groupId);
-        Group group = super.find(key);
-        return group;
-    }
-    
-    public List<Group> findAll()
-    {
-        List<Group> list = super.findAll(Group.class.getSimpleName(), null);
-        return list;
-    }
-    
-    private String createId(Group group)
-    {
-        return urlify(group.getName());
-    }
+	public void update(Group group) throws DaoException {
+		Key key = createKey(group.getId());
+		super.update(key, group);
+	}
 
-    private Key createKey(String groupId)
-    {
-        Builder builder = new KeyFactory.Builder(Group.class.getSimpleName(), groupId);
-        return builder.getKey();
-    }
+	public void delete(Group group) throws DaoException {
+		Key key = createKey(group.getId());
+		super.delete(key);
+	}
+
+	public Group find(String groupId) throws DaoException {
+		Key key = createKey(groupId);
+		Group group = super.find(key);
+		return group;
+	}
+
+	public List<Group> findAll() {
+		List<Group> list = super.findAll(Group.class.getSimpleName(), null);
+		return list;
+	}
+
+	private String createId(Group group) {
+		return urlify(group.getName());
+	}
+
+	private Key createKey(String groupId) {
+		Builder builder = new KeyFactory.Builder(Group.class.getSimpleName(),
+				groupId);
+		return builder.getKey();
+	}
 
 }

@@ -11,8 +11,15 @@
 		<meta name="description" content="${pageDescription}" />
 		<meta name="keywords" content="${pageKeywords}" />
 		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-		<link rel="stylesheet" type="text/css" href="style.css" />
-		
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheet/style.css" />		
 		<title>${pageTitle}</title>
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 </head>
 <body>
+	<div id="header">
+		This is a header
+	</div>
+	
+	
+	

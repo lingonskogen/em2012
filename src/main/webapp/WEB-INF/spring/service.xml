@@ -2,14 +2,31 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="registrationValidator" class="se.lingonskogen.em2012.validator.RegistrationValidator" />
+
+
+
+	<bean id="groupDao" class="se.lingonskogen.em2012.domain.GroupDao" />
 	
+	<bean id="groupService" class="se.lingonskogen.em2012.services.impl.GroupServiceImpl">
+		<property name="groupDao" ref="groupDao" />
+	</bean>
+
+	<bean id="userDao" class="se.lingonskogen.em2012.domain.UserDao" />
 	
 	<bean id="userService" class="se.lingonskogen.em2012.services.impl.UserServiceImpl">
 		<property name="userDao" ref="userDao" />
 	</bean>
 
 	<bean name="registerService" class="se.lingonskogen.em2012.services.impl.RegisterServiceImpl">
-		<property name="userService" ref="userService" />		
+		<property name="userService" ref="userService" />
+		<property name="groupService" ref="groupService" />		
+	</bean>
+
+	<bean name="registerController" class="se.lingonskogen.em2012.controller.RegisterController">
+		<property name="registerService" ref="registerService" />	
+		<property name="validator" ref="registrationValidator" />
 	</bean>
 	
 </beans>

@@ -10,7 +10,7 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>classpath:locale/messages</value>
+				<value>messages</value>
 			</list>
 		</property>
 	</bean>

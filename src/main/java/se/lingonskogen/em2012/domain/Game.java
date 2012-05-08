@@ -2,88 +2,75 @@ package se.lingonskogen.em2012.domain;
 
 import java.util.Date;
 
-public class Game extends Bean
-{
-    public static final String HOMETEAM = "hometeam";
-    
-    public static final String AWAYTEAM = "awayteam";
+public class Game extends Bean {
+	public static final String HOMETEAM = "hometeam";
 
-    public static final String KICKOFF = "kickoff";
-    
-    public static final String HOMESCORE = "homeScore";
-    
-    public static final String AWAYSCORE = "awayScore";
-    
-    private String tournamentId;
-    
-    private String homeTeamId;
-    
-    private String awayTeamId;
+	public static final String AWAYTEAM = "awayteam";
 
-    private Date kickoff;
-    
-    private Integer homeScore;
-    
-    private Integer awayScore;
+	public static final String KICKOFF = "kickoff";
 
-    public String getTournamentId()
-    {
-        return tournamentId;
-    }
+	public static final String HOMESCORE = "homeScore";
 
-    public void setTournamentId(String tournamentId)
-    {
-        this.tournamentId = tournamentId;
-    }
+	public static final String AWAYSCORE = "awayScore";
 
-    public String getHomeTeamId()
-    {
-        return homeTeamId;
-    }
+	private String tournamentId;
 
-    public void setHomeTeamId(String homeTeamId)
-    {
-        this.homeTeamId = homeTeamId;
-    }
+	private String homeTeamId;
 
-    public String getAwayTeamId()
-    {
-        return awayTeamId;
-    }
+	private String awayTeamId;
 
-    public void setAwayTeamId(String awayTeamId)
-    {
-        this.awayTeamId = awayTeamId;
-    }
+	private Date kickoff;
 
-    public Date getKickoff()
-    {
-        return kickoff;
-    }
+	private Integer homeScore;
 
-    public void setKickoff(Date kickoff)
-    {
-        this.kickoff = kickoff;
-    }
+	private Integer awayScore;
 
-    public Integer getHomeScore()
-    {
-        return homeScore;
-    }
+	public String getTournamentId() {
+		return tournamentId;
+	}
 
-    public void setHomeScore(Integer homeScore)
-    {
-        this.homeScore = homeScore;
-    }
+	public void setTournamentId(String tournamentId) {
+		this.tournamentId = tournamentId;
+	}
 
-    public Integer getAwayScore()
-    {
-        return awayScore;
-    }
+	public String getHomeTeamId() {
+		return homeTeamId;
+	}
 
-    public void setAwayScore(Integer awayScore)
-    {
-        this.awayScore = awayScore;
-    }
-    
+	public void setHomeTeamId(String homeTeamId) {
+		this.homeTeamId = homeTeamId;
+	}
+
+	public String getAwayTeamId() {
+		return awayTeamId;
+	}
+
+	public void setAwayTeamId(String awayTeamId) {
+		this.awayTeamId = awayTeamId;
+	}
+
+	public Date getKickoff() {
+		return kickoff;
+	}
+
+	public void setKickoff(Date kickoff) {
+		this.kickoff = kickoff;
+	}
+
+	public Integer getHomeScore() {
+		return homeScore;
+	}
+
+	public void setHomeScore(Integer homeScore) {
+		this.homeScore = homeScore;
+	}
+
+	public Integer getAwayScore() {
+		return awayScore;
+	}
+
+	public void setAwayScore(Integer awayScore) {
+		this.awayScore = awayScore;
+	}
+
 }

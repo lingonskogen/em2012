@@ -1,31 +1,26 @@
 package se.lingonskogen.em2012.domain;
 
-public class Team extends Bean
-{
-    public static final String NAME = "name";
-    
-    private String tournamentId;
-    
-    private String name;
+public class Team extends Bean {
+	public static final String NAME = "name";
 
-    public String getTournamentId()
-    {
-        return tournamentId;
-    }
+	private String tournamentId;
 
-    public void setTournamentId(String tournamentId)
-    {
-        this.tournamentId = tournamentId;
-    }
+	private String name;
 
-    public String getName()
-    {
-        return name;
-    }
+	public String getTournamentId() {
+		return tournamentId;
+	}
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-    
+	public void setTournamentId(String tournamentId) {
+		this.tournamentId = tournamentId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }
