@@ -87,8 +87,8 @@ public class ServletListener implements ServletContextListener
                          prediction.setCouponId(couponId);
                          prediction.setTournamentId(game.getTournamentId());
                          prediction.setGameId(game.getId());
-                         prediction.setHomeScore(random.nextInt(5));
-                         prediction.setAwayScore(random.nextInt(5));
+                         prediction.setHomeScore(random.nextLong() % 5);
+                         prediction.setAwayScore(random.nextLong() % 5);
                          predictionDao.create(prediction);
                     }
     		     }

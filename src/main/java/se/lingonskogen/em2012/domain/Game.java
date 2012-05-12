@@ -21,9 +21,9 @@ public class Game extends Bean {
 
 	private Date kickoff;
 
-	private Integer homeScore;
+	private Long homeScore;
 
-	private Integer awayScore;
+	private Long awayScore;
 
 	public String getTournamentId() {
 		return tournamentId;
@@ -57,19 +57,19 @@ public class Game extends Bean {
 		this.kickoff = kickoff;
 	}
 
-	public Integer getHomeScore() {
+	public Long getHomeScore() {
 		return homeScore;
 	}
 
-	public void setHomeScore(Integer homeScore) {
+	public void setHomeScore(Long homeScore) {
 		this.homeScore = homeScore;
 	}
 
-	public Integer getAwayScore() {
+	public Long getAwayScore() {
 		return awayScore;
 	}
 
-	public void setAwayScore(Integer awayScore) {
+	public void setAwayScore(Long awayScore) {
 		this.awayScore = awayScore;
 	}
 
