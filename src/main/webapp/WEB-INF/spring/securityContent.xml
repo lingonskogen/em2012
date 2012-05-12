@@ -10,6 +10,7 @@
   <http security="none" pattern="/img/**" />
   <http security="none" pattern="/images/**" />
   <http security="none" pattern="/js/**" />
+  <http security="none" pattern="/admin/**" />
   
   <http use-expressions="true">
     <intercept-url pattern="/start.html" access="permitAll" />
