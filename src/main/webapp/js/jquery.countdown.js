@@ -10,7 +10,7 @@ function Countdown() {
 		labels: ['Years', 'Months', 'Weeks', 'Days', 'Hours', 'Minutes', 'Seconds'],
 		// The display texts for the counters if only one
 		labels1: ['Year', 'Month', 'Week', 'Day', 'Hour', 'Minute', 'Second'],
-		compactLabels: ['y', 'm', 'w', 'd'], // The compact texts for the counters
+		compactLabels: ['y', 'm', 'w', ':'], // The compact texts for the counters
 		whichLabels: null, // Function to determine which labels to use
 		timeSeparator: ':', // Separator for time periods
 		isRTL: false // True for right-to-left languages, false for left-to-right
@@ -18,7 +18,7 @@ function Countdown() {
 	this._defaults = {
 		until: null, 
 		since: null, 
-		timezone: null, // The timezone (hours or minutes from GMT) for the target times,
+		timezone: +1, // The timezone (hours or minutes from GMT) for the target times,
 			// or null for client local
 		serverSync: null, // A function to retrieve the current server time for synchronisation
 		format: 'dHMS', // Format for display - upper case for always, lower case only if non-zero,
@@ -26,7 +26,7 @@ function Countdown() {
 		layout: '', // Build your own layout for the countdown
 		compact: true, // True to display in a compact format, false for an expanded one
 		significant: 0, // The number of periods with values to show, zero for all
-		description: 'Detta är en description', // The description displayed for the countdown
+		description: '', // The description displayed for the countdown
 		expiryUrl: '', // A URL to load upon expiry, replacing the current page
 		expiryText: '', // Text to display upon expiry, replacing the countdown
 		alwaysExpire: false, // True to trigger onExpiry even if never counted down
@@ -500,7 +500,7 @@ $.extend(Countdown.prototype, {
 			var labelsNum = $.countdown._get(inst,
 				'compactLabels' + whichLabels(inst._periods[period]));
 			return (show[period] ? inst._periods[period] +
-				(labelsNum ? labelsNum[period] : labels[period]) + ' ' : '');
+				(labelsNum ? labelsNum[period] : labels[period]) + '' : '');
 		};
 		var showFull = function(period) {
 			var labelsNum = $.countdown._get(inst, 'labels' + whichLabels(inst._periods[period]));
@@ -758,6 +758,6 @@ $.fn.countdown = function(options) {
 };
 
 /* Initialise the countdown functionality. */
-$.countdown = new Countdown(); // singleton instance
+$.countdown = new Countdown();
 
 })(jQuery);

@@ -12,15 +12,8 @@ public class GroupServiceImpl implements GroupService {
 	private GroupDao groupDao;
 	
 	@Override
-	public String createGroup(Group group) {
-		String id = null;
-		try {
-			id = groupDao.create(group);
-			
-		} catch (DaoException e) {
-			return null;
-		}
-		return id;
+	public String createGroup(Group group) throws DaoException {
+		return groupDao.create(group);
 	}
 
 	public Group newInstance(final String name) {
@@ -34,6 +27,15 @@ public class GroupServiceImpl implements GroupService {
 		return groupDao.findAll();
 	}
 	
+	public String getGroupName(final String groupId) {
+		Group group;
+		try {
+			group = groupDao.find(groupId);
+		} catch (DaoException e) {
+			return null;
+		}
+		return group.getName();
+	}
 	public void setGroupDao(final GroupDao groupDao) {
 		this.groupDao = groupDao;
 	}

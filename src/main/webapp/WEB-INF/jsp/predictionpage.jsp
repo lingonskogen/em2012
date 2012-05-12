@@ -1,8 +1,6 @@
 <%@ include file="./views/includes/header.jsp"%>
 
 <div class="content">
-<c:if test="${message!=null}">
-	<div class="message">${message}</div>
-</c:if>
+<H1>Prediction Page</H1>
 </div>
 <%@ include file="./views/includes/footer.jsp"%>
