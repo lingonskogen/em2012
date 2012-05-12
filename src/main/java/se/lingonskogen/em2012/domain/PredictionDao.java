@@ -27,9 +27,9 @@ public class PredictionDao extends AbstractDao<Prediction> {
 		prediction.setTournamentId((String) entity
 				.getProperty(Prediction.TOURNAMENT));
 		prediction.setGameId((String) entity.getProperty(Prediction.GAME));
-		prediction.setHomeScore((Integer) entity
+		prediction.setHomeScore((Long) entity
 				.getProperty(Prediction.HOMESCORE));
-		prediction.setAwayScore((Integer) entity
+		prediction.setAwayScore((Long) entity
 				.getProperty(Prediction.AWAYSCORE));
 		return prediction;
 	}

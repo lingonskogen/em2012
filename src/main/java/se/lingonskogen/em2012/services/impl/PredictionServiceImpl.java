@@ -19,7 +19,7 @@ public class PredictionServiceImpl implements PredictionService {
 	@Override
 	public Prediction newInstance(String groupId, String userId,
 			String couponId, String tournamentId, String gameId,
-			Integer homeScore, Integer awayScore) {
+			Long homeScore, Long awayScore) {
 		Prediction prediction = new Prediction();
 		prediction.setAwayScore(awayScore);
 		prediction.setCouponId(couponId);

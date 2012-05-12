@@ -23,7 +23,7 @@ public class GameServiceImpl implements GameService {
 	
 	@Override
 	public Game newInstance(final String tournamentId, final String homeTeamId, 
-			final String awayTeamId, final Date kickoff, final Integer homeScore, final Integer awayScore) {
+			final String awayTeamId, final Date kickoff, final Long homeScore, final Long awayScore) {
 		Game game = new Game();
 		game.setAwayScore(awayScore);
 		game.setAwayTeamId(awayTeamId);
