@@ -11,4 +11,5 @@ public interface GameService {
 	Game newInstance(final String tournamentId, final String homeTeamId, final String awayTeamId, 
 					final Date kickoff, final Integer homeScore, final Integer awayScore);
 	List<Game> getAvailableGames();
+	Game getGame(final String tournamentId, final String gameId) throws DaoException;
 }

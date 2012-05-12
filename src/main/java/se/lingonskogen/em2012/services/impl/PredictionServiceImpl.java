@@ -31,6 +31,10 @@ public class PredictionServiceImpl implements PredictionService {
 		return prediction;
 	}
 
+	public Prediction findPrediction(final String groupId, final String userId, final String couponId, final String predictionId) throws DaoException {
+		return predictionDao.find(groupId, userId, couponId, predictionId);
+	}
+	
 	public List<Prediction> findPredictions(final String groupId, final String userId, final String couponId) {
 		return predictionDao.findAll(groupId, userId, couponId);
 	}
