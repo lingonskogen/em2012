@@ -46,7 +46,7 @@ public class ServletListener implements ServletContextListener {
 		// Create users
 		UserDao userdao = new UserDao();
 		User user = new User();
-		user.setGroupId(GroupType.VÄNNER.toString());
+		user.setGroupId(GroupType.FRIENDS.toString());
 		user.setPassword("PWD");
 		user.setRealName("Kalle");
 		user.setUserName("kalle@katten.se");
@@ -91,61 +91,61 @@ public class ServletListener implements ServletContextListener {
 		PredictionDao pDao = new PredictionDao();
 		
 		Prediction p = new Prediction();
-		p.setAwayScore(0);
+		p.setAwayScore(new Integer(0));
 		p.setCouponId(TOURNAMENT_ID);
 		p.setGameId(createId("Sverige","Ukraina"));
 		p.setGroupId(GroupType.ATELES.toString());
-		p.setHomeScore(2);
+		p.setHomeScore(new Integer(2));
 		p.setTournamentId(TOURNAMENT_ID);
 		p.setUserId("susen@susen.se");
 		pDao.create(p);
 		
 		p = new Prediction();
-		p.setAwayScore(2);
+		p.setAwayScore(new Integer(2));
 		p.setCouponId(TOURNAMENT_ID);
 		p.setGameId(createId("Frankrike","England"));
 		p.setGroupId(GroupType.ATELES.toString());
-		p.setHomeScore(2);
+		p.setHomeScore(new Integer(2));
 		p.setTournamentId(TOURNAMENT_ID);
 		p.setUserId("susen@susen.se");
 		pDao.create(p);
 		
 		p = new Prediction();
-		p.setAwayScore(8);
+		p.setAwayScore(new Integer(8));
 		p.setCouponId(TOURNAMENT_ID);
 		p.setGameId(createId("Frankrike","England"));
 		p.setGroupId(GroupType.SIGMA.toString());
-		p.setHomeScore(8);
+		p.setHomeScore(new Integer(8));
 		p.setTournamentId(TOURNAMENT_ID);
 		p.setUserId("tobbe@tobbe.se");
 		pDao.create(p);
 		
 		p = new Prediction();
-		p.setAwayScore(9);
+		p.setAwayScore(new Integer(9));
 		p.setCouponId(TOURNAMENT_ID);
 		p.setGameId(createId("Sverige","Ukraina"));
 		p.setGroupId(GroupType.SIGMA.toString());
-		p.setHomeScore(9);
+		p.setHomeScore(new Integer(9));
 		p.setTournamentId(TOURNAMENT_ID);
 		p.setUserId("tobbe@tobbe.se");
 		pDao.create(p);
 		
 		p = new Prediction();
-		p.setAwayScore(10);
+		p.setAwayScore(new Integer(10));
 		p.setCouponId(TOURNAMENT_ID);
 		p.setGameId(createId("Frankrike","England"));
-		p.setGroupId(GroupType.VÄNNER.toString());
-		p.setHomeScore(0);
+		p.setGroupId(GroupType.FRIENDS.toString());
+		p.setHomeScore(new Integer(0));
 		p.setTournamentId(TOURNAMENT_ID);
 		p.setUserId("kalle@katten.se");
 		pDao.create(p);
 		
 		p = new Prediction();
-		p.setAwayScore(11);
+		p.setAwayScore(new Integer(11));
 		p.setCouponId(TOURNAMENT_ID);
 		p.setGameId(createId("Sverige","Ukraina"));
-		p.setGroupId(GroupType.VÄNNER.toString());
-		p.setHomeScore(0);
+		p.setGroupId(GroupType.FRIENDS.toString());
+		p.setHomeScore(new Integer(0));
 		p.setTournamentId(TOURNAMENT_ID);
 		p.setUserId("kalle@katten.se");
 		pDao.create(p);
@@ -181,7 +181,7 @@ public class ServletListener implements ServletContextListener {
 	private void createCoupons() throws DaoException {
 		CouponDao cDao = new CouponDao();
 		Coupon c = new Coupon();
-		c.setGroupId(GroupType.VÄNNER.toString());
+		c.setGroupId(GroupType.FRIENDS.toString());
 		c.setTournamentId(TOURNAMENT_ID);
 		c.setUserId("kalle@katten.se");
 		cDao.create(c);

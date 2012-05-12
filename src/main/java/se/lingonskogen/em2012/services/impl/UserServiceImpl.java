@@ -1,5 +1,7 @@
 package se.lingonskogen.em2012.services.impl;
 
+import java.util.List;
+
 import se.lingonskogen.em2012.domain.DaoException;
 import se.lingonskogen.em2012.domain.GroupType;
 import se.lingonskogen.em2012.domain.User;
@@ -20,7 +22,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
-	private User newUserInstance(final GroupType groupType, final String password, final String realName, final String userName) {
+	public User newInstance(final GroupType groupType, final String password, final String realName, final String userName) {
 		User user = new User();
 		user.setGroupId(groupType.toString());
 		user.setPassword(password);
@@ -29,20 +31,28 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 	
-	public User createUser(final User user) {
-		//User user = newUserInstance(GroupType.ATELES,"testpwd", "Susen", "susgl");
-		try {
-			userDao.create(user);
-			return user;
-		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+	public String createUser(final User user) throws DaoException {
+			return userDao.create(user);
+	}
+
+	public String getUserName(final String userId) {
+		String name = "";
+		
+		for(User user : userDao.findAll()) {
+			if(user.getId().equals(userId)) {
+				name = user.getRealName();
+			}
 		}
+		return name;
 	}
 	
 	public void setUserDao(final UserDao userDao) {
 		this.userDao = userDao;
+	}
+
+	@Override
+	public List<User> getAvailableUsers() {
+		return userDao.findAll();
 	}
 	
 }

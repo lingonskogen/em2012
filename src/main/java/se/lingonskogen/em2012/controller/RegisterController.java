@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import se.lingonskogen.em2012.domain.Group;
-import se.lingonskogen.em2012.domain.GroupType;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.form.RegisterForm;
 import se.lingonskogen.em2012.services.RegisterService;
@@ -78,7 +77,7 @@ public class RegisterController {
 			return "userRegisterForm";
 		}
 	
-		model.addAttribute("message","Vänkommen till EM-tipset 2012");
+		model.addAttribute("message","Vï¿½nkommen till EM-tipset 2012");
 		return "start";
 	}
 	

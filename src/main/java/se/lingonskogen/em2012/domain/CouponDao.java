@@ -42,11 +42,14 @@ public class CouponDao extends AbstractDao<Coupon> {
 		super.delete(key);
 	}
 
+	public Coupon find(final Key key) throws DaoException {
+		return super.find(key);
+	}
+	
 	public Coupon find(String groupId, String userId, String couponId)
 			throws DaoException {
 		Key key = createKey(groupId, userId, couponId);
-		Coupon coupon = super.find(key);
-		return coupon;
+		return find(key);
 	}
 
 	public List<Coupon> findAll() {

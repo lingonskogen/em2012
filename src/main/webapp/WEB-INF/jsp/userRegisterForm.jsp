@@ -1,6 +1,6 @@
 <%@ include file="./views/includes/header.jsp"%>
 
-
+<div class="content">
 <form:form action="register.html" commandName="register">
 
 	<table align="center">
@@ -39,5 +39,5 @@
 
 </form:form>
 
-
+</div>
 <%@ include file="./views/includes/footer.jsp"%>
