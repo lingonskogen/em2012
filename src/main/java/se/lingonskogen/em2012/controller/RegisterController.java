@@ -37,7 +37,7 @@ public class RegisterController {
 		model.addAttribute("groupList", groups);
 
 		// return form view
-		return "userRegisterForm";
+		return "register";
 	}
 
 	private Map<String,String> getGroups() {
@@ -62,7 +62,7 @@ public class RegisterController {
 			model.addAttribute("register", register);			
 			model.addAttribute("groupList", groups);
 			
-			return "userRegisterForm";
+			return "register";
 		}
 		
 		// Register new User
@@ -75,10 +75,10 @@ public class RegisterController {
 			Map<String, String> groups = getGroups();
 			model.addAttribute("register", register);			
 			model.addAttribute("groupList", groups);
-			return "userRegisterForm";
+			return "register";
 		}
 	
-		model.addAttribute("message","Vänkommen till EM-tipset 2012");
+		model.addAttribute("message","VÃ¤lkommen till EM-tipset 2012");
 		return "start";
 	}
 	

@@ -1,5 +1,7 @@
 package se.lingonskogen.em2012.domain;
 
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +79,8 @@ public abstract class AbstractDao<T extends Bean> {
 	}
 
 	protected String urlify(String text) {
-		// TODO urlify
+	    text = Normalizer.normalize(text, Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+","");
+		text = text.trim().toLowerCase().replaceAll("[^a-z0-9]", "-");
 		return text;
 	}
 }
