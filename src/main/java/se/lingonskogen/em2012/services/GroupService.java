@@ -14,4 +14,5 @@ public interface GroupService {
 	Group newInstance(final String name);
 	List<Group> getAvailableGroups();
 	String getGroupName(final String groupId);
+	void delete(final String groupId) throws DaoException;
 }

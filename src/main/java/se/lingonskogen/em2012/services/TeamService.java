@@ -9,4 +9,5 @@ public interface TeamService {
 	String createTeam(final Team team) throws DaoException;
 	Team newInstance(final String name, final String tournamentId);
 	List<Team> getAvailableTeams();
+	String getTeamName(final String tournamentId, final String teamId);
 }
