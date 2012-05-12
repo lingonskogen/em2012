@@ -11,7 +11,7 @@
 	<properties>
 		<gae.version>1.6.3</gae.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>3.1.1.RELEASE</spring.version>
+		<spring.version>3.1.0.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
@@ -41,6 +41,21 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+    <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
