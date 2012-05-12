@@ -4,29 +4,102 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="registrationValidator" class="se.lingonskogen.em2012.validator.RegistrationValidator" />
-
+	<bean id="gameValidator" class="se.lingonskogen.em2012.validator.admin.GameValidator" />
 
 
 	<bean id="groupDao" class="se.lingonskogen.em2012.domain.GroupDao" />
-	
 	<bean id="groupService" class="se.lingonskogen.em2012.services.impl.GroupServiceImpl">
 		<property name="groupDao" ref="groupDao" />
 	</bean>
 
+	<bean id="couponDao" class="se.lingonskogen.em2012.domain.CouponDao" />
+	<bean id="couponService" class="se.lingonskogen.em2012.services.impl.CouponServiceImpl">
+		<property name="couponDao" ref="couponDao" />
+	</bean>
+
+	<bean id="gameDao" class="se.lingonskogen.em2012.domain.GameDao" />
+	<bean id="gameService" class="se.lingonskogen.em2012.services.impl.GameServiceImpl">
+		<property name="gameDao" ref="gameDao" />
+	</bean>
+
+	<bean id="predictionDao" class="se.lingonskogen.em2012.domain.PredictionDao" />
+	<bean id="predictionService"
+		class="se.lingonskogen.em2012.services.impl.PredictionServiceImpl">
+		<property name="predictionDao" ref="predictionDao" />
+	</bean>
+
+	<bean id="teamDao" class="se.lingonskogen.em2012.domain.TeamDao" />
+	<bean id="teamService" class="se.lingonskogen.em2012.services.impl.TeamServiceImpl">
+		<property name="teamDao" ref="teamDao" />
+	</bean>
+
+	<bean id="tournamentDao" class="se.lingonskogen.em2012.domain.TournamentDao" />
+	<bean id="tournamentService"
+		class="se.lingonskogen.em2012.services.impl.TournamentServiceImpl">
+		<property name="tournamentDao" ref="tournamentDao" />
+	</bean>
+
 	<bean id="userDao" class="se.lingonskogen.em2012.domain.UserDao" />
-	
 	<bean id="userService" class="se.lingonskogen.em2012.services.impl.UserServiceImpl">
 		<property name="userDao" ref="userDao" />
 	</bean>
 
-	<bean name="registerService" class="se.lingonskogen.em2012.services.impl.RegisterServiceImpl">
+	<bean name="registerService"
+		class="se.lingonskogen.em2012.services.impl.RegisterServiceImpl">
 		<property name="userService" ref="userService" />
-		<property name="groupService" ref="groupService" />		
+		<property name="groupService" ref="groupService" />
+	</bean>
+
+	<!-- Controllers -->
+	<bean id="abstractController" class="se.lingonskogen.em2012.controller.AbstractController"
+		abstract="true">
+		<property name="couponService" ref="couponService" />
+		<property name="tournamentService" ref="tournamentService" />
+		<property name="groupService" ref="groupService" />
+		<property name="userService" ref="userService" />
+		<property name="teamService" ref="teamService" />
+		<property name="predictionService" ref="predictionService" />
+		<property name="gameService" ref="gameService" />
 	</bean>
 
 	<bean name="registerController" class="se.lingonskogen.em2012.controller.RegisterController">
-		<property name="registerService" ref="registerService" />	
+		<property name="registerService" ref="registerService" />
 		<property name="validator" ref="registrationValidator" />
 	</bean>
+
+	<!-- Admin controllers -->
+	<bean name="groupController" parent="abstractController"
+		class="se.lingonskogen.em2012.controller.admin.GroupController">
+	</bean>
 	
+	<bean name="couponController" parent="abstractController"
+		class="se.lingonskogen.em2012.controller.admin.CouponController">
+	</bean>
+	
+	<bean name="gameController"
+		class="se.lingonskogen.em2012.controller.admin.GameController">
+		<property name="gameService" ref="gameService" />
+		<property name="tournamentService" ref="tournamentService" />
+		<property name="teamService" ref="teamService" />
+		<property name="gameValidator" ref="gameValidator" />
+	</bean>
+	
+	<bean name="predictionController" parent="abstractController"
+		class="se.lingonskogen.em2012.controller.admin.PredictionController">
+	</bean>
+	
+	<bean name="teamController"
+		class="se.lingonskogen.em2012.controller.admin.TeamController">
+		<property name="teamService" ref="teamService" />
+		<property name="gameService" ref="gameService" />
+		<property name="tournamentService" ref="tournamentService" />
+	</bean>
+	
+	<bean name="tournamentController" parent="abstractController"
+		class="se.lingonskogen.em2012.controller.admin.TournamentController">
+	</bean>
+	
+	<bean name="userController" parent="abstractController"
+		class="se.lingonskogen.em2012.controller.admin.UserController">
+	</bean>
 </beans>

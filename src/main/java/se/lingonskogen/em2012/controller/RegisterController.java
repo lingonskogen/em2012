@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import se.lingonskogen.em2012.domain.Group;
-import se.lingonskogen.em2012.domain.GroupType;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.form.RegisterForm;
 import se.lingonskogen.em2012.services.RegisterService;
