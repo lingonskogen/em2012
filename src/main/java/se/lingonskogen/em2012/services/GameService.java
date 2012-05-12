@@ -9,6 +9,6 @@ import se.lingonskogen.em2012.domain.Game;
 public interface GameService {
 	String createGame(final Game game) throws DaoException;
 	Game newInstance(final String tournamentId, final String homeTeamId, final String awayTeamId, 
-					final Date kickoff, final Integer homeScore, final Integer awayScore);
+					final Date kickoff, final Long homeScore, final Long awayScore);
 	List<Game> getAvailableGames();
 }
