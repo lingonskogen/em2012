@@ -28,11 +28,21 @@ public class CouponServiceImpl implements CouponService {
 		return couponDao.find(groupId, userId, couponId);
 	}
 	
-	@Override
-	public List<Coupon> getAvailableCoupons() {
+	public List<Coupon> getCoupons(final String groupId, final String userId) {
+		return couponDao.findAll(groupId, userId);
+	}
+	
+	public List<Coupon> getCoupons() {
 		return couponDao.findAll();
 	}
-
+	
+	public List<Coupon> getCoupons(final String groupId) {
+		if(groupId == null) {
+			return couponDao.findAll();
+		}
+		
+		return couponDao.findAll(groupId);
+	}
 	public void setCouponDao(final CouponDao couponDao) {
 		this.couponDao = couponDao;
 	}
