@@ -3,7 +3,7 @@ package se.lingonskogen.em2012.domain;
 public enum GroupType {
 	ATELES,
 	SIGMA,
-	FRIENDS;
+	VÄNNER;
 	
 	@Override public String toString() {
 	   String s = super.toString();

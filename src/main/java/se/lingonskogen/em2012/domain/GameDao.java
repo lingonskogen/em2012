@@ -26,8 +26,8 @@ public class GameDao extends AbstractDao<Game> {
 		game.setHomeTeamId((String) entity.getProperty(Game.HOMETEAM));
 		game.setAwayTeamId((String) entity.getProperty(Game.AWAYTEAM));
 		game.setKickoff((Date) entity.getProperty(Game.KICKOFF));
-		game.setHomeScore((Integer) entity.getProperty(Game.HOMESCORE));
-		game.setAwayScore((Integer) entity.getProperty(Game.AWAYSCORE));
+		game.setHomeScore((Long) entity.getProperty(Game.HOMESCORE));
+		game.setAwayScore((Long) entity.getProperty(Game.AWAYSCORE));
 		return game;
 	}
 
