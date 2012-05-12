@@ -12,12 +12,10 @@ public class UserServiceImpl implements UserService {
 
 	private UserDao userDao;
 
-	public User fetchUser(final String group, final String userName) {
+	public User getUser(final String groupId, final String userId) {
 		try {
-			return userDao.find(group, userName);
+			return userDao.find(groupId, userId);
 		} catch (DaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return null;
 		}
 	}
@@ -46,13 +44,21 @@ public class UserServiceImpl implements UserService {
 		return name;
 	}
 	
+
+	public void delete(final String groupId, final String userId) throws DaoException {
+		User user = getUser(groupId, userId);
+		userDao.delete(user);
+	}
+	
 	public void setUserDao(final UserDao userDao) {
 		this.userDao = userDao;
 	}
 
-	@Override
-	public List<User> getAvailableUsers() {
-		return userDao.findAll();
+	public List<User> getUsers(final String groupId) {
+		return userDao.findAll(groupId);
 	}
 	
+	public List<User> getUsers() {
+		return userDao.findAll();
+	}	
 }

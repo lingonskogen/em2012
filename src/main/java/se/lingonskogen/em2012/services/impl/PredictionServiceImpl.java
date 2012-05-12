@@ -31,15 +31,37 @@ public class PredictionServiceImpl implements PredictionService {
 		return prediction;
 	}
 
-	public List<Prediction> findPredictions(final String groupId, final String userId, final String couponId) {
+	public Prediction getPrediction(final String groupId, final String userId, final String couponId, final String predictionId) throws DaoException {
+		return predictionDao.find(groupId, userId, couponId, predictionId);
+	}
+	
+	public List<Prediction> getPredictions(final String groupId) {
+		if(groupId == null) {
+			return getPredictions();
+		}
+		return predictionDao.findAll(groupId);
+	}
+	public List<Prediction> getPredictions(final String groupId, final String userId) {
+		if(userId == null) {
+			return getPredictions(groupId); 
+		}
+		
+		return predictionDao.findAll(groupId, userId);
+	}
+	public List<Prediction> getPredictions(final String groupId, final String userId, final String couponId) {		
+		if(couponId == null) {
+			return getPredictions(groupId, userId);
+		}
+		
 		return predictionDao.findAll(groupId, userId, couponId);
 	}
+
+	public List<Prediction> getPredictions() {
+		return predictionDao.findAll();
+	}
+
 	public void deletePrediction(final Prediction prediction) throws DaoException {
 		predictionDao.delete(prediction);
-	}
-	@Override
-	public List<Prediction> getAvailablePredictions() {
-		return predictionDao.findAll();
 	}
 
 	public void setPredictionDao(final PredictionDao predictionDao) {

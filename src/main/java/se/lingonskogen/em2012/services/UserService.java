@@ -11,9 +11,13 @@ import se.lingonskogen.em2012.domain.User;
 @Service
 public interface UserService {
 	
-	User fetchUser(final String group, final String userName);
 	String createUser(final User user) throws DaoException;
-	List<User> getAvailableUsers();
 	User newInstance(final GroupType groupType, final String password, final String realName, final String userName);
+	
 	String getUserName(final String userId);
+	void delete(final String groupId, final String userId) throws DaoException;
+	
+	User getUser(final String groupId, final String userId);
+	List<User> getUsers(final String groupId);
+	List<User> getUsers();
 }

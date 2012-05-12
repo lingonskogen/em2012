@@ -17,6 +17,10 @@ public class GameServiceImpl implements GameService {
 		return gameDao.create(game);
 	}
 
+	public Game getGame(final String tournamentId, final String gameId) throws DaoException {
+		return gameDao.find(tournamentId, gameId);
+	}
+	
 	@Override
 	public Game newInstance(final String tournamentId, final String homeTeamId, 
 			final String awayTeamId, final Date kickoff, final Long homeScore, final Long awayScore) {

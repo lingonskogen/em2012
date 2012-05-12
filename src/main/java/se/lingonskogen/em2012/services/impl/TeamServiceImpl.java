@@ -16,6 +16,16 @@ public class TeamServiceImpl implements TeamService {
 		return teamDao.create(team);
 	}
 
+	public String getTeamName(final String tournamentId, final String teamId) {
+		Team team;
+		try {
+			team = teamDao.find(tournamentId, teamId);
+		} catch (DaoException e) {
+			return null;
+		}
+		return team.getName();
+	}
+	
 	@Override
 	public Team newInstance(final String name, final String tournamentId) {
 		Team team = new Team();		

@@ -23,6 +23,11 @@ public class GroupServiceImpl implements GroupService {
 		return group;
 	}
 	
+	public void delete(final String groupId) throws DaoException {
+		Group group = groupDao.find(groupId);
+		groupDao.delete(group);
+	}
+	
 	public List<Group> getAvailableGroups() {
 		return groupDao.findAll();
 	}
