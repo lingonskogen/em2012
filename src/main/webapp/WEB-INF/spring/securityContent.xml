@@ -1,0 +1,39 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+  <http security="none" pattern="/css/**" />
+  <http security="none" pattern="/stylesheet/**" />
+  <http security="none" pattern="/img/**" />
+  <http security="none" pattern="/images/**" />
+  <http security="none" pattern="/js/**" />
+  <http security="none" pattern="/admin/**" />
+  
+  <http use-expressions="true">
+    <intercept-url pattern="/start.html" access="permitAll" />
+    <intercept-url pattern="/register.html" access="permitAll" />
+    <intercept-url pattern="/**" access="isAuthenticated()" />
+    <form-login login-page="/start.html" default-target-url="/start.html" authentication-failure-url="/start.html"/>
+    <logout logout-url="/logout.html" logout-success-url="/start.html"/>
+  </http>
+
+  <beans:bean id="authenticationProvider" class="se.lingonskogen.em2012.security.GaeAuthProvider" />
+
+  <authentication-manager>
+    <authentication-provider user-service-ref="authenticationProvider">
+    </authentication-provider>
+  </authentication-manager>
+    <!-- 
+    <authentication-manager>
+        <authentication-provider >
+            <user-service>
+                <user name="susen" password="susen" authorities="admin, user" />
+                <user name="bob" password="bob" authorities="user" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+-->
+</beans:beans>
