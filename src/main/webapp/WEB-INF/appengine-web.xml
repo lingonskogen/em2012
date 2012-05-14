@@ -3,5 +3,5 @@
   <application>emtipset-2012</application>
   <!--  This variable is defined in your POM file -->
   <version>1</version>
-    
+  <sessions-enabled>true</sessions-enabled>
 </appengine-web-app>

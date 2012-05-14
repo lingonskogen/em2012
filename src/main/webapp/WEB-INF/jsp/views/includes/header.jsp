@@ -33,8 +33,14 @@
 				<li class=" " id="ml2_ma"><a
 					href="/uefaeuro/season=2012/matches/index.html"><span>Matches</span></a>
 				</li>
-				<li class=" " id="ml2_sd"><a
-					href="/uefaeuro/season=2012/standings/index.html"><span>Standings</span></a>
-				</li>
+        <li class=" " id="ml2_sd"><a
+          href="/uefaeuro/season=2012/standings/index.html"><span>Standings</span></a>
+        </li>
+        <li class=" " id="ml2_un"><span>${username}</span>
+        </li>
+        <li class=" " id="ml2_lo"><a
+          href="/logout.html"><span>Logout</span></a>
+        </li>
 			</ul>
 		</div>
+		
