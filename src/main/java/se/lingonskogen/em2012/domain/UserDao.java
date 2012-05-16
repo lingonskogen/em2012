@@ -2,6 +2,8 @@ package se.lingonskogen.em2012.domain;
 
 import java.util.List;
 
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -12,7 +14,9 @@ public class UserDao extends AbstractDao<User> {
 	protected void populateEntity(Entity entity, User user) {
 		entity.setProperty(User.REALNAME, user.getRealName());
 		entity.setProperty(User.USERNAME, user.getUserName());
-		entity.setProperty(User.PASSWORD, user.getPassword());
+		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		String password = encoder.encodePassword(user.getPassword(), "");
+        entity.setProperty(User.PASSWORD, password);
 	}
 
 	@Override
