@@ -4,28 +4,39 @@
                     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                     http://www.springframework.org/schema/security 
                     http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-
-  <http security="none" pattern="/css/**" />
+                    
+  <!-- bypass authentication 
+  <http security="none" pattern="/**" />
+   -->
+   
+  <http security="none" pattern="/login.html" />
+  <http security="none" pattern="/register.html" />
+  <http security="none" pattern="/forgotten-password.html" />
+  
   <http security="none" pattern="/stylesheet/**" />
-  <http security="none" pattern="/img/**" />
   <http security="none" pattern="/images/**" />
   <http security="none" pattern="/js/**" />
+  
+  <!-- this is authenticated by gmail -->
   <http security="none" pattern="/admin/**" />
   
+  <!-- this is for dev only -->
+  <http security="none" pattern="/_ah/**" />
+  
   <http use-expressions="true">
-    <intercept-url pattern="/start.html" access="permitAll" />
-    <intercept-url pattern="/register.html" access="permitAll" />
     <intercept-url pattern="/**" access="isAuthenticated()" />
-    <form-login login-page="/start.html" default-target-url="/start.html" authentication-failure-url="/start.html"/>
-    <logout logout-url="/logout.html" logout-success-url="/start.html"/>
+    <form-login login-page="/login.html" default-target-url="/startpage.html" authentication-failure-url="/login.html"/>
+    <logout logout-url="/logout.html" logout-success-url="/login.html"/>
   </http>
 
   <beans:bean id="authenticationProvider" class="se.lingonskogen.em2012.security.GaeAuthProvider" />
 
   <authentication-manager>
-    <authentication-provider user-service-ref="authenticationProvider">
+    <authentication-provider user-service-ref="authenticationProvider" >
+      <password-encoder hash="md5" />
     </authentication-provider>
   </authentication-manager>
+
     <!-- 
     <authentication-manager>
         <authentication-provider >
