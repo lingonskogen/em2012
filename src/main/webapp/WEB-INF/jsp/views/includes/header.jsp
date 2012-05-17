@@ -4,7 +4,52 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>${pageTitle}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="${pageDescription}" />
+<meta name="keywords" content="${pageKeywords}" />
+<meta name="author" content="">
 
+<!-- Le styles -->
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.css" >
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<style type="text/css">
+body {
+  padding-top: 140px;
+  padding-bottom: 40px;
+}
+</style>
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<body class="back">
+
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <div class="pull-right">
+          <ul class="nav">
+            <li><a href="/logout.html">${username}</a></li>
+            <li><a href="/logout.html">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="span8 offset2">
+
+
+<!-- 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
@@ -14,10 +59,6 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/stylesheet/style.css" />
 <title>${pageTitle}</title>
-
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-</head>
 
 <body class="back">
 
@@ -44,3 +85,4 @@
 			</ul>
 		</div>
 		
+-->

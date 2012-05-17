@@ -20,10 +20,11 @@ public class LoginController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String initForm(ModelMap model) {
 
-		LoginForm login = new LoginForm();
+		//LoginForm login = new LoginForm();
 
 		// command object
-		model.addAttribute("loginForm", login);
+		//model.addAttribute("loginForm", login);
+		model.addAttribute("username", "The User");
 
 		// return form view
 		return "login";
