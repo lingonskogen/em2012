@@ -1,14 +1,18 @@
 <%@ include file="./views/includes/header.jsp"%>
 
 <div class="content">
-<H1>Game Setup Page</H1>
 
-<c:if test="${errorMessage}">
-	<div class="errorMessage">${errorMessage}</div>
-</c:if>
-<c:if test="${successMessage}">
-	<div class="successMessage">${successMessage}</div>
-</c:if>
+	<%@ include file="./views/includes/adminmenu.jsp"%>
+
+
+	<H1>User Page</H1>
+
+	<c:if test="${errorMessage}">
+		<div class="errorMessage">${errorMessage}</div>
+	</c:if>
+	<c:if test="${successMessage}">
+		<div class="successMessage">${successMessage}</div>
+	</c:if>
 
 
 <!-- List all available games data -->
@@ -16,11 +20,10 @@
 <table>
 	<tr>
 		<th>Tournament name</th>
-		<th>homeTeamId</th>
-		<th>awayTeamId</th>
-		<th>kickoff</th>
-		<th>homeScore</th>
-		<th>awayScore</th>								
+		<th>Hemmalag</th>
+		<th>Bortalag</th>
+		<th>Avspark</th>
+		<th>Resultat</th>								
 	</tr>
 	<c:forEach var="entry" items="${availableGames}">
 		<tr>
@@ -28,8 +31,7 @@
 			<td>${entry.value.homeTeamId}</td>
 			<td>${entry.value.awayTeamId}</td>
 			<td>${entry.value.kickoff}</td>
-			<td>${entry.value.homeScore}</td>
-			<td>${entry.value.awayScore}</td>
+			<td>${entry.value.homeScore} - ${entry.value.awayScore}</td>
 		</tr>
 	</c:forEach>
 </table>
@@ -65,12 +67,12 @@
 			<form:errors path="kickoff" /></td>
 		</tr>
 		<tr>
-			<td><fmt:message key="global.homeScore" />*:</td>
+			<td><fmt:message key="global.homeScore" />:</td>
 			<td><form:input path="homeScore" /> 
 			<form:errors path="homeScore" /></td>
 		</tr>
 		<tr>
-			<td><fmt:message key="global.awayScore" />*:</td>
+			<td><fmt:message key="global.awayScore" />:</td>
 			<td><form:input path="awayScore" /> 
 			<form:errors path="awayScore" /></td>
 		</tr>

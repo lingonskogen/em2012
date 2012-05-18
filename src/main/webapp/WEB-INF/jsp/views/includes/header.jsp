@@ -9,80 +9,79 @@
 <head>
 <meta charset="utf-8">
 <title>${pageTitle}</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="${pageDescription}" />
 <meta name="keywords" content="${pageKeywords}" />
-<meta name="author" content="">
 
 <!-- Le styles -->
-<link rel="stylesheet" type="text/css" href="/css/bootstrap.css" >
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<style type="text/css">
-body {
-  padding-top: 140px;
-  padding-bottom: 40px;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!-- For IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
-<body class="back">
-
-  <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <div class="pull-right">
-          <ul class="nav">
-            <li><a href="/logout.html">${username}</a></li>
-            <li><a href="/logout.html">Logout</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="row">
-      <div class="span8 offset2">
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<div class="span4">
+				<a class="brand" href="start.html"><img src="/images/euro2012.png" /></a>
+			</div>
 
 
-<!-- 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-<meta name="description" content="${pageDescription}" />
-<meta name="keywords" content="${pageKeywords}" />
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/stylesheet/style.css" />
-<title>${pageTitle}</title>
+			<div class="span4 offset4" style="text-align: right">
+				<c:choose>
+					<c:when test="${loggedIn}">					
+  					Inloggad som: ${userName}<br />
+						<a href="">Logga ut</a>
+					</c:when>
 
-<body class="back">
+					<c:otherwise>
+						<div class="links">
+							<div>
+								<a href="/forgotten-password.html">Glömt lösenordet?</a>
+							</div>
+							<div>
+								<a href="/register.html">Registrera dig</a>
+							</div>
+						</div>
 
-	<div class="page">
-		<div id="menuLevel2">
-			<ul class="right">
-				<li class=" " id="ml2_ne"><a href="/uefaeuro/news/index.html"><span>News</span></a>
-				</li>
-				<li class=" " id="ml2_vi"><a href="/uefaeuro/video/index.html"><span>Video</span></a>
-				</li>
-				<li class=" " id="ml2_ph"><a href="/uefaeuro/photos/index.html"><span>Photos</span></a>
-				</li>
-				<li class=" " id="ml2_ma"><a
-					href="/uefaeuro/season=2012/matches/index.html"><span>Matches</span></a>
-				</li>
-        <li class=" " id="ml2_sd"><a
-          href="/uefaeuro/season=2012/standings/index.html"><span>Standings</span></a>
-        </li>
-        <li class=" " id="ml2_un"><span>${username}</span>
-        </li>
-        <li class=" " id="ml2_lo"><a
-          href="/logout.html"><span>Logout</span></a>
-        </li>
-			</ul>
+						<form name='f' action='<c:url value='j_spring_security_check'/>'
+							class="form-inline" method='POST'>
+							<input type="text" class="input-small" name='j_username' value=""
+								placeholder="Användarnamn/Email"> <input type="password"
+								class="input-small" name='j_password' placeholder="Lösenord">
+							<button type="submit" name="submit" value="Login" class="btn">Logga
+								in</button>
+						</form>
+						<div>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</div>
+					</c:otherwise>
+				</c:choose>
+
+			</div>
 		</div>
+
+		<c:choose>
+			<c:when test="${loggedIn}">
+				<div>
+					<ul class="nav nav-pills">
+						<li <c:if test="${currentPage == 'start'}">class="active"</c:if>><a href="start.html">Hem</a></li>
+						<li <c:if test="${currentPage == 'mypage'}">class="active"</c:if>><a href="mypage.html">Min sida</a></li>
+						<li <c:if test="${currentPage == 'statistics'}">class="active"</c:if>><a href="statistics.html">Statistik</a></li>
+						<li <c:if test="${currentPage == 'rules'}">class="active"</c:if>><a href="rules.html">Regler</a></li>
+					</ul>
+				</div>
+			</c:when>
+		</c:choose>
 		
--->
+		<c:if test="isAdmin">
+			<div>
+				<ul class="nav nav-pills">
+					<li class="active"><a href="#">Tournaments</a></li>
+					<li><a href="#">Coupons</a></li>
+					<li><a href="#">Games</a></li>
+					<li><a href="#">Groups</a></li>
+					<li><a href="#">Predictions</a></li>
+					<li><a href="#">Users</a></li>
+				</ul>
+			</div>
+		</c:if>

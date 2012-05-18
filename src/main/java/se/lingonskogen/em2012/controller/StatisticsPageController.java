@@ -1,24 +1,26 @@
 package se.lingonskogen.em2012.controller;
-
 import java.security.Principal;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller
-@RequestMapping("/start.html")
-public class StartPageController extends AbstractController {
 
+@Controller
+@RequestMapping("/statistics.html")
+public class StatisticsPageController extends AbstractController {
+
+	private static final String PAGE_NAME = "statpage";
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public String start(final ModelMap model, final Principal principal) throws Exception {   
-	    setParameters(model, principal);
-        return "prestartpage";
+	public String showPage(final ModelMap model, final Principal principal) {
+
+		setParameters(model, principal);
+		return PAGE_NAME;
 	}
 
 	@Override
 	public String getCurrentPageId() {
-		return "start";
+		return "statistics";
 	}
 }

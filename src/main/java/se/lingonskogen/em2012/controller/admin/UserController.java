@@ -17,7 +17,7 @@ import se.lingonskogen.em2012.form.admin.SearchForm;
 
 @Controller
 @RequestMapping("/admin/userpage.html")
-public class UserController extends AbstractController {
+public class UserController extends AbstractAdminController {
 
 	final private static String USER_PAGE = "userpage";
 	

@@ -18,7 +18,7 @@ import se.lingonskogen.em2012.form.admin.TeamForm;
 
 @Controller
 @RequestMapping("/admin/teampage.html")
-public class TeamController extends AbstractController {
+public class TeamController extends AbstractAdminController {
 	
 	final private static String TEAM_PAGE = "teampage";
     

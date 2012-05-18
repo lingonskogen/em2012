@@ -1,14 +1,18 @@
 <%@ include file="./views/includes/header.jsp"%>
 
 <div class="content">
-<H1>Tournament Setup Page</H1>
 
-<c:if test="${errorMessage}">
-	<div class="errorMessage">${errorMessage}</div>
-</c:if>
-<c:if test="${successMessage}">
-	<div class="successMessage">${successMessage}</div>
-</c:if>
+	<%@ include file="./views/includes/adminmenu.jsp"%>
+
+
+	<H1>User Page</H1>
+
+	<c:if test="${errorMessage}">
+		<div class="errorMessage">${errorMessage}</div>
+	</c:if>
+	<c:if test="${successMessage}">
+		<div class="successMessage">${successMessage}</div>
+	</c:if>
 
 
 <!-- List all available tournament data -->

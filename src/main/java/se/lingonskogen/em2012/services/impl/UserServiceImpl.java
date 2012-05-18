@@ -44,7 +44,17 @@ public class UserServiceImpl implements UserService {
 		return name;
 	}
 	
-
+	public User getUser(final String userName) {
+		List<User> users = this.getUsers();
+		
+		for(User user : users) {
+			if(user.getUserName().equals(userName)) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
 	public void delete(final String groupId, final String userId) throws DaoException {
 		User user = getUser(groupId, userId);
 		userDao.delete(user);

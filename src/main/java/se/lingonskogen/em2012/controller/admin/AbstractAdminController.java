@@ -18,7 +18,7 @@ import se.lingonskogen.em2012.services.TeamService;
 import se.lingonskogen.em2012.services.TournamentService;
 import se.lingonskogen.em2012.services.UserService;
 
-public class AbstractController {
+public class AbstractAdminController {
 
 	protected final static String DELETE_ACTION = "delete";
 	

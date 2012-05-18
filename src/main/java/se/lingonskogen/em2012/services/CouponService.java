@@ -11,6 +11,8 @@ public interface CouponService {
 	void deleteCoupon(final String couponId, final String userId, final String groupId) throws DaoException;
 	void deleteCoupon(final Coupon coupon) throws DaoException;
 	Coupon getCoupon(final String groupId, final String userId, final String couponId) throws DaoException;
+	// User id is now globally unique
+	Coupon getCoupon(final String userId);
 	
 	List<Coupon> getCoupons(final String groupId, final String userId);	
 	List<Coupon> getCoupons(final String groupId);

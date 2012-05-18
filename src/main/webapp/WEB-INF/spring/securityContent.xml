@@ -25,7 +25,7 @@
   
   <http use-expressions="true">
     <intercept-url pattern="/**" access="isAuthenticated()" />
-    <form-login login-page="/login.html" default-target-url="/startpage.html" authentication-failure-url="/login.html"/>
+    <form-login login-page="/login.html" default-target-url="/start.html" authentication-failure-url="/login.html"/>
     <logout logout-url="/logout.html" logout-success-url="/login.html"/>
   </http>
 

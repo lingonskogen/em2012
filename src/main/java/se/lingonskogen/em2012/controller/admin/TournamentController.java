@@ -16,7 +16,7 @@ import se.lingonskogen.em2012.form.admin.TournamentForm;
 
 @Controller
 @RequestMapping("/admin/tournamentpage.html")
-public class TournamentController extends AbstractController {
+public class TournamentController extends AbstractAdminController {
 
     final private static String TOURNAMENT_PAGE = "tournamentpage";
 

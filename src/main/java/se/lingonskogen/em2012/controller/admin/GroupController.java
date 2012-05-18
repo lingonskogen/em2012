@@ -16,7 +16,7 @@ import se.lingonskogen.em2012.form.admin.GroupForm;
 
 @Controller
 @RequestMapping("/admin/grouppage.html")
-public class GroupController extends AbstractController {
+public class GroupController extends AbstractAdminController {
 
     final private static String GROUP_PAGE = "grouppage";
 

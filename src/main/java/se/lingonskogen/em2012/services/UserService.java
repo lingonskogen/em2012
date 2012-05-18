@@ -18,6 +18,7 @@ public interface UserService {
 	void delete(final String groupId, final String userId) throws DaoException;
 	
 	User getUser(final String groupId, final String userId);
+	User getUser(final String userName);
 	List<User> getUsers(final String groupId);
 	List<User> getUsers();
 }
