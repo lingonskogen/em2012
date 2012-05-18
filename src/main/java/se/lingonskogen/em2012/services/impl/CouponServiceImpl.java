@@ -58,4 +58,15 @@ public class CouponServiceImpl implements CouponService {
 		deleteCoupon(coupon);
 		
 	}
+	
+	public Coupon getCoupon(final String userId) {
+		List<Coupon> coupons = getCoupons();
+		for(Coupon coupon : coupons) {
+			if(coupon.getUserId().equals(userId)) {
+				return coupon;
+			}
+		}
+		return null;
+	}
+	
 }

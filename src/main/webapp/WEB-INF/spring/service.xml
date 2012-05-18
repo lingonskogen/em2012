@@ -61,18 +61,35 @@
 		<property name="predictionService" ref="predictionService" />
 		<property name="gameService" ref="gameService" />
 	</bean>
+	
+	<bean id="abstractAdminController" class="se.lingonskogen.em2012.controller.admin.AbstractAdminController"
+		abstract="true">
+		<property name="couponService" ref="couponService" />
+		<property name="tournamentService" ref="tournamentService" />
+		<property name="groupService" ref="groupService" />
+		<property name="userService" ref="userService" />
+		<property name="teamService" ref="teamService" />
+		<property name="predictionService" ref="predictionService" />
+		<property name="gameService" ref="gameService" />
+	</bean>
 
 	<bean name="registerController" class="se.lingonskogen.em2012.controller.RegisterController">
 		<property name="registerService" ref="registerService" />
 		<property name="validator" ref="registrationValidator" />
 	</bean>
-
+	
+	<bean name="userPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.UserPageController">		
+	</bean>
+	<bean name="userCouponPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.UserCouponPageController">		
+	</bean>
+	
+	
 	<!-- Admin controllers -->
-	<bean name="groupController" parent="abstractController"
+	<bean name="groupController" parent="abstractAdminController"
 		class="se.lingonskogen.em2012.controller.admin.GroupController">
 	</bean>
 	
-	<bean name="couponController" parent="abstractController"
+	<bean name="couponController" parent="abstractAdminController"
 		class="se.lingonskogen.em2012.controller.admin.CouponController">
 	</bean>
 	
@@ -84,7 +101,7 @@
 		<property name="gameValidator" ref="gameValidator" />
 	</bean>
 	
-	<bean name="predictionController" parent="abstractController"
+	<bean name="predictionController" parent="abstractAdminController"
 		class="se.lingonskogen.em2012.controller.admin.PredictionController">
 	</bean>
 	
@@ -95,11 +112,11 @@
 		<property name="tournamentService" ref="tournamentService" />
 	</bean>
 	
-	<bean name="tournamentController" parent="abstractController"
+	<bean name="tournamentController" parent="abstractAdminController"
 		class="se.lingonskogen.em2012.controller.admin.TournamentController">
 	</bean>
 	
-	<bean name="userController" parent="abstractController"
+	<bean name="userController" parent="abstractAdminController"
 		class="se.lingonskogen.em2012.controller.admin.UserController">
 	</bean>
 </beans>

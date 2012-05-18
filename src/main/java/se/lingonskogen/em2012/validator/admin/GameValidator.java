@@ -21,8 +21,9 @@ public class GameValidator implements Validator {
 
 		// Is date valid date?
 		
-		
+		System.out.println("Inne i validae");
 		if(gameForm.getAwayTeamId().equals(gameForm.getHomeTeamId())) {
+			System.out.println("Not validated ok");
 			errors.reject("awayTeamId", "matching.newgame.teams");
 		}
 		

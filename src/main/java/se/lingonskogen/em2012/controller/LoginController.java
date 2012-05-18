@@ -1,7 +1,6 @@
 package se.lingonskogen.em2012.controller;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.security.Principal;
 
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -15,36 +14,24 @@ import se.lingonskogen.em2012.form.LoginForm;
 
 @Controller
 @RequestMapping("/login.html")
-public class LoginController {
+public class LoginController extends AbstractController {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String initForm(ModelMap model) {
+	public String initForm(final ModelMap model, final Principal principals) {
 
-		//LoginForm login = new LoginForm();
-
-		// command object
-		//model.addAttribute("loginForm", login);
-		model.addAttribute("username", "The User");
-
+		setParameters(model, principals);
 		// return form view
 		return "login";
 	}
 	
 	// Process the login form.
 	@RequestMapping(method = RequestMethod.POST)
-	public String processForm(@ModelAttribute(value="login") @Valid LoginForm login, BindingResult result, ModelMap model) {
-		// Login user.
-		// If not logged in - show login page
-		// If logger in - show start page
+	public String processForm(@ModelAttribute(value="login") @Valid LoginForm login, BindingResult result, ModelMap model, Principal principals) {
+		setParameters(model, principals);
 		return "start";
 	}
-	
-/*	public void setValidator(final LoginValidator validator) {
-	
-		this.validator = validator;
+
+	public String getCurrentPageId() {
+		return "login";
 	}
-	
-	public RegistrationValidator getValidator() {
-		return validator;
-	}*/
 }

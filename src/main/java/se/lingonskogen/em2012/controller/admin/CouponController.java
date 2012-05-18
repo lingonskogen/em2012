@@ -20,7 +20,7 @@ import se.lingonskogen.em2012.form.admin.SearchForm;
 
 @Controller
 @RequestMapping("/admin/couponpage.html")
-public class CouponController extends AbstractController {
+public class CouponController extends AbstractAdminController {
 	
 	private final static String COUPON_PAGE = "couponpage";
 	private final static String DELETE_BASE_LINK = "/admin/couponpage.html?action=delete";

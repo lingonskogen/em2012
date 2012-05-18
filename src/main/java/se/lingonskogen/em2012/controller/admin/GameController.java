@@ -26,7 +26,7 @@ import se.lingonskogen.em2012.validator.admin.GameValidator;
 
 @Controller
 @RequestMapping("/admin/gamepage.html")
-public class GameController extends AbstractController {
+public class GameController extends AbstractAdminController {
 
 	private GameValidator gameValidator;
 	
@@ -47,12 +47,7 @@ public class GameController extends AbstractController {
 		Map<String, Game> t = new LinkedHashMap<String, Game>();
 		
 		for (Game game : getGameService().getAvailableGames()) {
-			Tournament tournament = getTournamentService().getTournament(game.getTournamentId());
-			String tName = null;
-			if(tournament!=null) {
-				tName = tournament.getName();
-			}
-			t.put(tName, game);
+			t.put(game.getId(), game);
 		}
 
 		return t;
@@ -60,7 +55,7 @@ public class GameController extends AbstractController {
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 	    dateFormat.setLenient(false);
 
 	    // true passed to CustomDateEditor constructor means convert empty String to null

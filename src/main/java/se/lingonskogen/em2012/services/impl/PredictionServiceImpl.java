@@ -1,10 +1,12 @@
 package se.lingonskogen.em2012.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import se.lingonskogen.em2012.domain.DaoException;
 import se.lingonskogen.em2012.domain.Prediction;
 import se.lingonskogen.em2012.domain.PredictionDao;
+import se.lingonskogen.em2012.form.PredictionFormData;
 import se.lingonskogen.em2012.services.PredictionService;
 
 public class PredictionServiceImpl implements PredictionService {
@@ -56,6 +58,17 @@ public class PredictionServiceImpl implements PredictionService {
 		return predictionDao.findAll(groupId, userId, couponId);
 	}
 
+	public PredictionFormData newFormInstance(final String gameId, final String homeTeamName, final String awayTeamName, 
+			final Long homeScore, final Long awayScore) {
+		PredictionFormData data = new PredictionFormData();
+		data.setAwayScore(awayScore);
+		data.setAwayTeamName(awayTeamName);
+		data.setGameId(gameId);
+		data.setHomeScore(homeScore);
+		data.setHomeTeamName(homeTeamName);
+		return data;
+	}
+	
 	public List<Prediction> getPredictions() {
 		return predictionDao.findAll();
 	}

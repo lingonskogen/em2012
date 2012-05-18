@@ -19,7 +19,7 @@ import se.lingonskogen.em2012.form.admin.SearchForm;
 
 @Controller
 @RequestMapping("/admin/predictionpage.html")
-public class PredictionController extends AbstractController {
+public class PredictionController extends AbstractAdminController {
 	
 	private final static String PREDICTION_PAGE = "predictionpage";
 	
