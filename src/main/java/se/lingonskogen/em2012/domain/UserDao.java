@@ -17,6 +17,7 @@ public class UserDao extends AbstractDao<User> {
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		String password = encoder.encodePassword(user.getPassword(), "");
         entity.setProperty(User.PASSWORD, password);
+        entity.setProperty(User.PAID, user.getPaid());
 	}
 
 	@Override
@@ -27,17 +28,19 @@ public class UserDao extends AbstractDao<User> {
 		user.setRealName((String) entity.getProperty(User.REALNAME));
 		user.setUserName((String) entity.getProperty(User.USERNAME));
 		user.setPassword((String) entity.getProperty(User.PASSWORD));
+		user.setPaid((Boolean) entity.getProperty(User.PAID));
 		return user;
 	}
 
 	public String create(User user) throws DaoException {
 		String userId = createId(user);
+		checkGlobalUnique(userId);
 		Key key = createKey(user.getGroupId(), userId);
 		super.create(key, user);
 		return userId;
 	}
 
-	public void update(User user) throws DaoException {
+    public void update(User user) throws DaoException {
 		String userId = createId(user);
 		Key key = createKey(user.getGroupId(), userId);
 		super.update(key, user);
@@ -83,4 +86,14 @@ public class UserDao extends AbstractDao<User> {
 		return builder.getKey();
 	}
 
+    private void checkGlobalUnique(String userId) throws DaoException
+    {
+        for (User user : findAll())
+        {
+            if (user.getId().equals(userId))
+            {
+                throw new DaoException("Username must by globaly unique");
+            }
+        }
+    }
 }
