@@ -82,7 +82,7 @@
 	</bean>
 	<bean name="userCouponPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.UserCouponPageController">		
 	</bean>
-	
+	<bean name="statisticsPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.StatisticsPageController" />	
 	
 	<!-- Admin controllers -->
 	<bean name="groupController" parent="abstractAdminController"

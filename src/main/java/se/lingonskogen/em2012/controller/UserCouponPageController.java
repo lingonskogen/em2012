@@ -2,9 +2,7 @@ package se.lingonskogen.em2012.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -13,23 +11,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import se.lingonskogen.em2012.domain.Coupon;
 import se.lingonskogen.em2012.domain.DaoException;
 import se.lingonskogen.em2012.domain.Game;
-import se.lingonskogen.em2012.domain.Group;
 import se.lingonskogen.em2012.domain.Prediction;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.form.CouponForm;
 import se.lingonskogen.em2012.form.PredictionFormData;
-import se.lingonskogen.em2012.form.RegisterForm;
-import se.lingonskogen.em2012.services.CouponService;
-import se.lingonskogen.em2012.services.PredictionService;
-import se.lingonskogen.em2012.services.RegisterService;
-import se.lingonskogen.em2012.services.TournamentService;
-import se.lingonskogen.em2012.services.UserService;
-import se.lingonskogen.em2012.services.GameService;
-import se.lingonskogen.em2012.validator.RegistrationValidator;
 
 @Controller
 @RequestMapping("/coupon.html")
@@ -39,8 +29,9 @@ public class UserCouponPageController extends AbstractController {
     
     private static final String PAGE_NAME = "usercouponpage";
     
-	@RequestMapping(method = RequestMethod.GET)
-	public String initForm(final ModelMap model, final Principal principals) {
+	@RequestMapping(method = RequestMethod.GET) 
+	public String initForm(@RequestParam(value="couponId", defaultValue = "") String couponId, 
+														ModelMap model, Principal principals) {
 		User user = null;
 		if(principals != null) {
 			String name = principals.getName();
@@ -53,6 +44,8 @@ public class UserCouponPageController extends AbstractController {
 			return PAGE_NAME;
 		}
 		
+		System.out.println("CouponId: " + couponId);
+		
 		String action = "";
 		
 		CouponForm form = new CouponForm();
@@ -62,8 +55,8 @@ public class UserCouponPageController extends AbstractController {
 		String tournamentId = getTournamentService().getAvailableTournaments().get(0).getId();
 		
 		if(coupon != null) {
-			String couponId = coupon.getId();
-			List<Prediction> preds = getPredictionService().getPredictions(user.getGroupId(), user.getId(), couponId);
+			String c = coupon.getId();
+			List<Prediction> preds = getPredictionService().getPredictions(user.getGroupId(), user.getId(), c);
 			predictions = getFormData(tournamentId, preds);		
 			// Get text from messages	
 			action = "Uppdatera";
@@ -87,7 +80,7 @@ public class UserCouponPageController extends AbstractController {
 		
 		form.setPredictions(predictions);
 		
-		setParameters(model, principals);
+		//setParameters(model, principals);
 		
 		// command object
 		model.addAttribute("form", form);
@@ -120,8 +113,8 @@ public class UserCouponPageController extends AbstractController {
 					awayTeamName, prediction.getHomeScore(), prediction.getAwayScore());
 			
 			data.add(d);
-			System.out.print(d);
 		}
+		
 		return data;	
 	}
 	

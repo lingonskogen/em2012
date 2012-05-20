@@ -4,34 +4,53 @@
 
 	<legend>Min sida</legend>
 
-	<div class="control-group">
-		<label class="control-label">Namn:</label>
-		<div class="controls">
-			<label class="control-label">${user.realName}</label>
-		</div>
-	</div>
+	<table class="table">
+		<tr>
+			<td>Namn:</td>
+			<td>${user.realName}</td>
+		</tr>
+		<tr>
+			<td>Användarnamn/email:</td>
+			<td>${user.userName}</td>
+		</tr>
+		<tr>
+			<td>Grupp:</td>
+			<td>${groupName}</td>
+		</tr>
+		<tr>
+			<td>Betalat:</td>
+			<td style="color: green;">Ja</td>
+		</tr>
+		<tr>
+			<td>Tipsrad:</td>
+			<td><c:choose>
+				<c:when test="${hasCoupon}"><a href="${couponUrl}">Tipsrad</a></c:when></c:choose>
+			</td>
+		</tr>
+		<tr>
+			<td>Statistik:</td>
+			<td><c:choose>
+				<c:when test="${hasCoupon}">Du har plats ${position} av ${totalUsers}</c:when></c:choose>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
 
-
-
-	<div class="userInfo">
-		<div class="name"> </div>
-		<div class="usrName">Användarnamn/email: ${user.userName}</div>
-		<div class="group">Grupp: ${groupName}</div>
-		<div class="paid">Betalat: Ja</div>
-		<div class="statistics">Statistik: Plats 1</div>
-		<div class="coupon">
-			<c:choose>
-				<c:when test="${coupon}">					
-						LISTA PÅ ANVÄNDARENS MATCHER
-					</c:when>
-				<c:otherwise>
-					Kupong: Du har inte skapat någon kupong än
-					<a href="couponpage.html" class="btn">Skapa kupong</a>
-				</c:otherwise>
-			</c:choose>
-
-		</div>
-
-	</div>
+	<c:choose>
+		<c:when test="${hasCoupon}">
+		</c:when>
+		<c:otherwise>
+		 <div class="obs"><b style="color: red;">OBS!</b> Du har inte skapat någon tipsrad än</div>
+		 			<div class="control-group">
+				<div class="controls" style="margin-left: 300px">
+					<a href="coupon.html" class="btn btn-primary">Skapa tipsrad</a>
+				</div>
+			</div>
+					
+		</c:otherwise>
+	</c:choose>
 </section>
 <%@ include file="./views/includes/footer.jsp"%>
