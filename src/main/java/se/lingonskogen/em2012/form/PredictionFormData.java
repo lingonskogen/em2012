@@ -18,7 +18,7 @@ public class PredictionFormData {
 		this.homeTeamName = homeTeamName;
 	}
 
-	public String getAwayTeam() {
+	public String getAwayTeamName() {
 		return awayTeamName;
 	}
 

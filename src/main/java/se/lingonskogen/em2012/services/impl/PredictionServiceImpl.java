@@ -69,6 +69,17 @@ public class PredictionServiceImpl implements PredictionService {
 		return data;
 	}
 	
+	public Prediction getPrediction(final String userId, final String groupId, final String gameId) {
+		List<Prediction> predictions = getPredictions(groupId, userId);
+		
+		for (Prediction prediction : predictions) {
+			if(prediction.getGameId().equals(gameId)) {
+				return prediction;
+			}
+		}
+		return null;
+	}
+	
 	public List<Prediction> getPredictions() {
 		return predictionDao.findAll();
 	}

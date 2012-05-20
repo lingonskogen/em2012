@@ -16,6 +16,7 @@ public interface PredictionService {
 	
 	Prediction getPrediction(final String groupId, final String userId, final String couponId, final String predictionId) throws DaoException;
 	void deletePrediction(final Prediction prediction) throws DaoException;
+	Prediction getPrediction(final String userId, final String groupId, final String gameId);
 	
 	List<Prediction> getPredictions(final String groupId, final String userId, final String couponId);
 	List<Prediction> getPredictions(final String groupId, final String userId);

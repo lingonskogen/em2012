@@ -26,6 +26,11 @@ public class UserPageController extends AbstractController {
 		
 		model.addAttribute("user", user);
 		model.addAttribute("groupName", groupName);
+		model.addAttribute("position", getPosition(user));
+		model.addAttribute("totalUsers", getTotalNumUsers(user.getGroupId()));
+		model.addAttribute("hasCoupon", hasCoupon(user));
+		model.addAttribute("couponUrl", getCouponUrl(user.getId()));
+		
 		setParameters(model, principal);
 		return PAGE_NAME;
 	}	
