@@ -8,6 +8,8 @@ public class User extends Bean {
 
 	public static final String PASSWORD = "password";
 
+	public static final String PAID = "paid";
+
 	private String groupId;
 
 	private String realName;
@@ -15,6 +17,8 @@ public class User extends Bean {
 	private String userName;
 
 	private String password;
+
+	private Boolean paid = Boolean.FALSE;
 
 	public String getGroupId() {
 		return groupId;
@@ -47,5 +51,15 @@ public class User extends Bean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public void setPaid(Boolean paid)
+	{
+	    this.paid = paid;
+    }
+
+    public Boolean getPaid()
+    {
+        return paid;
+    }
 
 }
