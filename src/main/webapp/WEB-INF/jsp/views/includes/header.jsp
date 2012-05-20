@@ -32,7 +32,7 @@
 				<c:choose>
 					<c:when test="${loggedIn}">					
   					Inloggad som: ${userName}<br />
-						<a href="">Logga ut</a>
+						<a href="/logout.html">Logga ut</a>
 					</c:when>
 
 					<c:otherwise>
@@ -85,3 +85,4 @@
 				</ul>
 			</div>
 		</c:if>
+  </div>

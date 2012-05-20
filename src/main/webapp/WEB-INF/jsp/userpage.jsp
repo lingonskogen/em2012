@@ -33,14 +33,16 @@
 		<tr>
 			<th><fmt:message key="global.group" /></th>
 			<th><fmt:message key="global.userName" /></th>
-			<th><fmt:message key="global.realName" /></th>
+      <th><fmt:message key="global.realName" /></th>
+      <th><fmt:message key="global.paid" /></th>
 		</tr>
 		<c:forEach var="entry" items="${availableUsers}">
 			<tr>
 				<!-- <td>${entry.key}</td>  -->
 				<td>${entry.value.groupName}</td>
 				<td>${entry.value.userName}</td>
-				<td>${entry.value.realName}</td>
+        <td>${entry.value.realName}</td>
+        <td>${entry.value.paid}</td>
 			</tr>
 		</c:forEach>
 	</table>

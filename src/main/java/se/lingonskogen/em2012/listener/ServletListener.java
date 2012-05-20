@@ -71,6 +71,7 @@ public class ServletListener implements ServletContextListener
     		         user.setPassword(name.toLowerCase());
     		         user.setRealName(name);
     		         user.setUserName(name.toLowerCase());
+    		         user.setPaid(random.nextBoolean());
     		         String userId = userdao.create(user);
     		         
     		         Coupon coupon = new Coupon();
