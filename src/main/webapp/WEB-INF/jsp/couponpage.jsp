@@ -6,7 +6,7 @@
 
 
 	<H1>Coupon Page</H1>
-
+	
 	<c:if test="${errorMessage}">
 		<div class="errorMessage">${errorMessage}</div>
 	</c:if>

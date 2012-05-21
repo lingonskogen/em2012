@@ -85,8 +85,8 @@ public class RegisterController extends AbstractController {
 			return PAGE_NAME;
 		}
 	
-		model.addAttribute("message","Välkommen till EM-tipset 2012");
-		return "start";
+		model.addAttribute("registreradOk", true);
+		return PAGE_NAME;
 	}
 	
 	public void setValidator(final RegistrationValidator validator) {

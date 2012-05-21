@@ -20,19 +20,6 @@ section {
 	margin-bottom: 20px;
 }
 
-.startContent {
-	text-align: center;
-}
-.nav {
-	margin-top: 30px;
-	font-weight: bold;
-	margin-left: 25px!important;
-}
-
-.header .links {
-	margin-bottom: 10px;
-}
-
 .clearfix {
 	*zoom: 1;
 }
