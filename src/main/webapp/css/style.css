@@ -1,15 +1,28 @@
-body
-{
-	font-family: 'Verdana', Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #000;
-	background: #FFF;
+body {
+	/*
+  padding-top: 20px;
+  padding-bottom: 40px;
+  */
+  background: url("/images/background.jpg") no-repeat scroll 50% 0pt transparent;
+  color: #000000;
 }
-.back {
-    background: url("/images/back.png") no-repeat #002211;
-    background-position: top center;
-    
+
+section {
+  background-color: #FFF;
+  padding: 20px 20px;
+  margin-bottom: 20px;
 }
+
+.startContent {
+  text-align: center;
+}
+/*
+.nav {
+  margin-top: 30px;
+  font-weight: bold;
+  margin-left: 25px!important;
+}
+*/
 /*
 
 .page {

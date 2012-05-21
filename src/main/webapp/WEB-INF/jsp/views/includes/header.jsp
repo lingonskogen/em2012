@@ -9,12 +9,16 @@
 <head>
 <meta charset="utf-8">
 <title>${pageTitle}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="${pageDescription}" />
 <meta name="keywords" content="${pageKeywords}" />
 
 <!-- Le styles -->
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
-
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<!-- 
+<link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.css" >
+ -->
 <!-- For IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -22,29 +26,27 @@
 </head>
 <body>
 	<div class="container">
-		<div class="header">
+		<div class="row">
 			<div class="span4">
-				<a class="brand" href="start.html"><img src="/images/euro2012.png" /></a>
+				<a class="brand" href="start.html"><img
+					src="/images/euro2012.png" />
+				</a>
 			</div>
-
-
 			<div class="span4 offset4" style="text-align: right">
 				<c:choose>
-					<c:when test="${loggedIn}">					
+					<c:when test="${loggedIn}">
+            <br />
+            <p>
   					Inloggad som: ${userName}<br />
 						<a href="/logout.html">Logga ut</a>
+						</p>
 					</c:when>
-
 					<c:otherwise>
-						<div class="links">
-							<div>
-								<a href="/forgotten-password.html">Glömt lösenordet?</a>
-							</div>
-							<div>
-								<a href="/register.html">Registrera dig</a>
-							</div>
-						</div>
-
+					  <br />
+					  <p>
+						<a href="/forgotten-password.html">Glömt lösenordet?</a><br />
+						<a href="/register.html">Registrera dig</a>
+						</p>
 						<form name='f' action='<c:url value='j_spring_security_check'/>'
 							class="form-inline" method='POST'>
 							<input type="text" class="input-small" name='j_username' value=""
@@ -60,29 +62,42 @@
 			</div>
 		</div>
 
-		<c:choose>
-			<c:when test="${loggedIn}">
-				<div>
+		<div class="row">
+			<div class="span12">
+				<c:choose>
+					<c:when test="${loggedIn}">
+						<ul class="nav nav-pills">
+							<li <c:if test="${currentPage == 'start'}">class="active"</c:if>><a
+								href="start.html">Hem</a>
+							</li>
+							<li <c:if test="${currentPage == 'mypage'}">class="active"</c:if>><a
+								href="mypage.html">Min sida</a>
+							</li>
+							<li
+								<c:if test="${currentPage == 'statistics'}">class="active"</c:if>><a
+								href="statistics.html">Statistik</a>
+							</li>
+							<li <c:if test="${currentPage == 'rules'}">class="active"</c:if>><a
+								href="rules.html">Regler</a>
+							</li>
+						</ul>
+					</c:when>
+				</c:choose>
+				<c:if test="isAdmin">
 					<ul class="nav nav-pills">
-						<li <c:if test="${currentPage == 'start'}">class="active"</c:if>><a href="start.html">Hem</a></li>
-						<li <c:if test="${currentPage == 'mypage'}">class="active"</c:if>><a href="mypage.html">Min sida</a></li>
-						<li <c:if test="${currentPage == 'statistics'}">class="active"</c:if>><a href="statistics.html">Statistik</a></li>
-						<li <c:if test="${currentPage == 'rules'}">class="active"</c:if>><a href="rules.html">Regler</a></li>
+						<li class="active"><a href="#">Tournaments</a>
+						</li>
+						<li><a href="#">Coupons</a>
+						</li>
+						<li><a href="#">Games</a>
+						</li>
+						<li><a href="#">Groups</a>
+						</li>
+						<li><a href="#">Predictions</a>
+						</li>
+						<li><a href="#">Users</a>
+						</li>
 					</ul>
-				</div>
-			</c:when>
-		</c:choose>
-		
-		<c:if test="isAdmin">
-			<div>
-				<ul class="nav nav-pills">
-					<li class="active"><a href="#">Tournaments</a></li>
-					<li><a href="#">Coupons</a></li>
-					<li><a href="#">Games</a></li>
-					<li><a href="#">Groups</a></li>
-					<li><a href="#">Predictions</a></li>
-					<li><a href="#">Users</a></li>
-				</ul>
+				</c:if>
 			</div>
-		</c:if>
-  </div>
+		</div>
