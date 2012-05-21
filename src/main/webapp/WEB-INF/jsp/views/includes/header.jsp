@@ -9,11 +9,9 @@
 <head>
 <meta charset="utf-8">
 <title>${pageTitle}</title>
-<meta name="description" content="${pageDescription}" />
-<meta name="keywords" content="${pageKeywords}" />
 
-<!-- Le styles -->
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css">
 
 <!-- For IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>

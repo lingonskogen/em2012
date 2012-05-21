@@ -1,102 +1,40 @@
-body
-{
-	font-family: 'Verdana', Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #000;
-	background: #FFF;
-}
-.back {
-    background: url("/images/back.png") no-repeat #002211;
-    background-position: top center;
-    
-}
-/*
 
-.page {
-	position: relative;
-	width: 1000px;
-	margin: 20px auto;
-	background-color: white;
-
+.gamesTable .table td {
+	line-height: 12px;
+	padding: 5px;
 }
 
-.content {
-    position: absolute;
-    top: 100px;
-    width: 960px;
-    min-height: 600px;
-    background-color: white;
-    padding: 20px;
-    font-family: arial;
-    font-size: 12px;
+.loginHeader {
+	text-align: center; 
+	font-weight: bold; 
+	font-size: 26px; 
+	padding: 20px;	
 }
 
-#menuLevel2 {
-    position: absolute;
-    top: 0px;
-    left: 200px;
-    font: 11px arial;
+.registreredMessageHeader {
+	padding: 15px; 
+	font-weight: bold; 
+	font-size: 20px;	
 }
 
-
-#menuLevel2 ul.right {
-    float: right;
+.registreredMessage {
+	padding: 15px; 
+	font-size: 14px;
 }
 
-#menuLevel2 ul {
-	background: #000000;
-   height: 20px;
-    margin: 22px 6px 0 0;
-    padding: 2px 0 0;
+.startContent {
+	text-align: center;
+}
+.nav {
+	margin-top: 30px;
+	font-weight: bold;
+	margin-left: 25px!important;
 }
 
-#menuLevel2 ul {
-    float: right;
+.header .links {
+	margin-bottom: 10px;
 }
 
-#menuLevel2 ul {
-    float: left;
-    list-style-type: none;
-}
-
-#menuLevel2 li {
-    float: left;
-    list-style: none outside none;
-    padding: 0 1px;
-}
-
-#menuLevel2 li, #menuLevel2 a {
-    color: #FFFFFF;
-}
-
- #menuLevel2 a {
-    display: block;
-    padding: 0 0 0 8px;
-}
-
-#menuLevel2 li, #menuLevel2 a {
-    color: #FFFFFF;
-} 
-
-#menuLevel2 li {
-    float: left;
-    list-style: none outside none;
-    padding: 0 1px;
-}
-
-#menuLevel2 li, #menuLevel2 a {
-    color: #FFFFFF;
-}
-
-#menuLevel2 span {
-    display: block;
-    font-family: arial;
-    font-size: 11px;
-    font-weight: bold;
-    line-height: 18px;
-    padding: 0 6px 0 0;
-}
-*/
 
 /** Countdown clock css **/
 /* jQuery Countdown styles 1.5.11. */
