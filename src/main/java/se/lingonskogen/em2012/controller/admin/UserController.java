@@ -19,7 +19,7 @@ import se.lingonskogen.em2012.form.admin.SearchForm;
 @RequestMapping("/admin/userpage.html")
 public class UserController extends AbstractAdminController {
 
-	final private static String USER_PAGE = "userpage";
+	final private static String USER_PAGE = "/admin/userpage";
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String initForm(ModelMap model) {
@@ -59,6 +59,8 @@ public class UserController extends AbstractAdminController {
 	}
 		
 	private void setParameters(final ModelMap model, final SearchForm searchForm) {
+		super.setParameters(model);
+		
 		String groupId = searchForm.getGroupId();
 		if(groupId == null || groupId.equals("default")) {
 			groupId = null;
@@ -115,5 +117,7 @@ public class UserController extends AbstractAdminController {
 		    this.paid = paid;
 		}
 	}
-
+	public String getPageId() {
+		return "user";
+	}
 }

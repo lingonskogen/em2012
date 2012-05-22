@@ -18,7 +18,7 @@ import se.lingonskogen.em2012.form.admin.GroupForm;
 @RequestMapping("/admin/grouppage.html")
 public class GroupController extends AbstractAdminController {
 
-    final private static String GROUP_PAGE = "grouppage";
+    final private static String GROUP_PAGE = "/admin/grouppage";
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String initForm(ModelMap model) {
@@ -41,6 +41,7 @@ public class GroupController extends AbstractAdminController {
 	
 	private void setParameters(final ModelMap model, final GroupForm groupForm) {		
 		Map<String, String> availableGroups = getGroups();
+		super.setParameters(model);
 		
 		// command object
 		model.addAttribute("groupForm", groupForm);
@@ -79,5 +80,9 @@ public class GroupController extends AbstractAdminController {
 		// TODO: Get message from message file
 		model.addAttribute("successMessage","Gruppen blev skapad");
 		return GROUP_PAGE;
+	}
+	
+	public String getPageId() {
+		return "group";
 	}
 }

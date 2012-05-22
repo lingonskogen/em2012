@@ -16,22 +16,25 @@ import se.lingonskogen.em2012.form.LoginForm;
 @RequestMapping("/login.html")
 public class LoginController extends AbstractController {
 
+	private static final String PAGE_NAME = "login";
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String initForm(final ModelMap model, final Principal principals) {
 
 		setParameters(model, principals);
 		// return form view
-		return "login";
+		return PAGE_NAME;
 	}
 	
 	// Process the login form.
 	@RequestMapping(method = RequestMethod.POST)
 	public String processForm(@ModelAttribute(value="login") @Valid LoginForm login, BindingResult result, ModelMap model, Principal principals) {
 		setParameters(model, principals);
+		
 		return "start";
 	}
 
 	public String getCurrentPageId() {
-		return "login";
+		return PAGE_NAME;
 	}
 }

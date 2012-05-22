@@ -30,7 +30,7 @@ public class GameController extends AbstractAdminController {
 
 	private GameValidator gameValidator;
 	
-	final private static String GAME_PAGE = "gamepage";
+	final private static String GAME_PAGE = "/admin/gamepage";
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String initForm(ModelMap model) {
@@ -101,6 +101,8 @@ public class GameController extends AbstractAdminController {
 	}
 	
 	private void setParameters(final ModelMap model, final GameForm gameForm) {
+		super.setParameters(model);
+		
 		Map<String, Game> availableGames = getGames();
 		Map<String, String> availableTournaments = getTournaments();
 		Map<String, String> availableTeams = getTeams();
@@ -133,5 +135,9 @@ public class GameController extends AbstractAdminController {
 
 	public void setGameValidator(final GameValidator gameValidator) {
 		this.gameValidator = gameValidator;
+	}
+	
+	public String getPageId() {
+		return "game";
 	}
 }

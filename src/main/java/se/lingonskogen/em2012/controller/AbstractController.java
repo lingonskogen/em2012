@@ -196,15 +196,20 @@ public abstract class AbstractController {
 			model.addAttribute("userName", "");
 		} else {
 		    User user = getUserService().getUser(principal.getName());
-			if (principal.getName() != null) {
+			if(user!=null) {
+		    if (principal.getName() != null) {
 				model.addAttribute("loggedIn", true);
 				model.addAttribute("userName", user.getRealName());
-			}
+			}}
 		}
 
+		model.addAttribute("registrationOpen", isRegistrationOpen());
 		model.addAttribute("currentPage", getCurrentPageId());
 	}
 
+	public boolean isRegistrationOpen() {
+		return true;
+	}
 	public UserService getUserService() {
 		return userService;
 	}

@@ -22,8 +22,8 @@ import se.lingonskogen.em2012.form.admin.SearchForm;
 @RequestMapping("/admin/couponpage.html")
 public class CouponController extends AbstractAdminController {
 	
-	private final static String COUPON_PAGE = "couponpage";
-	private final static String DELETE_BASE_LINK = "/admin/couponpage.html?action=delete";
+	private final static String COUPON_PAGE = "/admin/couponpage";
+//	private final static String DELETE_BASE_LINK = "/admin/couponpage.html?action=delete";
 	
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -32,13 +32,13 @@ public class CouponController extends AbstractAdminController {
 						   @RequestParam(value = "userId", defaultValue="") String userId,
 						   @RequestParam(value = "groupId", defaultValue="") String groupId, ModelMap model) {
 
-		if(action.equals(DELETE_ACTION)) {
+		/*if(action.equals(DELETE_ACTION)) {
 			try{
 				deleteCoupon(groupId, userId, couponId);
 			} catch(DaoException e) {
 				model.addAttribute("errorMessage","Kunde inte ta bort kupungen");
 			}
-		}
+		}*/
 
 		SearchForm searchForm = new SearchForm();
 		setParameters(model, searchForm);
@@ -67,18 +67,20 @@ public class CouponController extends AbstractAdminController {
 			String gName = getGroupService().getGroupName(coupon.getGroupId());
 			String uName = getUserService().getUserName(coupon.getUserId());
 
-			String deleteLink = createDeleteLink(coupon.getId(), coupon.getUserId(), coupon.getGroupId());
-			t.put(coupon.getId()+uName+gName, new CouponInfo(tName, gName, uName, deleteLink));
+			//String deleteLink = createDeleteLink(coupon.getId(), coupon.getUserId(), coupon.getGroupId());
+			t.put(coupon.getId()+uName+gName, new CouponInfo(tName, gName, uName));
 		}
 
 		return t;
 	}
 	
-	private String createDeleteLink(final String couponId, final String userId, final String groupId) {
+	/*private String createDeleteLink(final String couponId, final String userId, final String groupId) {
 		return DELETE_BASE_LINK + "&couponId=" + couponId + "&userId=" + userId + "&groupId=" + groupId;
-	}
+	}*/
 		
 	private void setParameters(final ModelMap model, final SearchForm searchForm) {
+		super.setParameters(model);
+		
 		String groupId = searchForm.getGroupId();
 		if(groupId == null || groupId.equals("default")) {
 			groupId = null;
@@ -103,13 +105,11 @@ public class CouponController extends AbstractAdminController {
 		private String tournamentName;
 		private String groupName;
 		private String userName;
-		private String deleteLink;
 		
-		public CouponInfo(final String tName, final String gName, final String uName, final String deleteLink) {
+		public CouponInfo(final String tName, final String gName, final String uName) {
 			this.tournamentName = tName;
 			this.groupName = gName;
 			this.userName = uName;
-			this.deleteLink = deleteLink;
 		}
 		
 		public String getTournamentName() {
@@ -130,12 +130,10 @@ public class CouponController extends AbstractAdminController {
 		public void setUserName(String userName) {
 			this.userName = userName;
 		}
-		public void setDeleteLink(final String link) {
-			this.deleteLink = link;
-		}
-		public String getDeleteLink() {
-			return deleteLink;
-		}
+	}
+
+	public String getPageId() {
+		return "coupon";
 	}
 
 }

@@ -77,21 +77,8 @@
 						</ul>
 					</c:when>
 				</c:choose>
-				<c:if test="isAdmin">
-					<ul class="nav nav-pills">
-						<li class="active"><a href="#">Tournaments</a>
-						</li>
-						<li><a href="#">Coupons</a>
-						</li>
-						<li><a href="#">Games</a>
-						</li>
-						<li><a href="#">Groups</a>
-						</li>
-						<li><a href="#">Predictions</a>
-						</li>
-						<li><a href="#">Users</a>
-						</li>
-					</ul>
+				<c:if test="${isAdmin}">
+					<%@ include file="./adminmenu.jsp"%>
 				</c:if>
 			</div>
 		</div>

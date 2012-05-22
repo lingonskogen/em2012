@@ -73,16 +73,20 @@
 		<property name="gameService" ref="gameService" />
 	</bean>
 
-	<bean name="registerController" class="se.lingonskogen.em2012.controller.RegisterController">
+	<bean name="registerController" parent="abstractController" class="se.lingonskogen.em2012.controller.RegisterController">
 		<property name="registerService" ref="registerService" />
 		<property name="validator" ref="registrationValidator" />
 	</bean>
 	
-	<bean name="userPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.UserPageController">		
-	</bean>
-	<bean name="userCouponPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.UserCouponPageController">		
-	</bean>
+	<bean name="userPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.UserPageController" />
+	<bean name="userCouponPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.UserCouponPageController" />
 	<bean name="statisticsPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.StatisticsPageController" />	
+	<bean name="loginController" parent="abstractController" class="se.lingonskogen.em2012.controller.LoginController" />
+	<bean name="startPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.StartPageController" />
+	<bean name="rulesPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.RulesPageController" />
+	<bean name="forgottenPasswordController" parent="abstractController" class="se.lingonskogen.em2012.controller.ForgottenPasswordController" />
+	
+	
 	
 	<!-- Admin controllers -->
 	<bean name="groupController" parent="abstractAdminController"
