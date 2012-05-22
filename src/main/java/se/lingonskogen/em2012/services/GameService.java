@@ -10,6 +10,7 @@ public interface GameService {
 	String createGame(final Game game) throws DaoException;
 	Game newInstance(final String tournamentId, final String homeTeamId, final String awayTeamId, 
 					final Date kickoff, final Long homeScore, final Long awayScore);
-	List<Game> getAvailableGames();
+    List<Game> getAvailableGames();
+    List<Game> getAvailableGames(String tournamentId);
 	Game getGame(final String tournamentId, final String gameId) throws DaoException;
 }

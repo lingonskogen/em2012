@@ -64,7 +64,7 @@ public class UserCouponPageController extends AbstractController {
 			coupon = getCouponService().newInstance(getTournamentService().getAvailableTournaments().get(0).getId(), 
 					user.getId(), user.getGroupId());
 			
-			List<Game> games = getGameService().getAvailableGames();
+			List<Game> games = getGameService().getAvailableGames(coupon.getId());
 			
 			for(Game game : games) {
 				

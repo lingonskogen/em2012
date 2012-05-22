@@ -11,6 +11,7 @@ public class TeamDao extends AbstractDao<Team> {
 	@Override
 	protected void populateEntity(Entity entity, Team bean) {
 		entity.setProperty(Team.NAME, bean.getName());
+		entity.setProperty(Team.CODE, bean.getCode());
 	}
 
 	@Override
@@ -19,6 +20,7 @@ public class TeamDao extends AbstractDao<Team> {
 		team.setId(entity.getKey().getName());
 		team.setTournamentId(entity.getParent().getName());
 		team.setName((String) entity.getProperty(Team.NAME));
+		team.setCode((String) entity.getProperty(Team.CODE));
 		return team;
 	}
 
