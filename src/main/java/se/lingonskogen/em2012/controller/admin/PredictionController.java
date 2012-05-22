@@ -21,7 +21,7 @@ import se.lingonskogen.em2012.form.admin.SearchForm;
 @RequestMapping("/admin/predictionpage.html")
 public class PredictionController extends AbstractAdminController {
 	
-	private final static String PREDICTION_PAGE = "predictionpage";
+	private final static String PREDICTION_PAGE = "/admin/predictionpage";
 	
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -73,6 +73,8 @@ public class PredictionController extends AbstractAdminController {
 	}
 	
 	private void setParameters(final ModelMap model, SearchForm searchForm) {	
+		super.setParameters(model);
+		
 		String groupId = searchForm.getGroupId();
 		if(groupId == null || groupId.equals("default")) {
 			searchForm.setUserId(null);
@@ -167,5 +169,7 @@ public class PredictionController extends AbstractAdminController {
 			this.userName = userName;
 		}
 	}
-
+	public String getPageId() {
+		return "prediction";
+	}
 }

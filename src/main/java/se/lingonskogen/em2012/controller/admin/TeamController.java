@@ -20,7 +20,7 @@ import se.lingonskogen.em2012.form.admin.TeamForm;
 @RequestMapping("/admin/teampage.html")
 public class TeamController extends AbstractAdminController {
 	
-	final private static String TEAM_PAGE = "teampage";
+	final private static String TEAM_PAGE = "/admin/teampage";
     
 	@RequestMapping(method = RequestMethod.GET)
 	public String initForm(ModelMap model) {
@@ -83,6 +83,8 @@ public class TeamController extends AbstractAdminController {
 	}
 	
 	private void setParameters(final ModelMap model, final TeamForm teamForm) {
+		super.setParameters(model);
+		
 		Map<String, String> availableTeams = getTeams();
 		Map<String, String> availableTournaments = getTournaments();
 		// command object
@@ -99,5 +101,8 @@ public class TeamController extends AbstractAdminController {
 		}
 
 		return t;
-	}	
+	}
+	public String getPageId() {
+		return "team";
+	}
 }

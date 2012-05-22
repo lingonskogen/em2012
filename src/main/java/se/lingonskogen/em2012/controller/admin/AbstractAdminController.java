@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.ui.ModelMap;
+
 import se.lingonskogen.em2012.domain.Coupon;
 import se.lingonskogen.em2012.domain.DaoException;
 import se.lingonskogen.em2012.domain.Group;
@@ -18,7 +20,7 @@ import se.lingonskogen.em2012.services.TeamService;
 import se.lingonskogen.em2012.services.TournamentService;
 import se.lingonskogen.em2012.services.UserService;
 
-public class AbstractAdminController {
+public abstract class AbstractAdminController {
 
 	protected final static String DELETE_ACTION = "delete";
 	
@@ -30,6 +32,13 @@ public class AbstractAdminController {
 	private PredictionService predictionService;
 	private TeamService teamService;
 
+	public abstract String getPageId();
+	
+	public void setParameters(final ModelMap model) {
+		model.addAttribute("isAdmin", true);
+		model.addAttribute("pageId", getPageId());
+	}
+	
 	public Map<String,String> getAvailableGroups() {
 		Map<String, String> groups = new HashMap<String, String>();
 		

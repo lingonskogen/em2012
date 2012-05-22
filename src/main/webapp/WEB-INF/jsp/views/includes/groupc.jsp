@@ -1,8 +1,6 @@
 <div class="gamesTable">
-
-
-	<div class="groupHeader">Grupp C</div>
-	<table class="table table-striped">
+	<h4>Grupp C</h4>
+	<table class="table table-striped table-condensed">
 		<thead>
 			<tr>
 				<th>Lag</th>

@@ -14,7 +14,12 @@ public class StartPageController extends AbstractController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String start(final ModelMap model, final Principal principal) throws Exception {   
 	    setParameters(model, principal);
-        return "prestartpage";
+	    
+	    if(isRegistrationOpen()) {
+	    	return "prestartpage";
+	    }
+	    
+	    return "startpage";
 	}
 
 	@Override
