@@ -1,11 +1,17 @@
 package se.lingonskogen.em2012.controller;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import org.springframework.ui.ModelMap;
@@ -208,7 +214,14 @@ public abstract class AbstractController {
 	}
 
 	public boolean isRegistrationOpen() {
-		return true;
+        TimeZone tz = TimeZone.getTimeZone("Europe/Stockholm");
+        GregorianCalendar current = new GregorianCalendar();
+        current.setTimeZone(tz);
+        GregorianCalendar deadline = new GregorianCalendar(2012, Calendar.JUNE, 8, 12, 0);
+        deadline.setTimeZone(tz);
+        //System.out.println("current : " + current.get(Calendar.YEAR) + "-" + current.get(Calendar.MONTH) + "-" + current.get(Calendar.DAY_OF_MONTH) + " " + current.get(Calendar.HOUR_OF_DAY) + ":" + current.get(Calendar.MINUTE));
+        //System.out.println("deadline: " + deadline.get(Calendar.YEAR) + "-" + deadline.get(Calendar.MONTH) + "-" + deadline.get(Calendar.DAY_OF_MONTH) + " " + deadline.get(Calendar.HOUR_OF_DAY) + ":" + deadline.get(Calendar.MINUTE));
+        return current.before(deadline);
 	}
 	public UserService getUserService() {
 		return userService;
