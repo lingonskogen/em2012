@@ -195,10 +195,10 @@ public abstract class AbstractController {
 			model.addAttribute("loggedIn", false);
 			model.addAttribute("userName", "");
 		} else {
-			System.out.println("Logged in: " + principal.getName());
+		    User user = getUserService().getUser(principal.getName());
 			if (principal.getName() != null) {
 				model.addAttribute("loggedIn", true);
-				model.addAttribute("userName", principal.getName());
+				model.addAttribute("userName", user.getRealName());
 			}
 		}
 

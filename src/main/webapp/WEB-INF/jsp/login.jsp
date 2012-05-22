@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="span8">
 		<section>
-			<div class="loginHeader">Väkommen till EM-tipset 2012!</div>
+		  <h1 class="center">Väkommen till EM-tipset 2012!</h1>
 			<img alt="EM2012" src="/images/team.jpg">
 			<script type="text/javascript">
 				$(function() {

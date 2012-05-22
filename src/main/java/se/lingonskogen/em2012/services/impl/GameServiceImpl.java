@@ -34,10 +34,15 @@ public class GameServiceImpl implements GameService {
 		return game;
 	}
 
-	@Override
-	public List<Game> getAvailableGames() {
-		return gameDao.findAll();
-	}
+    @Override
+    public List<Game> getAvailableGames() {
+        return gameDao.findAll();
+    }
+
+    @Override
+    public List<Game> getAvailableGames(String tournamentId) {
+        return gameDao.findAll(tournamentId);
+    }
 
 	public void setGameDao(final GameDao gameDao) {
 		this.gameDao = gameDao;
