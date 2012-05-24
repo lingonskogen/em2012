@@ -40,8 +40,6 @@
 						<td>${entry.value.tournamentName}</td>
 						<td>${entry.value.groupName}</td>
 						<td>${entry.value.userName}</td>
-						<td><a href="${entry.value.deleteLink}"><fmt:message
-									key="global.remove" /></a></td>
 					</tr>
 				</c:forEach>
 			</table>

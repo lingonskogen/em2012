@@ -3,12 +3,16 @@ package se.lingonskogen.em2012.domain;
 public class Coupon extends Bean {
 	public static final String TOURNAMENT = "tournament";
 
-	private String groupId;
+    public static final String WINNER = "winner";
+
+    private String groupId;
 
 	private String userId;
 
 	private String tournamentId;
 
+	private String winnerTeamId;
+	
 	public String getGroupId() {
 		return groupId;
 	}
@@ -32,5 +36,15 @@ public class Coupon extends Bean {
 	public void setTournamentId(String tournamentId) {
 		this.tournamentId = tournamentId;
 	}
+
+    public void setWinnerTeamId(String winnerTeamId)
+    {
+        this.winnerTeamId = winnerTeamId;
+    }
+
+    public String getWinnerTeamId()
+    {
+        return winnerTeamId;
+    }
 
 }
