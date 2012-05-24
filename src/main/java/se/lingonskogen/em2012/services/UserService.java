@@ -12,6 +12,7 @@ import se.lingonskogen.em2012.domain.User;
 public interface UserService {
 	
 	String createUser(final User user) throws DaoException;
+	void updateUser(final User user) throws DaoException;
 	User newInstance(final GroupType groupType, final String password, final String realName, final String userName);
 	
 	String getUserName(final String userId);
