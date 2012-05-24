@@ -11,6 +11,7 @@ public class CouponDao extends AbstractDao<Coupon> {
 	@Override
 	protected void populateEntity(Entity entity, Coupon coupon) {
 		entity.setProperty(Coupon.TOURNAMENT, coupon.getTournamentId());
+		entity.setProperty(Coupon.WINNER, coupon.getWinnerTeamId());
 	}
 
 	@Override
@@ -20,6 +21,7 @@ public class CouponDao extends AbstractDao<Coupon> {
 		coupon.setGroupId(entity.getParent().getParent().getName());
 		coupon.setUserId(entity.getParent().getName());
 		coupon.setTournamentId((String) entity.getProperty(Coupon.TOURNAMENT));
+		coupon.setWinnerTeamId((String) entity.getProperty(Coupon.WINNER));
 		return coupon;
 	}
 

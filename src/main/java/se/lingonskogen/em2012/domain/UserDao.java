@@ -17,7 +17,6 @@ public class UserDao extends AbstractDao<User> {
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		String password = encoder.encodePassword(user.getPassword(), "");
         entity.setProperty(User.PASSWORD, password);
-        entity.setProperty(User.PAID, user.getPaid());
 	}
 
 	@Override
@@ -28,7 +27,6 @@ public class UserDao extends AbstractDao<User> {
 		user.setRealName((String) entity.getProperty(User.REALNAME));
 		user.setUserName((String) entity.getProperty(User.USERNAME));
 		user.setPassword((String) entity.getProperty(User.PASSWORD));
-		user.setPaid((Boolean) entity.getProperty(User.PAID));
 		return user;
 	}
 

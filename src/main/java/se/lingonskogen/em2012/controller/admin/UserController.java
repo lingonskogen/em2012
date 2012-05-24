@@ -50,9 +50,8 @@ public class UserController extends AbstractAdminController {
 			String gName = getGroupService().getGroupName(user.getGroupId());
 			String rName = user.getRealName();
 			String uName = user.getUserName();
-			Boolean paid = user.getPaid();
 
-			usersInfo.put(user.getId()+uName+gName, new UserPageInfo(gName, uName, rName, paid));
+			usersInfo.put(user.getId()+uName+gName, new UserPageInfo(gName, uName, rName));
 		}
 
 		return usersInfo;
@@ -83,13 +82,11 @@ public class UserController extends AbstractAdminController {
 		private String groupName;
 		private String userName;
 		private String realName;
-        private Boolean paid;
 		
-		public UserPageInfo(final String groupName, final String userName, final String realName, final Boolean paid) {
+		public UserPageInfo(final String groupName, final String userName, final String realName) {
 			this.groupName = groupName;
 			this.userName = userName;
 			this.realName = realName;
-            this.paid = paid;
 		}
 		
 		public String getGroupName() {
@@ -109,12 +106,6 @@ public class UserController extends AbstractAdminController {
 		}
 		public void setRealName(String realName) {
 			this.realName = realName;
-		}
-		public Boolean getPaid() {
-		    return paid;
-		}
-		public void setPaid(Boolean paid) {
-		    this.paid = paid;
 		}
 	}
 	public String getPageId() {

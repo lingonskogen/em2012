@@ -29,6 +29,18 @@
 							value="${predictionformdata.awayScore}" /></td>
 					</tr>
 				</c:forEach>
+        <tr>
+         <td />
+         <td><b>Slutvinnare</b></td>
+         <td>
+           <select id="winner">
+           <c:forEach items="${form.teams}" var="team">
+             <option value="${team.id}" <c:if test="${form.winnerTeamId == team.id}">selected="selected"</c:if>>${team.name}</option>
+            </c:forEach>
+            </select>
+         </td>
+         <td />
+        </tr>
 			</table>
 
 			<div class="control-group">
