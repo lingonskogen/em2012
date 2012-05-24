@@ -9,12 +9,12 @@
 				<fmt:message key="pwdPage.newPwd" />
 			</legend>
 			
-			<c:if test="${newPwdSent}">
-				<div class="control-group">
-					<div class="controls" style="margin-left: 315px">
-						${newPwdSent}</div>
-				</div>
-			</c:if>
+      <c:if test="${newPwdSent != null}">
+        <div class="control-group">
+          <div class="controls" style="margin-left: 315px">
+            ${newPwdSent}</div>
+        </div>
+      </c:if>
 
 			<div class="control-group">
 				<label class="control-label"><fmt:message
