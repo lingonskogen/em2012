@@ -1,7 +1,7 @@
 <%@ include file="../views/includes/header.jsp"%>
 
 <div class="row">
-	<div class="span8">
+	<div class="span12">
 		<section>
 			<legend>Tournament Page</legend>
 
@@ -14,7 +14,7 @@
 
 
 			<!-- List all available tournament data -->
-			<div class="sectionTitle">Available tournaments</div>
+			<H4>Available tournaments</H4>
 			<table class="table table-striped">
 				<tr>
 					<th>Tournament name</th>
@@ -26,7 +26,7 @@
 				</c:forEach>
 			</table>
 
-			<div class="sectionTitle">Insert new tournament</div>
+			<H4>Insert new tournament</H4>
 
 			<form:form action="tournamentpage.html" class="form-horizontal"
 				commandName="tournamentForm">
@@ -44,6 +44,7 @@
 					</table>
 				</fieldset>
 			</form:form>
+		</section>
 	</div>
 </div>
 <%@ include file="../views/includes/footer.jsp"%>

@@ -115,12 +115,6 @@ public abstract class AbstractController {
 		return position;
 	}
 
-	public String getCouponUrl() {
-		String url = "coupon.html";
-
-		return url;
-	}
-
 	public boolean hasCoupon(final User user) {
 		return couponService.getCoupon(user.getId()) == null ? false : true;
 	}

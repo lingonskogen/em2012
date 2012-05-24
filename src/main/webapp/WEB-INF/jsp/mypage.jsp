@@ -1,7 +1,7 @@
 <%@ include file="./views/includes/header.jsp"%>
 
 <div class="row">
-	<div class="span8">
+	<div class="span6">
 		<section>
 
 			<legend>Min sida</legend>
@@ -18,18 +18,6 @@
 				<tr>
 					<td>Grupp:</td>
 					<td>${groupName}</td>
-				</tr>
-				<tr>
-					<td>Betalat:</td>
-					<td style="color: green;">Ja</td>
-				</tr>
-				<tr>
-					<td>Tipsrad:</td>
-					<td><c:choose>
-							<c:when test="${hasCoupon}">
-								<a href="${couponUrl}">Tipsrad</a>
-							</c:when>
-						</c:choose></td>
 				</tr>
 				<tr>
 					<td>Statistik:</td>
@@ -49,28 +37,70 @@
 				<c:otherwise>
 					<div class="obs">
 						<b style="color: red;">OBS!</b> Du har inte skapat någon tipsrad
-						än
-					</div>
-					<div class="control-group">
-						<div class="controls" style="margin-left: 300px">
-							<a href="coupon.html" class="btn btn-primary">Skapa tipsrad</a>
+						än: <a href="${couponUrl}" class="btn btn-primary">Skapa tipsrad</a>
 						</div>
-					</div>
-
 				</c:otherwise>
 			</c:choose>
 		</section>
 	</div>
-	<div class="span4">
+	<div class="span6">
 		<section>
-			<legend>sidinfo</legend>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-				do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-				enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-				ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-				reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-				pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-				culpa qui officia deserunt mollit anim id est laborum.</p>
+
+			<c:choose>
+				<c:when test="${hasCoupon}">
+					<div class="myTipForm">
+					<form:form class="form-horizontal" action="mypage.html"
+						commandName="form">
+						<fieldset>
+							<legend>Min tipsrad</legend>
+
+							<table class="table table-striped">
+								<tr>
+									<th>Datum</th>
+									<th colspan="3">Match</th>
+									<th>Resultat</th>
+								</tr>
+
+								<c:forEach items="${form.predictions}" var="predictionformdata"
+									varStatus="status">
+									<tr>
+										<td>${predictionformdata.kickoff}</td>
+
+										<td style="text-align: right;"><input type="hidden" name="gameId" id="gameId"
+											value="${predictionformdata.gameId}" />
+											${predictionformdata.homeTeamName}</td>
+										<td>-</td>
+										<td>${predictionformdata.awayTeamName}</td>
+										<td><input name="contacts[${status.index}].homeScore"
+											value="${predictionformdata.homeScore}" /> - <input
+											name="contacts[${status.index}].awayScore"
+											value="${predictionformdata.awayScore}" /></td>
+									</tr>
+								</c:forEach>
+								<tr>
+									<td colspan="5"></td>
+								</tr>
+								<tr>
+									<td colspan="4"><b>Slutvinnare: </b> <select id="winner">
+											<c:forEach items="${form.teams}" var="team">
+												<option value="${team.id}"
+													<c:if test="${form.winnerTeamId == team.id}">selected="selected"</c:if>>${team.name}</option>
+											</c:forEach>
+									</select></td>
+									<td><button class="btn btn-primary" type="submit">${submitAction}</button></td>
+								</tr>
+
+							</table>
+						</fieldset>
+					</form:form>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<img src="/images/zlatko.jpg" alt="kram">
+					<div style="padding-bottom: 20px;"></div>
+					<img src="/images/kimpa.jpg" alt="elamnder">
+				</c:otherwise>
+			</c:choose>
 		</section>
 	</div>
 </div>

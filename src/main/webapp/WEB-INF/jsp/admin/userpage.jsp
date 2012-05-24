@@ -2,6 +2,7 @@
 
 <div class="row">
 	<div class="span12">
+		<section>
 		<legend>User Page</legend>
 
 		<c:if test="${errorMessage}">
@@ -14,7 +15,7 @@
 		<!-- Search Form -->
 		<form:form action="userpage.html" class="form-horizontal" commandName="searchForm">
 
-			<table align="center">
+			<table align="center" class="table table-striped">
 				<tr>
 					<td><form:select path="groupId" onChange="this.form.submit()">
 							<form:options items="${availableGroups}" />
@@ -25,8 +26,8 @@
 
 
 		<!-- List all available games data -->
-		<div class="sectionTitle">Available users</div>
-		<table>
+		<H4>Available users</H4>
+		<table class="table table-striped">
 			<tr>
 				<th><fmt:message key="global.group" /></th>
 				<th><fmt:message key="global.userName" /></th>
@@ -41,6 +42,5 @@
 				</tr>
 			</c:forEach>
 		</table>
-	</div>
-</div>
+</section></div></div>
 <%@ include file="../views/includes/footer.jsp"%>

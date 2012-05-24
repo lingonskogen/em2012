@@ -57,17 +57,6 @@ public class PredictionServiceImpl implements PredictionService {
 		
 		return predictionDao.findAll(groupId, userId, couponId);
 	}
-
-	public PredictionFormData newFormInstance(final String gameId, final String homeTeamName, final String awayTeamName, 
-			final Long homeScore, final Long awayScore) {
-		PredictionFormData data = new PredictionFormData();
-		data.setAwayScore(awayScore);
-		data.setAwayTeamName(awayTeamName);
-		data.setGameId(gameId);
-		data.setHomeScore(homeScore);
-		data.setHomeTeamName(homeTeamName);
-		return data;
-	}
 	
 	public Prediction getPrediction(final String userId, final String groupId, final String gameId) {
 		List<Prediction> predictions = getPredictions(groupId, userId);
