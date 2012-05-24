@@ -1,0 +1,11 @@
+Hej REALNAME!
+
+Här kommer ditt nya lösenord till em-tipset.
+Det går tyvärr inte att ändra på lösenordet så lägg det på minnet :)
+
+Ditt nya lösenord är: PASSWORD
+
+mvh
+em-tipset
+
+SITEURL

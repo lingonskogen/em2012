@@ -29,6 +29,10 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 	
+	public void updateUser(final User user) throws DaoException {
+	    userDao.update(user);
+	}
+	
 	public String createUser(final User user) throws DaoException {
 			return userDao.create(user);
 	}
