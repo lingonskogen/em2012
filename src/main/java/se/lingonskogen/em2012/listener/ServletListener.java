@@ -80,7 +80,7 @@ public class ServletListener implements ServletContextListener
                         user.setGroupId(groupId);
                         user.setPassword("123".toLowerCase());
                         user.setRealName(firstname + " " + lastname);
-                        user.setUserName(firstname.toLowerCase() + "." + lastname.toLowerCase());
+                        user.setUserName(firstname.toLowerCase() + "." + lastname.toLowerCase() + "@home.se");
                         String userId = userdao.create(user);
 
                         Coupon coupon = new Coupon();
