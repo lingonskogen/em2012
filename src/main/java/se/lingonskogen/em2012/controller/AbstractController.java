@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import org.springframework.ui.ModelMap;
 
-import se.lingonskogen.em2012.domain.Coupon;
 import se.lingonskogen.em2012.domain.Game;
 import se.lingonskogen.em2012.domain.Prediction;
+import se.lingonskogen.em2012.domain.Tournament;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.services.CouponService;
 import se.lingonskogen.em2012.services.GameService;
@@ -30,97 +28,94 @@ public abstract class AbstractController {
 	private PredictionService predictionService;
 	private GameService gameService;
 	private TournamentService tournamentService;
+	private TeamService teamService;
 
-	public int getPosition(final User user) {
-		List<User> users = getTotalUsers(user.getGroupId());
-		List<Game> games = getGameService().getAvailableGames();
-		SortedMap<Integer, String> userScoreMap = new TreeMap<Integer, String>();
-		List<Game> playedGames = new ArrayList<Game>();
+	public abstract String getCurrentPageId();
 
-		// Remove all games that doesnt have a result yet
-		for (Game game : games) {
-			if (game.getAwayScore() != null && game.getHomeScore() != null) {
-				playedGames.add(game);
+	public void setParameters(final ModelMap model, final Principal principal) {
+		if (principal == null) {
+			model.addAttribute("loggedIn", false);
+			model.addAttribute("userName", "");
+		} else {
+			User user = getUserService().getUser(principal.getName());
+			if (user != null) {
+				if (principal.getName() != null) {
+					model.addAttribute("loggedIn", true);
+					model.addAttribute("userName", user.getRealName());
+				}
 			}
 		}
 
-		for (User tmpUser : users) {
-			int score = getScore(tmpUser, playedGames);
-
-			// String key = String.valueOf(score) + tmpUser.getId();
-
-			// userScoreMap.put(tmpUser.getId(), score);
-		}
-
-		System.out.print(userScoreMap);
-
-		// for(String key)
-
-		return 3;
+		model.addAttribute("registrationOpen", isRegistrationOpen());
+		model.addAttribute("currentPage", getCurrentPageId());
 	}
 
-	public int getScore(final User user, final List<Game> games) {
+	public Integer calcScore(Game game, Prediction prediction) {
+		boolean sane = true;
+		sane &= game.getHomeScore() != null;
+		sane &= game.getAwayScore() != null;
+		sane &= prediction.getHomeScore() != null;
+		sane &= prediction.getAwayScore() != null;
 		int score = 0;
-
-		for (Game game : games) {
-			
-			if(game.getAwayScore() == null || game.getHomeScore() == null) {
-				continue;
-			}
-			
-			long homeScore = game.getHomeScore();
-			long awayScore = game.getAwayScore();
-
-			Prediction prediction = getPredictionService().getPrediction(
-					user.getId(), user.getGroupId(), game.getId());
-
-			if (prediction == null) {
-				continue;
-			}
-
-			if (prediction.getAwayScore() == awayScore) {
-				score++;
-			}
-			if (prediction.getHomeScore() == homeScore) {
-				score++;
-			}
-
-			if (isCorrectWinner(game, prediction)) {
-				score++;
-			}
+		if (sane) {
+			score += game.getHomeScore() == prediction.getHomeScore() ? 1 : 0;
+			score += game.getAwayScore() == prediction.getAwayScore() ? 1 : 0;
+			score += (game.getHomeScore() < game.getAwayScore() && prediction
+					.getHomeScore() < prediction.getAwayScore()) ? 1 : 0;
+			score += (game.getHomeScore() > game.getAwayScore() && prediction
+					.getHomeScore() > prediction.getAwayScore()) ? 1 : 0;
+			score += (game.getHomeScore() == game.getAwayScore() && prediction
+					.getHomeScore() == prediction.getAwayScore()) ? 1 : 0;
 		}
 		return score;
 	}
 
-	public String getCouponUrl(final String userId) {
-		String url = "coupon.html";
+	public Integer getPosition(final User currentUser) {
+		String groupId = currentUser.getGroupId();
 
-		Coupon coupon = getCouponService().getCoupon(userId);
-		if (coupon != null) {
-			url += "?couponId=" + coupon.getId();
+		Tournament tournament = getTournamentService()
+				.getAvailableTournaments().get(0);
+		List<Game> games = getGameService().getAvailableGames(
+				tournament.getId());
+		List<User> users = getUserService().getUsers(groupId);
+
+		Map<String, Integer> scores = new HashMap<String, Integer>();
+		for (Game game : games) {
+			for (User user : users) {
+				String userId = user.getId();
+
+				List<Prediction> userPredictions = getPredictionService()
+						.getPredictions(groupId, userId);
+
+				for (Prediction prediction : userPredictions) {
+					if (game.getId().equals(prediction.getGameId())) {
+						Integer score = calcScore(game, prediction);
+						if (!scores.containsKey(userId)) {
+							scores.put(userId, 0);
+						}
+						scores.put(userId, score + scores.get(userId));
+					}
+				}
+			}
 		}
 
-		return url;
+		Integer currentUserScore = scores.get(currentUser.getId());
+		Integer position = null;
+		if (currentUserScore != null) {
+			position = 1;
+			for (String key : scores.keySet()) {
+				if (scores.get(key) > currentUserScore) {
+					position++;
+				}
+			}
+		}
+		return position;
 	}
 
-	private boolean isCorrectWinner(final Game game, final Prediction prediction) {
-		long awayScore = game.getAwayScore();
-		long homeScore = game.getHomeScore();
-		long predAwayScore = prediction.getAwayScore();
-		long predHomeScore = prediction.getHomeScore();
+	public String getCouponUrl() {
+		String url = "coupon.html";
 
-		if (awayScore == homeScore) {
-			return predAwayScore == predHomeScore ? true : false;
-		}
-
-		if (awayScore > homeScore) {
-			return predAwayScore > predHomeScore ? true : false;
-		}
-
-		if (awayScore < homeScore) {
-			return predAwayScore < predHomeScore ? true : false;
-		}
-		return false;
+		return url;
 	}
 
 	public boolean hasCoupon(final User user) {
@@ -132,14 +127,17 @@ public abstract class AbstractController {
 	 */
 	public List<User> getTotalUsers(final String groupId) {
 		List<User> users = userService.getUsers(groupId);
+		List<User> tmpUsers = new ArrayList<User>(users);
 
-		// Remove all ursers that does not have a coupon
-		for (User user : users) {
-			if (getCouponService().getCoupon(user.getId()) == null) {
-				users.remove(user);
+		if (users != null) {
+			// Remove all ursers that does not have a coupon
+			for (User user : users) {
+				if (getCouponService().getCoupon(user.getId()) == null) {
+					tmpUsers.remove(user);
+				}
 			}
 		}
-		return users;
+		return tmpUsers;
 	}
 
 	public int getTotalNumUsers(final String groupId) {
@@ -186,30 +184,10 @@ public abstract class AbstractController {
 		this.teamService = teamService;
 	}
 
-	private TeamService teamService;
-
-	public abstract String getCurrentPageId();
-
-	public void setParameters(final ModelMap model, final Principal principal) {
-		if (principal == null) {
-			model.addAttribute("loggedIn", false);
-			model.addAttribute("userName", "");
-		} else {
-		    User user = getUserService().getUser(principal.getName());
-			if(user!=null) {
-		    if (principal.getName() != null) {
-				model.addAttribute("loggedIn", true);
-				model.addAttribute("userName", user.getRealName());
-			}}
-		}
-
-		model.addAttribute("registrationOpen", isRegistrationOpen());
-		model.addAttribute("currentPage", getCurrentPageId());
-	}
-
 	public boolean isRegistrationOpen() {
-		return true;
+		return false;
 	}
+
 	public UserService getUserService() {
 		return userService;
 	}
