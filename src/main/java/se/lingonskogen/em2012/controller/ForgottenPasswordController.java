@@ -27,7 +27,6 @@ public class ForgottenPasswordController extends AbstractController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String loadPage(final ModelMap model, final Principal principals) throws Exception {
-		logPrincipan(principals);
 		ForgottenPasswordForm form = new ForgottenPasswordForm();
 
 		// command object
