@@ -49,12 +49,14 @@ public class UserCouponPageController extends AbstractController {
 		String action = "";
 		
 		CouponForm form = new CouponForm();
+		form.setTeams(getTeamService().getAvailableTeams());
 		// Get user coupon - if any
 		Coupon coupon = getCouponService().getCoupon(user.getId());
 		List<PredictionFormData> predictions = new ArrayList<PredictionFormData>();
 		String tournamentId = getTournamentService().getAvailableTournaments().get(0).getId();
 		
 		if(coupon != null) {
+		    form.setWinnerTeamId(coupon.getWinnerTeamId());
 			String c = coupon.getId();
 			List<Prediction> preds = getPredictionService().getPredictions(user.getGroupId(), user.getId(), c);
 			predictions = getFormData(tournamentId, preds);		
@@ -120,7 +122,7 @@ public class UserCouponPageController extends AbstractController {
 	
 	// Process the form.
 	@RequestMapping(method = RequestMethod.POST)
-	public String processForm(@ModelAttribute(value="form") @Valid List<PredictionFormData> form, BindingResult result, 
+	public String processForm(@ModelAttribute(value="form") @Valid CouponForm form, BindingResult result, 
 			ModelMap model, Principal principals) {
 		
 		System.out.println("Har klickat update/Create");
