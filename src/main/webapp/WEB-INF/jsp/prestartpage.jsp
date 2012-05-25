@@ -1,16 +1,17 @@
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ include file="./views/includes/header.jsp"%>
 
 <section>
 	<div class="startContent">
-		<h2>Välkommen till EM-tipset 2012!</h2>
+		<h2>VÃ¤lkommen till EM-tipset 2012!</h2>
 
 
-		<div class="">Statistik och rader blir synligt när det inte är
-			tillåtet att registrera sig längre.</div>
+		<div class="">Statistik och rader blir synligt nÃ¤r det inte Ã¤r
+			tillÃ¥tet att registrera sig lÃ¤ngre.</div>
 
 		<div class="statistics">
 			<div class="info">Antal registrerade rader hittills: 6 st</div>
-			<div class="users">Halli, Susen, Björn</div>
+			<div class="users">Halli, Susen, BjÃ¶rn</div>
 		</div>
 
 		<script type="text/javascript">

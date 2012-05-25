@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <div class="gamesTable">
 	<h4>Grupp A</h4>
 	<table class="table table-striped table-condensed">
