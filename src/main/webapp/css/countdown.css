@@ -1,0 +1,26 @@
+.cd_numbers {
+    width: 55px;
+    text-align: center; 
+    font-family: Arial; 
+    font-size: 28px;
+    font-weight: bold;    /* options are normal, bold, bolder, lighter */
+    font-style: normal;   /* options are normal or italic */
+}
+.cd_title {    /* the styles below will affect the title under the numbers, i.e., "Days", "Hours", etc. */
+    width: 55px;
+    text-align: center; 
+    font-family: Arial; 
+    font-size: 10px;
+    font-weight: bold;    /* options are normal, bold, bolder, lighter */
+    color: #AAA;       /* change color using the hexadecimal color codes for HTML */
+}
+#cd_table {
+    width: 400px;
+    height: 48px;
+    border-style: none;
+    background-color: transparent;
+    margin: 0px auto;
+    position: relative;   /* leave as "relative" to keep timer centered on your page, or change to "absolute" then change the values of the "top" and "left" properties to position the timer */
+    top: 0px;             /* change to position the timer */
+    left: 0px;            /* change to position the timer; delete this property and it's value to keep timer centered on page */
+}

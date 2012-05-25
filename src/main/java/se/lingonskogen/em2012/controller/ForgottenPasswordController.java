@@ -64,7 +64,7 @@ public class ForgottenPasswordController extends AbstractController {
 
         MailService mailService = new MailService();
         mailService.setSubstitution(Substitution.PASSWORD, password);
-        mailService.sendMail(user, Template.NEW_PWD);
+        mailService.sendMail(user, Template.NEW_PWD, true);
         
 		// TODO: Msg from file
 		model.addAttribute("newPwdSent","Nytt lösenord skickat");
