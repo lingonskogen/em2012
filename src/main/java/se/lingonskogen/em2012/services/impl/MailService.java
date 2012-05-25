@@ -30,9 +30,16 @@ public class MailService
         subs.put(substitution.name(), value);
     }
     
-    public void sendMail(User user, Template template) throws Exception
+    public void sendMail(User user, Template template, boolean toUser, ContentWriter cw) throws Exception
+    {
+        subs.put(Substitution.CONTENT.name(), cw.write());
+        sendMail(user, template, toUser);
+    }
+    
+    public void sendMail(User user, Template template, boolean toUser) throws Exception
     {
         subs.put(Substitution.SITEURL.name(), SITEURL);
+        subs.put(Substitution.USERNAME.name(), user.getUserName());
         subs.put(Substitution.REALNAME.name(), user.getRealName());
         String filename = "WEB-INF/mail/" + template.getFilename();
         StringWriter writer = new StringWriter();
@@ -52,7 +59,14 @@ public class MailService
         Session session = Session.getDefaultInstance(new Properties(), null);
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(FROM_ADDRESS, FROM_NAME));
-        message.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getUserName(), user.getRealName()));
+        if (toUser)
+        {
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getUserName(), user.getRealName()));
+        }
+        else
+        {
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(FROM_ADDRESS, FROM_NAME));
+        }
         message.setSubject(template.getTitle());
         message.setText(writer.toString());
         Transport.send(message);
@@ -60,12 +74,13 @@ public class MailService
     
     public enum Substitution
     {
-        PASSWORD, REALNAME, SITEURL;
+        PASSWORD, USERNAME, REALNAME, SITEURL, CONTENT;
     }
     
     public enum Template
     {
-        NEW_PWD("new-pw.txt", "Ditt nya lösenord");
+        NEW_PWD("new-pw.txt", "Ditt nya lösenord"),
+        UPD_COUPON("upd-coupon.txt", "Uppdaterad kupong");
         
         private final String title;
         
@@ -86,5 +101,10 @@ public class MailService
         {
             return title;
         }
+    }
+    
+    public static interface ContentWriter
+    {
+        String write() throws Exception;
     }
 }
