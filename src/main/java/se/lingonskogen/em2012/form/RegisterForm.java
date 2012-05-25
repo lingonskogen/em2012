@@ -14,7 +14,7 @@ public class RegisterForm {
 	private String userName = null;
 
 	@NotEmpty
-	@Size
+	@Size(min=6)
 	private String password = null;
 	
 	private String confirmPassword = null;

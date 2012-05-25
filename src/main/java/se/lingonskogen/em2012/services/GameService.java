@@ -13,4 +13,6 @@ public interface GameService {
     List<Game> getAvailableGames();
     List<Game> getAvailableGames(String tournamentId);
 	Game getGame(final String tournamentId, final String gameId) throws DaoException;
+	List<Game> getSortedAvailableGames(final String tournamentId);
+	List<Game> getSortedAvailableGames();
 }

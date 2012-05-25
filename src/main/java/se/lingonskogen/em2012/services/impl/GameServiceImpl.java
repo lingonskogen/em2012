@@ -1,5 +1,7 @@
 package se.lingonskogen.em2012.services.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +46,31 @@ public class GameServiceImpl implements GameService {
         return gameDao.findAll(tournamentId);
     }
 
+    public List<Game> getSortedAvailableGames() {
+    	List<Game> games = getAvailableGames();
+    	Collections.<Game>sort(games, new Comparator<Game>(){
+            @Override
+            public int compare(Game game0, Game game1)
+            {
+                return game0.getKickoff().compareTo(game1.getKickoff());
+            }
+        });
+    	
+    	return games;
+    }
+    
+    public List<Game> getSortedAvailableGames(final String tournamentId) {
+    	List<Game> games = getAvailableGames(tournamentId);
+    	Collections.<Game>sort(games, new Comparator<Game>(){
+            @Override
+            public int compare(Game game0, Game game1)
+            {
+                return game0.getKickoff().compareTo(game1.getKickoff());
+            }
+        });
+    	
+    	return games;
+    }    
 	public void setGameDao(final GameDao gameDao) {
 		this.gameDao = gameDao;
 	}

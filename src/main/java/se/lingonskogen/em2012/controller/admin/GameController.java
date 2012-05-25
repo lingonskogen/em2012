@@ -46,7 +46,7 @@ public class GameController extends AbstractAdminController {
 	private Map<String,Game> getGames() {
 		Map<String, Game> t = new LinkedHashMap<String, Game>();
 		
-		for (Game game : getGameService().getAvailableGames()) {
+		for (Game game : getGameService().getSortedAvailableGames()) {
 			t.put(game.getId(), game);
 		}
 
