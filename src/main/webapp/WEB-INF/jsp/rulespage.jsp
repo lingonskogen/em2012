@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ include file="./views/includes/header.jsp"%>
 
 
@@ -6,33 +7,33 @@
 		<section>
 			<legend>Regler</legend>
 <p>
-Sista dag för att registrera sig eller ändra sin tipsrad är fredag den 8:e juni klockan 12.00.
+Sista dag fÃ¶r att registrera sig eller Ã¤ndra sin tipsrad Ã¤r fredag den 8:e juni klockan 12.00.
 </p>
 
-<p>Varje person lägger in 100. Sedan får vinnaren hela potten.<br />
-Skulle antalet spelare bli fler än 10 så får vinnaren 80% och tvåan får 20%.
+<p>Varje person lÃ¤gger in 100. Sedan fÃ¥r vinnaren hela potten.<br />
+Skulle antalet spelare bli fler Ã¤n 10 sÃ¥ fÃ¥r vinnaren 80% och tvÃ¥an fÃ¥r 20%.
 </p>
 <p>
-Blir vi 10 st: Vinnaren får 1000, 2:an ingenting.<br />
-Blir vi 11 st: Vinnaren får 890 2:an får 220.
+Blir vi 10 st: Vinnaren fÃ¥r 1000, 2:an ingenting.<br />
+Blir vi 11 st: Vinnaren fÃ¥r 890 2:an fÃ¥r 220.
 </p>
 <p>
-Man kan tippa på alla grupp-spelsmatcher samt en slutvinnare.<br /> 
-Möjlighet att tippa på slutspelsmatcherna kommer inte finnas.
+Man kan tippa pÃ¥ alla grupp-spelsmatcher samt en slutvinnare.<br /> 
+MÃ¶jlighet att tippa pÃ¥ slutspelsmatcherna kommer inte finnas.
 </p>
 
 <p>
-Man tippar resultat. Sedan ges poäng för varje spelad match enligt:<br />
-<b>1 poäng</b> om man har rätt på antal gjorda mål av hemmalaget<br />
-<b>1 poäng</b> om man har rätt på antal gjorda mål av bortalaget<br />
-<b>1 poäng</b> om man har tippat rätt vinnare/oavgjort<br />
-Man kan alltså få max 3 poäng per spelad match.
+Man tippar resultat. Sedan ges poÃ¤ng fÃ¶r varje spelad match enligt:<br />
+<b>1 poÃ¤ng</b> om man har rÃ¤tt pÃ¥ antal gjorda mÃ¥l av hemmalaget<br />
+<b>1 poÃ¤ng</b> om man har rÃ¤tt pÃ¥ antal gjorda mÃ¥l av bortalaget<br />
+<b>1 poÃ¤ng</b> om man har tippat rÃ¤tt vinnare/oavgjort<br />
+Man kan alltsÃ¥ fÃ¥ max 3 poÃ¤ng per spelad match.
 </p>
 <p>
-Sedan ges <b>5 poäng</b> till rätt tippad EM vinnare.
+Sedan ges <b>5 poÃ¤ng</b> till rÃ¤tt tippad EM vinnare.
 </p>
 <p>
-Betalning görs så fort som möjligt till Tobbe/Susen. 
+Betalning gÃ¶rs sÃ¥ fort som mÃ¶jligt till Tobbe/Susen. 
 </p>
 		</section>
 	</div>

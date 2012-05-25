@@ -1,4 +1,4 @@
-
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <div>
 	<ul class="nav nav-pills">
 		<li <c:if test="${pageId == 'tournament'}">class="active"</c:if>><a href="/admin/tournamentpage.html">Tournament page</a></li>
