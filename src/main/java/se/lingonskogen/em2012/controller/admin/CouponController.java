@@ -66,9 +66,10 @@ public class CouponController extends AbstractAdminController {
 			String tName = getTournamentService().getTournamentName(coupon.getTournamentId());
 			String gName = getGroupService().getGroupName(coupon.getGroupId());
 			String uName = getUserService().getUserName(coupon.getUserId());
-
+			String winnerTeam = getTeamService().getTeamName(coupon.getTournamentId(), coupon.getWinnerTeamId());
+			
 			//String deleteLink = createDeleteLink(coupon.getId(), coupon.getUserId(), coupon.getGroupId());
-			t.put(coupon.getId()+uName+gName, new CouponInfo(tName, gName, uName));
+			t.put(coupon.getId()+uName+gName, new CouponInfo(tName, gName, uName, winnerTeam));
 		}
 
 		return t;
@@ -105,13 +106,21 @@ public class CouponController extends AbstractAdminController {
 		private String tournamentName;
 		private String groupName;
 		private String userName;
+		private String winnerTeam;
 		
-		public CouponInfo(final String tName, final String gName, final String uName) {
+		public CouponInfo(final String tName, final String gName, final String uName, final String winnerTeam) {
 			this.tournamentName = tName;
 			this.groupName = gName;
 			this.userName = uName;
+			this.winnerTeam = winnerTeam;
 		}
 		
+		public String getWinnerTeam() {
+			return winnerTeam;
+		}
+		public void setWinnerTeam(final String winnerTeam) {
+			this.winnerTeam = winnerTeam;
+		}
 		public String getTournamentName() {
 			return tournamentName;
 		}

@@ -43,6 +43,13 @@ section {
 	padding: 20px;	
 }
 
+.myTipForm input {
+	width: 80px;
+}
+
+.myTipForm select {
+	width: 120px;
+}
 
 
 /*

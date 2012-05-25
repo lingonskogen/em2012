@@ -2,6 +2,7 @@ package se.lingonskogen.em2012.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ import se.lingonskogen.em2012.domain.Prediction;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.form.CouponForm;
 import se.lingonskogen.em2012.form.PredictionFormData;
+import se.lingonskogen.em2012.form.admin.SearchForm;
 
 @Controller
 @RequestMapping("/coupon.html")
@@ -30,8 +32,8 @@ public class UserCouponPageController extends AbstractController {
     private static final String PAGE_NAME = "usercouponpage";
     
 	@RequestMapping(method = RequestMethod.GET) 
-	public String initForm(@RequestParam(value="couponId", defaultValue = "") String couponId, 
-														ModelMap model, Principal principals) {
+	public String initForm(ModelMap model, Principal principals) {
+		
 		User user = null;
 		if(principals != null) {
 			String name = principals.getName();
@@ -44,7 +46,6 @@ public class UserCouponPageController extends AbstractController {
 			return PAGE_NAME;
 		}
 		
-		System.out.println("CouponId: " + couponId);
 		
 		String action = "";
 		
@@ -63,27 +64,28 @@ public class UserCouponPageController extends AbstractController {
 			// Get text from messages	
 			action = "Uppdatera";
 		} else {
-			coupon = getCouponService().newInstance(getTournamentService().getAvailableTournaments().get(0).getId(), 
-					user.getId(), user.getGroupId());
+			//coupon = getCouponService().newInstance(getTournamentService().getAvailableTournaments().get(0).getId(), 
+			//		user.getId(), user.getGroupId());
 			
-			List<Game> games = getGameService().getAvailableGames(coupon.getId());
+			List<Game> games = getGameService().getSortedAvailableGames(tournamentId);
 			
-			for(Game game : games) {
-				
+			for(Game game : games) {				
 				String homeTeamName = getTeamService().getTeamName(tournamentId, game.getHomeTeamId());
 				String awayTeamName = getTeamService().getTeamName(tournamentId, game.getAwayTeamId());
-				PredictionFormData data = getPredictionService().newFormInstance(game.getId(), homeTeamName, 
-									awayTeamName, null, null);
-				predictions.add(data);
+				Date kickoff = game.getKickoff(); 
+				PredictionFormData predictionFormData = new PredictionFormData(game.getId(), kickoff,
+								homeTeamName, awayTeamName, null, null);
+				predictions.add(predictionFormData);
 			}
+			
 			// TODO: Get text from messages
 			action = "Skapa";
 		}
 		
 		form.setPredictions(predictions);
 		
-		//setParameters(model, principals);
-		
+		setParameters(model, principals);
+				
 		// command object
 		model.addAttribute("form", form);
 		model.addAttribute("submitAction", action);
@@ -91,7 +93,7 @@ public class UserCouponPageController extends AbstractController {
 		// return form view
 		return PAGE_NAME;
 	}
-	
+		
 	private List<PredictionFormData> getFormData(final String tournamentId, final List<Prediction> predictions) {
 		List<PredictionFormData> data = new ArrayList<PredictionFormData>();
 
@@ -111,7 +113,7 @@ public class UserCouponPageController extends AbstractController {
 				continue;
 			}
 			
-			PredictionFormData d = getPredictionService().newFormInstance(gameId, homeTeamName, 
+			PredictionFormData d = new PredictionFormData(gameId, game.getKickoff(), homeTeamName, 
 					awayTeamName, prediction.getHomeScore(), prediction.getAwayScore());
 			
 			data.add(d);
@@ -119,7 +121,7 @@ public class UserCouponPageController extends AbstractController {
 		
 		return data;	
 	}
-	
+
 	// Process the form.
 	@RequestMapping(method = RequestMethod.POST)
 	public String processForm(@ModelAttribute(value="form") @Valid CouponForm form, BindingResult result, 

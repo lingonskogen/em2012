@@ -37,7 +37,7 @@
 					</c:when>
 					<c:otherwise>
 					  <br />
-					  <p>
+					  <p style="padding-right: 20px">
 						<a href="/forgotten-password.html">Glömt lösenordet?</a><br />
 						<a href="/register.html">Registrera dig</a>
 						</p>
@@ -60,7 +60,7 @@
 			<div class="span12">
 				<c:choose>
 					<c:when test="${loggedIn}">
-						<ul class="nav nav-pills">
+						<ul style="padding-left: 20px" class="nav nav-pills">
 							<li <c:if test="${currentPage == 'start'}">class="active"</c:if>><a
 								href="start.html">Hem</a>
 							</li>

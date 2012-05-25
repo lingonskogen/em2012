@@ -10,23 +10,22 @@
 
 			<table class="table table-striped">
 				<tr>
-					<th></th>
-					<th colspan="2">Match</th>
+					<th>Datum</th>
+					<th>Match</th>
 					<th>Resultat</th>
 				</tr>
 
 				<c:forEach items="${form.predictions}" var="predictionformdata"
 					varStatus="status">
 					<tr>
-						<td align="center">${status.count}</td>
+						<td>${predictionformdata.kickoff}</td>
 
 						<td><input type="hidden" name="gameId" id="gameId"
 							value="${predictionformdata.gameId}" />
 							${predictionformdata.homeTeamName} - ${predictionformdata.awayTeamName}</td>
 						<td><input name="contacts[${status.index}].homeScore"
-							value="${predictionformdata.homeScore}" /></td>
-						<td><input name="contacts[${status.index}].awayScore"
-							value="${predictionformdata.awayScore}" /></td>
+							value="${predictionformdata.homeScore}" /> - 
+							<input name="contacts[${status.index}].awayScore" value="${predictionformdata.awayScore}" /></td>
 					</tr>
 				</c:forEach>
         <tr>

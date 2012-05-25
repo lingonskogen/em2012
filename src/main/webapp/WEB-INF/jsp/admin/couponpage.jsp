@@ -1,7 +1,7 @@
 <%@ include file="../views/includes/header.jsp"%>
 
 <div class="row">
-	<div class="span8">
+	<div class="span12">
 		<section>
 			<legend>Coupon Page</legend>
 
@@ -16,7 +16,7 @@
 				commandName="searchForm">
 				<input type="hidden" name="tournamentId" value="${tournamentId}" />
 
-				<table align="center">
+				<table class="table table-striped" align="center">
 					<tr>
 						<td><form:select path="groupId" onChange="this.form.submit()">
 								<form:options items="${availableGroups}" />
@@ -27,12 +27,13 @@
 
 
 			<!-- List all available games data -->
-			<div class="sectionTitle">Available coupons</div>
-			<table>
+			<h4>Available coupons</h4>
+			<table class="table table-striped" >
 				<tr>
 					<th><fmt:message key="global.tournament" /></th>
 					<th><fmt:message key="global.group" /></th>
 					<th><fmt:message key="global.user" /></th>
+					<th>Slutvinnare</th>
 				</tr>
 				<c:forEach var="entry" items="${availableCoupons}">
 					<tr>
@@ -40,6 +41,7 @@
 						<td>${entry.value.tournamentName}</td>
 						<td>${entry.value.groupName}</td>
 						<td>${entry.value.userName}</td>
+						<td>${entry.value.winnerTeam}</td>
 					</tr>
 				</c:forEach>
 			</table>

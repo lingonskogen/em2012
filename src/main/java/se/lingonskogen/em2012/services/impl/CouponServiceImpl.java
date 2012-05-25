@@ -16,11 +16,12 @@ public class CouponServiceImpl implements CouponService {
 	}
 
 	@Override
-	public Coupon newInstance(final String tournamentId, final String userId, final String groupId) {
+	public Coupon newInstance(final String tournamentId, final String userId, final String groupId, final String winnerTeamId) {
 		Coupon coupon = new Coupon();
 		coupon.setGroupId(groupId);
 		coupon.setTournamentId(tournamentId);
 		coupon.setUserId(userId);
+		coupon.setWinnerTeamId(winnerTeamId);
 		return coupon;
 	}
 
