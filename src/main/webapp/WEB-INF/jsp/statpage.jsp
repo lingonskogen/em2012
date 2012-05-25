@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ include file="./views/includes/header.jsp"%>
 
 <div class="row">
@@ -6,7 +7,7 @@
 			<legend>Resultat/Tipsrader</legend>
 			<c:choose>
 				<c:when test="${registrationOpen}">
-				 Resultat och ripsrader blir synliga när tiden för registrering har gått ut!
+				 Resultat och ripsrader blir synliga nÃ¤r tiden fÃ¶r registrering har gÃ¥tt ut!
 				</c:when>
 				<c:otherwise>
 					<table class="table table-striped">

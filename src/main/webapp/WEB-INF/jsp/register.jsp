@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ include file="./views/includes/header.jsp"%>
 
 <div class="row">
@@ -6,8 +7,8 @@
 			<c:choose>
 				<c:when test="${registreradOk}">
 				
-				<div class="registreredMessageHeader">Välkommen!</div>
-				<div class="registreredMessage">Du är nu registrerad och kan logga in!</div>
+				<div class="registreredMessageHeader">VÃ¤lkommen!</div>
+				<div class="registreredMessage">Du Ã¤r nu registrerad och kan logga in!</div>
 				</c:when>
 
 				<c:otherwise>

@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ include file="./views/includes/header.jsp"%>
 
 <div class="row">
@@ -12,7 +13,7 @@
 					<td>${user.realName}</td>
 				</tr>
 				<tr>
-					<td>Anv‰ndarnamn/email:</td>
+					<td>Anv√§ndarnamn/email:</td>
 					<td>${user.userName}</td>
 				</tr>
 				<tr>
@@ -48,8 +49,8 @@
 				</c:when>
 				<c:otherwise>
 					<div class="obs">
-						<b style="color: red;">OBS!</b> Du har inte skapat nÂgon tipsrad
-						‰n
+						<b style="color: red;">OBS!</b> Du har inte skapat n√•gon tipsrad
+						√§n
 					</div>
 					<div class="control-group">
 						<div class="controls" style="margin-left: 300px">

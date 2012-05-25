@@ -1,9 +1,10 @@
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ include file="./views/includes/header.jsp"%>
 
 <div class="row">
 	<div class="span8">
 		<section>
-		  <div class="loginHeader"><h1 class="center">Väkommen till EM-tipset 2012!</h1></div>
+		  <div class="loginHeader"><h1 class="center">VÃ¤kommen till EM-tipset 2012!</h1></div>
 			<img alt="EM2012" src="/images/team.jpg">
 			<script type="text/javascript">
 				$(function() {
