@@ -37,8 +37,8 @@
 				</c:when>
 				<c:otherwise>
 					<div class="obs">
-						<b style="color: red;">OBS!</b> Du har inte skapat någon tipsrad
-						än: <a href="${couponUrl}" class="btn btn-primary">Skapa tipsrad</a>
+						<b style="color: red;">OBS!</b> Du har inte skapat nÃ¥gon tipsrad
+						Ã¤n: <a href="${couponUrl}" class="btn btn-primary">Skapa tipsrad</a>
 						</div>
 				</c:otherwise>
 			</c:choose>
