@@ -37,9 +37,10 @@ public class TeamServiceImpl implements TeamService {
     }
     
 	@Override
-	public Team newInstance(final String name, final String tournamentId) {
+	public Team newInstance(final String name, final String code, final String tournamentId) {
 		Team team = new Team();		
 		team.setName(name);
+		team.setCode(code);
 		team.setTournamentId(tournamentId);
 		return team;
 	}

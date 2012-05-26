@@ -116,6 +116,7 @@ public abstract class AbstractController {
 	}
 
 	public boolean hasCoupon(final User user) {
+		System.out.println("Inne i has coupon:" + couponService.getCoupon(user.getId()));
 		return couponService.getCoupon(user.getId()) == null ? false : true;
 	}
 
@@ -187,8 +188,7 @@ public abstract class AbstractController {
         current.setTimeZone(tz);
         GregorianCalendar deadline = new GregorianCalendar(2012, Calendar.JUNE, 8, 12, 0);
         deadline.setTimeZone(tz);
-        //System.out.println("current : " + current.get(Calendar.YEAR) + "-" + current.get(Calendar.MONTH) + "-" + current.get(Calendar.DAY_OF_MONTH) + " " + current.get(Calendar.HOUR_OF_DAY) + ":" + current.get(Calendar.MINUTE));
-        //System.out.println("deadline: " + deadline.get(Calendar.YEAR) + "-" + deadline.get(Calendar.MONTH) + "-" + deadline.get(Calendar.DAY_OF_MONTH) + " " + deadline.get(Calendar.HOUR_OF_DAY) + ":" + deadline.get(Calendar.MINUTE));
+        
         return current.before(deadline);
 	}
 

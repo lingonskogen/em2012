@@ -20,21 +20,25 @@
 				<tr>
 					<th>Tournament name</th>
 					<th>Team name</th>
+					<th>Team code</th>
 				</tr>
 				<c:forEach var="entry" items="${availableTeams}">
 					<tr>
-						<td>${entry.value}</td>
-						<td>${entry.key}</td>
+						<td>${entry.value.tournamentId}</td>
+						<td>${entry.value.name}</td>
+						<td>${entry.value.code}</td>						
 					</tr>
 				</c:forEach>
 			</table>
 
 			<H4>Insert new team</H4>
 
-			<form:form action="teampage.html" class="form-horizontal"
+			<form:form action="/admin/teampage.html" class="form-horizontal"
 				commandName="teamForm">
 				<table class="table table-striped">
 					<tr>
+						<td>Landskod*:</td>
+						<td><form:input path="code" /> <form:errors path="code" /></td>
 						<td><fmt:message key="global.teamName" />*:</td>
 						<td><form:input path="name" /> <form:errors path="name" /></td>
 						<td><form:select path="tournamentId">
@@ -42,7 +46,7 @@
 							</form:select></td>
 					</tr>
 					<tr>
-						<td></td>
+						<td colspan="4"></td>
 						<td><input type="submit" value="Skapa" /></td>
 					</tr>
 

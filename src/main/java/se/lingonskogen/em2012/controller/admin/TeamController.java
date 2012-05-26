@@ -33,16 +33,17 @@ public class TeamController extends AbstractAdminController {
 		return TEAM_PAGE;
 	}
 
-	private Map<String,String> getTeams() {
-		Map<String, String> t = new LinkedHashMap<String, String>();
+	private Map<String, Team> getTeams() {
+		Map<String, Team> t = new LinkedHashMap<String, Team>();
 		
 		for (Team team : getTeamService().getAvailableTeams()) {
 			Tournament tournament = getTournamentService().getTournament(team.getTournamentId());
 			String tName = null;
 			if(tournament!=null) {
 				tName = tournament.getName();
+				team.setTournamentId(tName);
 			}
-			t.put(team.getName(), tName);
+			t.put(tName+team.getCode(), team);
 		}
 
 		return t;
@@ -54,12 +55,11 @@ public class TeamController extends AbstractAdminController {
 
 		if (result.hasErrors()) {			
 			setParameters(model, teamForm);
-			
 			return TEAM_PAGE;
 		}
 		
 		// Register new Tournament
-		Team team = getTeamService().newInstance(teamForm.getName(), teamForm.getTournamentId());
+		Team team = getTeamService().newInstance(teamForm.getName(), teamForm.getCode(), teamForm.getTournamentId());
 		
 		try{
 			getTeamService().createTeam(team);
@@ -70,13 +70,11 @@ public class TeamController extends AbstractAdminController {
 			
 			// Error when creating tournament
 			setParameters(model, teamForm);			
-			model.addAttribute("errorMessage", errorMessage);
-			
+			model.addAttribute("errorMessage", errorMessage);	
 			return TEAM_PAGE;
 		}
 	
 		setParameters(model, teamForm);
-		
 		// TODO: Get message from message file
 		model.addAttribute("successMessage","Team blev skapad");
 		return TEAM_PAGE;
@@ -85,7 +83,7 @@ public class TeamController extends AbstractAdminController {
 	private void setParameters(final ModelMap model, final TeamForm teamForm) {
 		super.setParameters(model);
 		
-		Map<String, String> availableTeams = getTeams();
+		Map<String, Team> availableTeams = getTeams();
 		Map<String, String> availableTournaments = getTournaments();
 		// command object
 		model.addAttribute("teamForm", teamForm);

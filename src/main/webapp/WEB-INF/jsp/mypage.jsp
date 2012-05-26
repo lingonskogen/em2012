@@ -71,9 +71,9 @@
 											${predictionformdata.homeTeamName}</td>
 										<td>-</td>
 										<td>${predictionformdata.awayTeamName}</td>
-										<td><input name="contacts[${status.index}].homeScore"
+										<td><input name="predictions[${status.index}].homeScore"
 											value="${predictionformdata.homeScore}" /> - <input
-											name="contacts[${status.index}].awayScore"
+											name="predictions[${status.index}].awayScore"
 											value="${predictionformdata.awayScore}" /></td>
 									</tr>
 								</c:forEach>
@@ -81,7 +81,7 @@
 									<td colspan="5"></td>
 								</tr>
 								<tr>
-									<td colspan="4"><b>Slutvinnare: </b> <select id="winner">
+									<td colspan="4"><b>Slutvinnare: </b> <select id="winnerTeamId" name="winnerTeamId">
 											<c:forEach items="${form.teams}" var="team">
 												<option value="${team.id}"
 													<c:if test="${form.winnerTeamId == team.id}">selected="selected"</c:if>>${team.name}</option>

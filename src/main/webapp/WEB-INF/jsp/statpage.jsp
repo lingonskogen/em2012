@@ -17,6 +17,17 @@
 									<h4></th>
 						</tr>
 
+<tr>
+							<td colspan="10">
+							<table width="100%"><tbody><tr><td style="padding-left: 100px;"></td><td style="background: #FFF;"></td><td>0 poäng</td>
+							<td></td><td style="background: #CCFFCC;"></td><td>1 poäng</td>
+							<td></td><td style="background: #FFE5FF;"></td><td>2 poäng</td>
+							<td></td><td style="background: #FFFFCC;"></td><td>3 poäng</td>
+							<td style="padding-left: 100px;"></td>
+							</tr></tbody></table>
+							</td>
+						</tr>
+
 						<tr>
 							<td />
 							<th>Avspark</th>
