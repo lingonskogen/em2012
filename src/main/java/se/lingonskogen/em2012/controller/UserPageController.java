@@ -1,12 +1,12 @@
 package se.lingonskogen.em2012.controller;
 
+import java.io.StringWriter;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +21,10 @@ import se.lingonskogen.em2012.domain.Prediction;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.form.CouponForm;
 import se.lingonskogen.em2012.form.PredictionFormData;
+import se.lingonskogen.em2012.services.PredictionService;
+import se.lingonskogen.em2012.services.impl.MailService;
+import se.lingonskogen.em2012.services.impl.MailService.ContentWriter;
+import se.lingonskogen.em2012.services.impl.MailService.Template;
 
 @Controller
 @RequestMapping("/mypage.html")
@@ -82,7 +86,7 @@ public class UserPageController extends AbstractController {
 					
 					getPredictionService().createPrediction(prediction);
 				}
-				
+				mailCoupon(user);
 				
 			} catch (DaoException e) {
 				// TODO Auto-generated catch block
@@ -94,7 +98,7 @@ public class UserPageController extends AbstractController {
 		}
 	}
 
-	public void setupCoupon(final User user, final ModelMap model) {
+    public void setupCoupon(final User user, final ModelMap model) {
 		String action = "";
 		
 		CouponForm form = new CouponForm();
@@ -171,6 +175,42 @@ public class UserPageController extends AbstractController {
         });
 		return data;	
 	}
+
+    private void mailCoupon(final User user) throws Exception
+    {
+        MailService mailService = new MailService();
+        mailService.sendMail(user, Template.UPD_COUPON, false, new ContentWriter()
+        {
+            @Override
+            public String write() throws Exception
+            {
+                StringWriter writer = new StringWriter();
+                Coupon coupon = getCouponService().getCoupon(user.getId());
+                writer.write("Tournament: ");
+                writer.write(getTournamentService().getTournamentName(coupon.getTournamentId()));
+                writer.write("\r\n");
+                writer.write("-----------\r\n");
+                PredictionService ps = getPredictionService();
+                List<Prediction> predictions = ps.getPredictions(coupon.getGroupId(), coupon.getUserId(), coupon.getId());
+                for (Prediction prediction : predictions)
+                {
+                    Game game = getGameService().getGame(coupon.getTournamentId(), prediction.getGameId());
+                    String homeTeamName = getTeamService().getTeamName(coupon.getTournamentId(), game.getHomeTeamId());
+                    String awayTeamName = getTeamService().getTeamName(coupon.getTournamentId(), game.getAwayTeamId());
+                    writer.write(homeTeamName);
+                    writer.write(" - ");
+                    writer.write(awayTeamName);
+                    writer.write(": ");
+                    writer.write(prediction.getHomeScore().toString());
+                    writer.write(" - ");
+                    writer.write(prediction.getAwayScore().toString());
+                    writer.write("\r\n");
+                }
+                writer.write("-----------\r\n");
+                return writer.toString();
+            }
+        });
+    }
 
 	private String getCouponUrl() {
 		String url = "mypage.html?action=createcoupon";
