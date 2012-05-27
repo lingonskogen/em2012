@@ -17,26 +17,31 @@ section {
   text-align: center;
 }
 
+
+.table tbody tr td.score0, .table tbody tr th.score0 {
+  background-color: #FFF; 
+}
 .table tbody tr td.score1, .table tbody tr th.score1 {
-  background-color: #DDD; 
+  background-color: #CCFFCC; 
 }
 .table tbody tr td.score2, .table tbody tr th.score2 {
-  background-color: #888; 
+  background-color: #FFE5FF; 
 }
 .table tbody tr td.score3, .table tbody tr th.score3 {
-  background-color: #444; 
-  color: #FFF; 
+  background-color: #FFFFCC; 
 }
 
+.table tbody tr:hover td.score0, .table tbody tr:hover th.score0 {
+  background-color: #FFF; 
+}
 .table tbody tr:hover td.score1, .table tbody tr:hover th.score1 {
-  background-color: #BBB; 
+  background-color: #CCFFCC; 
 }
 .table tbody tr:hover td.score2, .table tbody tr:hover th.score2 {
-  background-color: #666; 
+  background-color: #FFE5FF; 
 }
 .table tbody tr:hover td.score3, .table tbody tr:hover th.score3 {
-  background-color: #222;
-  color: #FFF; 
+  background-color: #FFFFCC;
 }
 
 .loginHeader {
