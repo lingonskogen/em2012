@@ -24,19 +24,20 @@ public class CouponForm {
 	private List<Team> teams;
 	
 	private String winnerTeamId;
-	
+
     public List<PredictionFormData> getPredictions() {
-        List<PredictionFormData> list = new ArrayList<PredictionFormData>(predictionMap.values());
-        Collections.sort(list, new Comparator<PredictionFormData>()
+        List<PredictionFormData> predictions = new ArrayList<PredictionFormData>(predictionMap.values());
+        predictions = new ArrayList<PredictionFormData>(predictionMap.values());
+        Collections.sort(predictions, new Comparator<PredictionFormData>()
         {
             @Override
             public int compare(PredictionFormData o1, PredictionFormData o2)
             {
-                return -1;
-//                return o1.getKickoff().compareTo(o2.getKickoff());
+                return o1.getKickoffDate().compareTo(o2.getKickoffDate());
             }
         });
-		return list;
+
+        return predictions;
 	}
 
     public Map<String, PredictionFormData> getPredictionMap()
