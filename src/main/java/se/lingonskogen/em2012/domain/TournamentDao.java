@@ -1,6 +1,7 @@
 package se.lingonskogen.em2012.domain;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
@@ -8,6 +9,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyFactory.Builder;
 
 public class TournamentDao extends AbstractDao<Tournament> {
+
+	private Logger LOG = Logger.getLogger(TournamentDao.class.getName());
+	
 	@Override
 	protected void populateEntity(Entity entity, Tournament bean) {
 		entity.setProperty(Tournament.NAME, bean.getName());
@@ -62,6 +66,16 @@ public class TournamentDao extends AbstractDao<Tournament> {
 		Builder builder = new KeyFactory.Builder(
 				Tournament.class.getSimpleName(), tournamentId);
 		return builder.getKey();
+	}
+
+	@Override
+	protected Logger getLogger() {
+		return LOG;
+	}
+
+	@Override
+	protected String getType() {
+		return "Tournament";
 	}
 
 }

@@ -1,6 +1,7 @@
 package se.lingonskogen.em2012.domain;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
@@ -10,6 +11,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyFactory.Builder;
 
 public class UserDao extends AbstractDao<User> {
+	
+	private Logger LOG = Logger.getLogger(UserDao.class.getName());
+	
 	@Override
 	protected void populateEntity(Entity entity, User user) {
 		entity.setProperty(User.REALNAME, user.getRealName());
@@ -94,4 +98,14 @@ public class UserDao extends AbstractDao<User> {
             }
         }
     }
+	@Override
+	protected Logger getLogger() {
+		return LOG;
+	}
+
+	@Override
+	protected String getType() {
+		return "User";
+	}
+
 }
