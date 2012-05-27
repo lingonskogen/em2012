@@ -2,6 +2,8 @@ package se.lingonskogen.em2012.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,6 +19,7 @@ import se.lingonskogen.em2012.domain.Prediction;
 import se.lingonskogen.em2012.domain.Tournament;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.form.StatisticsFormData.TournamentFormData.GameFormData;
+import se.lingonskogen.em2012.form.PredictionFormData;
 import se.lingonskogen.em2012.form.TopListData;
 import se.lingonskogen.em2012.services.CouponService;
 import se.lingonskogen.em2012.services.GameService;
@@ -89,8 +92,12 @@ public abstract class AbstractController {
 				tournament.getId());
 		List<User> users = getUserService().getUsers(groupId);
 
-		Map<String, Integer> scores = new HashMap<String, Integer>();
-		for (Game game : games) {
+		Map<String, Integer> scores = getScores(users, tournament);
+		
+		
+		//Map<String, Integer> scores = new HashMap<String, Integer>();
+		
+		/*for (Game game : games) {
 			for (User user : users) {
 				String userId = user.getId();
 
@@ -118,7 +125,7 @@ public abstract class AbstractController {
 					scores.put(userid, 5 + scores.get(userid));	
 				}
 			}				
-		}
+		}*/
 		
 		Integer currentUserScore = scores.get(currentUser.getId());
 		Integer position = null;
@@ -133,40 +140,76 @@ public abstract class AbstractController {
 		return position;
 	}
 
+	private Map<String, Integer> getScores(List<User> users, final Tournament tournament) {
+		List<Game> games = getGameService().getAvailableGames(tournament.getId());
+		Map<String, Integer> scores = new HashMap<String, Integer>();
+		
+		for (Game game : games) {
+			for (User user : users) {
+				String userId = user.getId();
+
+				List<Prediction> userPredictions = getPredictionService()
+						.getPredictions(user.getGroupId(), userId);
+
+				for (Prediction prediction : userPredictions) {
+					if (game.getId().equals(prediction.getGameId())) {
+						Integer score = calcScore(game, prediction);
+						if (!scores.containsKey(userId)) {
+							scores.put(userId, 0);
+						}
+						scores.put(userId, score + scores.get(userId));
+					}
+				}				
+			}
+		}
+
+		// If we have a tournament winner - add points for correct winner
+		if (tournament.getWinnerTeamId() != null && !tournament.getWinnerTeamId().equals("")) {
+			for (String userid : scores.keySet()) {					
+				Coupon userCoupon = getCouponService().getCoupon(userid);
+				
+				if(userCoupon.getWinnerTeamId().equals(tournament.getWinnerTeamId())) {
+					scores.put(userid, 5 + scores.get(userid));	
+				}
+			}				
+		}
+		return scores;
+	}
+	
 	public List<TopListData> getToplist(final String groupId, final int num) {
 		List<User> users = groupId == null ? getUserService().getUsers() : 	getUserService().getUsers(groupId);
 		List<TopListData> toplist = new LinkedList<TopListData>();
+		Tournament tournament = getTournamentService()
+				.getAvailableTournaments().get(0);
 
-		// Get all users points and returl list with num
-		TopListData t = new TopListData();
-		t.setGroupName("Ateles");
-		t.setPoints(21);
-		t.setUserRealName("Susen Gladén");
-		toplist.add(t);
+		Map<String, Integer> userPointsMap = getScores(users, tournament);
 		
-		t = new TopListData();
-		t.setGroupName("Ateles");
-		t.setPoints(21);
-		t.setUserRealName("Susen Gladén");
-		toplist.add(t);
-		t = new TopListData();
-		t.setGroupName("Ateles");
-		t.setPoints(21);
-		t.setUserRealName("Susen Gladén");
-		toplist.add(t);
-		t = new TopListData();
-		t.setGroupName("Ateles");
-		t.setPoints(21);
-		t.setUserRealName("Susen Gladén");
-		toplist.add(t);
-		t = new TopListData();
-		t.setGroupName("Ateles");
-		t.setPoints(21);
-		t.setUserRealName("Susen Gladén");
-		toplist.add(t);
+		for (String key : userPointsMap.keySet()) {
+			TopListData t = new TopListData();
+			
+			User user = groupId == null ? getUserService().getUserById(key) : getUserService().getUser(groupId, key);
+			String groupName = getGroupService().getGroupName(user.getGroupId());
+			t.setGroupName(groupName);
+			t.setPoints(userPointsMap.get(key));
+			t.setUserRealName(user.getRealName());
+			
+			toplist.add(t);
+		}
 		
-		return toplist;
+		// Sort toplist
+		 Collections.sort(toplist, new Comparator<TopListData>() {
+			 @Override
+			 public int compare(TopListData o1, TopListData o2) {
+				 Integer p1 = o1.getPoints();
+				 Integer p2 = o2.getPoints();
+				 return -(p1.compareTo(p2));
+			 }
+		 });
+		 
+		// Return num elemenst
+		int size = toplist.size() < num ? toplist.size() : num;
 		
+		return toplist.subList(0, size);		
 	}
 	
 	public List<TopListData> getToplist(final int num) {

@@ -12,6 +12,15 @@ public class UserServiceImpl implements UserService {
 
 	private UserDao userDao;
 
+	public User getUserById(final String userId) {
+		for (User user : getUsers()) {
+			if (user.getId().equals(userId)) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
 	public User getUser(final String groupId, final String userId) {
 		try {
 			return userDao.find(groupId, userId);

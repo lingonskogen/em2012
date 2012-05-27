@@ -3,6 +3,8 @@ package se.lingonskogen.em2012.controller;
 import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,8 @@ public class RegisterController extends AbstractController {
     private RegisterService registerService;
 
     private static final String PAGE_NAME = "register";
+    
+    private Logger LOG = Logger.getLogger(RegisterController.class.getName());
     
 	@RequestMapping(method = RequestMethod.GET)
 	public String initForm(final ModelMap model, final Principal principals) {
@@ -58,6 +62,7 @@ public class RegisterController extends AbstractController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String processForm(@ModelAttribute(value="register") @Valid RegisterForm register, BindingResult result, 
 			ModelMap model, Principal principals) {
+
 		// set custom Validation by user
 		validator.validate(register, result);
 		if (result.hasErrors()) {
@@ -78,6 +83,9 @@ public class RegisterController extends AbstractController {
 		try {
 			registerService.registerUser(user);
 		} catch (Exception e) {
+			
+			LOG.log(Level.WARNING, "Could not register user " + user.getRealName(), e);
+			
 			// Error when creating user
 			Map<String, String> groups = getGroups();
 			model.addAttribute("register", register);			
