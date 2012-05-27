@@ -60,7 +60,6 @@ public class ForgottenPasswordController extends AbstractController {
 		String password = Long.toHexString(System.currentTimeMillis()).toLowerCase();
         user.setPassword(password);
         getUserService().updateUser(user);
-        System.out.println("User " + user.getUserName() + " new password " + password);
 
         MailService mailService = new MailService();
         mailService.setSubstitution(Substitution.PASSWORD, password);

@@ -15,6 +15,10 @@ public class CouponServiceImpl implements CouponService {
 		return couponDao.create(coupon);
 	}
 
+    @Override
+    public void updateCoupon(final Coupon coupon) throws DaoException {
+        couponDao.update(coupon);
+    }
 	@Override
 	public Coupon newInstance(final String tournamentId, final String userId, final String groupId, final String winnerTeamId) {
 		Coupon coupon = new Coupon();

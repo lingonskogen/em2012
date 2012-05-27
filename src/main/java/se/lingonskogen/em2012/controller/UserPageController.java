@@ -5,7 +5,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -13,6 +12,8 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +26,6 @@ import se.lingonskogen.em2012.domain.Prediction;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.form.CouponForm;
 import se.lingonskogen.em2012.form.PredictionFormData;
-import se.lingonskogen.em2012.form.admin.GameForm;
 import se.lingonskogen.em2012.services.PredictionService;
 import se.lingonskogen.em2012.services.impl.MailService;
 import se.lingonskogen.em2012.services.impl.MailService.ContentWriter;
@@ -33,257 +33,287 @@ import se.lingonskogen.em2012.services.impl.MailService.Template;
 
 @Controller
 @RequestMapping("/mypage.html")
-public class UserPageController extends AbstractController {
+public class UserPageController extends AbstractController
+{
 
-	private static final String PAGE_NAME = "mypage";
-	private static final String DEFAULT_WINNER_TEAM_ID = "sweden";
+    private static final String PAGE_NAME = "mypage";
+    private static final String DEFAULT_WINNER_TEAM_ID = "sweden";
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String showPage(
-			@RequestParam(value = "action", defaultValue = "") String action,
-			final ModelMap model, final Principal principal) {
+    @InitBinder
+    public void initBinder(WebDataBinder binder)
+    {
+        binder.setAutoGrowNestedPaths(false);
+    }
 
-		User user = null;
-		if (principal != null) {
-			String name = principal.getName();
-			user = getUserService().getUser(name);
-		}
-		
-		
-		if (action != null && !action.equals("")) {
-			if (action.equals("createcoupon")) {
-				// Create coupon for user
-				createDefaultCoupon(user);
-			}
-		}
+    @RequestMapping(method = RequestMethod.GET)
+    public String showPage(
+            @RequestParam(value = "action", defaultValue = "") String action,
+            final ModelMap model, final Principal principal) throws Exception
+    {
 
-		setParameters(model, principal, user);
-		setupCoupon(user, model);
-		
-		return PAGE_NAME;
-	}
+        User user = null;
+        if (principal != null)
+        {
+            String name = principal.getName();
+            user = getUserService().getUser(name);
+        }
 
-	
-	private void setParameters(final ModelMap model, final Principal principal, final User user) {
-		String groupName = getGroupService().getGroupName(user.getGroupId());
-		
-		model.addAttribute("user", user);
-		model.addAttribute("groupName", groupName);
-		model.addAttribute("position", getPosition(user));
-		model.addAttribute("totalUsers", getTotalNumUsers(user.getGroupId()));
-		model.addAttribute("hasCoupon", hasCoupon(user));
-		model.addAttribute("couponUrl", getCouponUrl());
-		
-		super.setParameters(model, principal);
-	}
-	
-	// Process the  post request
-	@RequestMapping(method = RequestMethod.POST)
-	public String processForm(@ModelAttribute(value = "form") @Valid CouponForm form,
-			BindingResult result, ModelMap model, Principal principal) {
-		User user = null;
-		if (principal != null) {
-			String name = principal.getName();
-			user = getUserService().getUser(name);
-		}
-		
-		if (result.hasErrors()) {
-			System.out.println("Formuläret innehåller fel");
-			return PAGE_NAME;
-		}
+        if (action != null && !action.equals(""))
+        {
+            if (action.equals("createcoupon"))
+            {
+                // Create coupon for user
+                createDefaultCoupon(user);
+            }
+        }
 
-		setParameters(model, principal, user);
-		String winnerTemId = form.getWinnerTeamId();
-		// TODO: Get message from message file
-		//model.addAttribute("successMessage", "Game blev skapad");
-		System.out.println("winnerTemId: " + winnerTemId );
-		model.addAttribute("form", form);
-		model.addAttribute("submitAction", "Uppdatera");
-		
-		return PAGE_NAME;
-	}
+        setupCoupon(user, model, null);
+        setParameters(model, principal, user);
 
-	private void createDefaultCoupon(final User user) {
+        return PAGE_NAME;
+    }
 
-		// Check that user does not have a coupon
-		Coupon coupon = getCouponService().getCoupon(user.getId());
-		if (coupon == null) {
-			String groupId = user.getGroupId();
-			String userId = user.getId();
-			String tournamentId = getTournamentService()
-					.getAvailableTournaments().get(0).getId();
-			coupon = getCouponService().newInstance(tournamentId, userId,
-					groupId, DEFAULT_WINNER_TEAM_ID);
+    private void setParameters(final ModelMap model, final Principal principal, final User user)
+    {
+        String groupName = getGroupService().getGroupName(user.getGroupId());
 
-			try {
-				String couponId = getCouponService().createCoupon(coupon);
-				if (couponId == null)
-					throw new Exception("Error when creating coupon");
+        model.addAttribute("user", user);
+        model.addAttribute("groupName", groupName);
+        model.addAttribute("position", getPosition(user));
+        model.addAttribute("totalUsers", getTotalNumUsers(user.getGroupId()));
+        model.addAttribute("hasCoupon", hasCoupon(user));
+        model.addAttribute("couponUrl", getCouponUrl());
 
-				// Create 0 - 0 predictions for user and all games
-				List<Game> games = getGameService().getAvailableGames();
-				for (Game game : games) {
-					Prediction prediction = getPredictionService().newInstance(
-							groupId, userId, couponId, tournamentId,
-							game.getId(), Long.valueOf(0), Long.valueOf(0));
+        super.setParameters(model, principal);
+    }
 
-					getPredictionService().createPrediction(prediction);
-				}
-				mailCoupon(user);
+    // Process the post request
+    @RequestMapping(method = RequestMethod.POST)
+    public String processForm(@ModelAttribute(value = "form") @Valid CouponForm form,
+            BindingResult result, ModelMap model, Principal principal) throws DaoException
+    {
 
-			} catch (DaoException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+        User user = null;
+        if (principal != null)
+        {
+            String name = principal.getName();
+            user = getUserService().getUser(name);
+        }
 
-	public void setupCoupon(final User user, final ModelMap model) {
-		String action = "";
+        setParameters(model, principal, user);
+        setupCoupon(user, model, form);
+        model.addAttribute("submitAction", "Uppdatera");
+        if (result.hasErrors())
+        {
+            return PAGE_NAME;
+        }
 
-		CouponForm form = new CouponForm();
-		form.setTeams(getTeamService().getAvailableTeams());
-		
-		// Get user coupon - if any
-		Coupon coupon = getCouponService().getCoupon(user.getId());
-		List<PredictionFormData> predictions = new ArrayList<PredictionFormData>();
-		
-		String tournamentId = getTournamentService().getAvailableTournaments()
-				.get(0).getId();
+        String groupId = user.getGroupId();
+        String userId = user.getId();
+        Coupon coupon = getCouponService().getCoupon(user.getId());
+        String tournamentId = coupon.getTournamentId();
+        String couponId = coupon.getId();
 
-		if (coupon != null) {
-			form.setWinnerTeamId(coupon.getWinnerTeamId());
+        coupon.setWinnerTeamId(form.getWinnerTeamId());
+        getCouponService().updateCoupon(coupon);
+        for (PredictionFormData pfd : form.getPredictions())
+        {
+            Prediction prediction = getPredictionService().newInstance(groupId, userId, couponId, tournamentId, pfd.getGameId(), pfd.getHomeScore(), pfd.getAwayScore());
+            getPredictionService().updatePrediction(prediction);
+        }
+        return PAGE_NAME;
+    }
 
-			String c = coupon.getId();
-			List<Prediction> preds = getPredictionService().getPredictions(
-					user.getGroupId(), user.getId(), c);
-			predictions = getFormData(tournamentId, preds);
-			// Get text from messages
-			action = "Uppdatera";
-		} else {
-			// coupon =
-			// getCouponService().newInstance(getTournamentService().getAvailableTournaments().get(0).getId(),
-			// user.getId(), user.getGroupId());
+    private void createDefaultCoupon(final User user) throws Exception
+    {
 
-			List<Game> games = getGameService().getSortedAvailableGames(
-					tournamentId);
+        // Check that user does not have a coupon
+        Coupon coupon = getCouponService().getCoupon(user.getId());
+        if (coupon == null)
+        {
+            String groupId = user.getGroupId();
+            String userId = user.getId();
+            String tournamentId = getTournamentService()
+                    .getAvailableTournaments().get(0).getId();
+            coupon = getCouponService().newInstance(tournamentId, userId,
+                    groupId, DEFAULT_WINNER_TEAM_ID);
 
-			for (Game game : games) {
-				String homeTeamName = getTeamService().getTeamName(
-						tournamentId, game.getHomeTeamId());
-				String awayTeamName = getTeamService().getTeamName(
-						tournamentId, game.getAwayTeamId());
-				Date kickoff = game.getKickoff();
-				PredictionFormData predictionFormData = new PredictionFormData(
-						game.getId(), kickoff, homeTeamName, awayTeamName,
-						null, null);
-				predictions.add(predictionFormData);
-			}
+            String couponId = getCouponService().createCoupon(coupon);
+            if (couponId == null)
+                throw new Exception("Error when creating coupon");
 
-			// TODO: Get text from messages
-			action = "Skapa";
-		}
+            // Create 0 - 0 predictions for user and all games
+            List<Game> games = getGameService().getAvailableGames();
+            for (Game game : games)
+            {
+                Prediction prediction = getPredictionService().newInstance(
+                        groupId, userId, couponId, tournamentId,
+                        game.getId(), Long.valueOf(0), Long.valueOf(0));
 
-		form.setPredictions(predictions);
-		model.addAttribute("form", form);
-		model.addAttribute("submitAction", action);
-	}
+                getPredictionService().createPrediction(prediction);
+            }
+            mailCoupon(user);
+        }
+    }
 
-	private List<PredictionFormData> getFormData(final String tournamentId,
-			final List<Prediction> predictions) {
-		List<PredictionFormData> data = new ArrayList<PredictionFormData>();
+    public void setupCoupon(final User user, final ModelMap model, CouponForm valueForm) throws DaoException
+    {
+        CouponForm form = new CouponForm();
+        String tournamentId = getTournamentService().getAvailableTournaments().get(0).getId();
+        List<Game> games = getGameService().getSortedAvailableGames(tournamentId);
+        form = new CouponForm();
+        form.setTeams(getTeamService().getAvailableTeams());
 
-		for (Prediction prediction : predictions) {
-			Game game;
-			try {
-				game = getGameService().getGame(tournamentId,
-						prediction.getGameId());
-			} catch (DaoException e) {
-				continue;
-			}
+        for (int i = 0; i < games.size(); i++)
+        {
+            Game game = games.get(i);
+            String homeTeamName = getTeamService().getTeamName(tournamentId, game.getHomeTeamId());
+            String awayTeamName = getTeamService().getTeamName(tournamentId, game.getAwayTeamId());
+            PredictionFormData formData = new PredictionFormData(game.getId(), game.getKickoff(), homeTeamName, awayTeamName, 0L, 0L);
+            form.putPredictionFormData(game.getId(), formData);
+        }
+        form.setWinnerTeamId(DEFAULT_WINNER_TEAM_ID);
+        model.addAttribute("form", form);
 
-			String gameId = prediction.getGameId();
-			String homeTeamName = getTeamService().getTeamName(tournamentId,
-					game.getHomeTeamId());
-			String awayTeamName = getTeamService().getTeamName(tournamentId,
-					game.getAwayTeamId());
+        // Get user coupon - if any
+        Coupon coupon = getCouponService().getCoupon(user.getId());
+        if (coupon != null)
+        {
+            form.setWinnerTeamId(coupon.getWinnerTeamId());
 
-			if (gameId == null || homeTeamName == null || awayTeamName == null) {
-				continue;
-			}
+            String couponId = coupon.getId();
 
-			PredictionFormData d = new PredictionFormData(gameId,
-					game.getKickoff(), homeTeamName, awayTeamName,
-					prediction.getHomeScore(), prediction.getAwayScore());
+            List<Prediction> predictions = getPredictionService().getPredictions(user.getGroupId(),user.getId(), couponId);
+            for (Prediction prediction : predictions)
+            {
+                form.getPrediction(prediction.getGameId()).setHomeScore(prediction.getHomeScore());
+                form.getPrediction(prediction.getGameId()).setAwayScore(prediction.getAwayScore());
+            }
+        }
+        
+        if (valueForm != null)
+        {
+            for (String gameId : valueForm.getPredictionMap().keySet())
+            {
+                form.getPrediction(gameId).setHomeScore(valueForm.getPrediction(gameId).getHomeScore());
+                form.getPrediction(gameId).setAwayScore(valueForm.getPrediction(gameId).getAwayScore());
+            }
+            form.setWinnerTeamId(valueForm.getWinnerTeamId());
+        }
+        // Get text from messages
+        String action = "Uppdatera";
 
-			data.add(d);
-		}
-		Collections.<PredictionFormData> sort(data,
-				new Comparator<PredictionFormData>() {
-					@Override
-					public int compare(PredictionFormData game0,
-							PredictionFormData game1) {
-						return game0.getKickoffDate().compareTo(
-								game1.getKickoffDate());
-					}
-				});
-		return data;
-	}
+        // form.setPredictions(predictions);
+        model.addAttribute("form", form);
+        model.addAttribute("submitAction", action);
+    }
 
-	private void mailCoupon(final User user) throws Exception {
-		MailService mailService = new MailService();
-		mailService.sendMail(user, Template.UPD_COUPON, false,
-				new ContentWriter() {
-					@Override
-					public String write() throws Exception {
-						StringWriter writer = new StringWriter();
-						Coupon coupon = getCouponService().getCoupon(
-								user.getId());
-						writer.write("Tournament: ");
-						writer.write(getTournamentService().getTournamentName(
-								coupon.getTournamentId()));
-						writer.write("\r\n");
-						writer.write("-----------\r\n");
-						PredictionService ps = getPredictionService();
-						List<Prediction> predictions = ps.getPredictions(
-								coupon.getGroupId(), coupon.getUserId(),
-								coupon.getId());
-						for (Prediction prediction : predictions) {
-							Game game = getGameService().getGame(
-									coupon.getTournamentId(),
-									prediction.getGameId());
-							String homeTeamName = getTeamService().getTeamName(
-									coupon.getTournamentId(),
-									game.getHomeTeamId());
-							String awayTeamName = getTeamService().getTeamName(
-									coupon.getTournamentId(),
-									game.getAwayTeamId());
-							writer.write(homeTeamName);
-							writer.write(" - ");
-							writer.write(awayTeamName);
-							writer.write(": ");
-							writer.write(prediction.getHomeScore().toString());
-							writer.write(" - ");
-							writer.write(prediction.getAwayScore().toString());
-							writer.write("\r\n");
-						}
-						writer.write("-----------\r\n");
-						return writer.toString();
-					}
-				});
-	}
+    private List<PredictionFormData> getFormData(final String tournamentId,
+            final List<Prediction> predictions)
+    {
+        List<PredictionFormData> data = new ArrayList<PredictionFormData>();
 
-	private String getCouponUrl() {
-		String url = "mypage.html?action=createcoupon";
+        for (Prediction prediction : predictions)
+        {
+            Game game;
+            try
+            {
+                game = getGameService().getGame(tournamentId,
+                        prediction.getGameId());
+            }
+            catch (DaoException e)
+            {
+                continue;
+            }
 
-		return url;
-	}
+            String gameId = prediction.getGameId();
+            String homeTeamName = getTeamService().getTeamName(tournamentId,
+                    game.getHomeTeamId());
+            String awayTeamName = getTeamService().getTeamName(tournamentId,
+                    game.getAwayTeamId());
 
-	@Override
-	public String getCurrentPageId() {
-		return PAGE_NAME;
-	}
+            if (gameId == null || homeTeamName == null || awayTeamName == null)
+            {
+                continue;
+            }
+
+            PredictionFormData d = new PredictionFormData(gameId,
+                    game.getKickoff(), homeTeamName, awayTeamName,
+                    prediction.getHomeScore(), prediction.getAwayScore());
+
+            data.add(d);
+        }
+        Collections.<PredictionFormData> sort(data,
+                new Comparator<PredictionFormData>()
+                {
+                    @Override
+                    public int compare(PredictionFormData game0,
+                            PredictionFormData game1)
+                    {
+                        return game0.getKickoffDate().compareTo(
+                                game1.getKickoffDate());
+                    }
+                });
+        return data;
+    }
+
+    private void mailCoupon(final User user) throws Exception
+    {
+        MailService mailService = new MailService();
+        mailService.sendMail(user, Template.UPD_COUPON, false,
+                new ContentWriter()
+                {
+                    @Override
+                    public String write() throws Exception
+                    {
+                        StringWriter writer = new StringWriter();
+                        Coupon coupon = getCouponService().getCoupon(
+                                user.getId());
+                        writer.write("Tournament: ");
+                        writer.write(getTournamentService().getTournamentName(
+                                coupon.getTournamentId()));
+                        writer.write("\r\n");
+                        writer.write("-----------\r\n");
+                        PredictionService ps = getPredictionService();
+                        List<Prediction> predictions = ps.getPredictions(
+                                coupon.getGroupId(), coupon.getUserId(),
+                                coupon.getId());
+                        for (Prediction prediction : predictions)
+                        {
+                            Game game = getGameService().getGame(
+                                    coupon.getTournamentId(),
+                                    prediction.getGameId());
+                            String homeTeamName = getTeamService().getTeamName(
+                                    coupon.getTournamentId(),
+                                    game.getHomeTeamId());
+                            String awayTeamName = getTeamService().getTeamName(
+                                    coupon.getTournamentId(),
+                                    game.getAwayTeamId());
+                            writer.write(homeTeamName);
+                            writer.write(" - ");
+                            writer.write(awayTeamName);
+                            writer.write(": ");
+                            writer.write(prediction.getHomeScore().toString());
+                            writer.write(" - ");
+                            writer.write(prediction.getAwayScore().toString());
+                            writer.write("\r\n");
+                        }
+                        writer.write("-----------\r\n");
+                        return writer.toString();
+                    }
+                });
+    }
+
+    private String getCouponUrl()
+    {
+        String url = "mypage.html?action=createcoupon";
+
+        return url;
+    }
+
+    @Override
+    public String getCurrentPageId()
+    {
+        return PAGE_NAME;
+    }
 }
