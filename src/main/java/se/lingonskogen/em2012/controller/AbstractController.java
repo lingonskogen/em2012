@@ -3,18 +3,24 @@ package se.lingonskogen.em2012.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
 import org.springframework.ui.ModelMap;
 
+import se.lingonskogen.em2012.domain.Coupon;
 import se.lingonskogen.em2012.domain.Game;
 import se.lingonskogen.em2012.domain.Prediction;
+import se.lingonskogen.em2012.domain.Team;
 import se.lingonskogen.em2012.domain.Tournament;
 import se.lingonskogen.em2012.domain.User;
+import se.lingonskogen.em2012.form.StatisticsFormData.TournamentFormData.GameFormData;
+import se.lingonskogen.em2012.form.TopListData;
 import se.lingonskogen.em2012.services.CouponService;
 import se.lingonskogen.em2012.services.GameService;
 import se.lingonskogen.em2012.services.GroupService;
@@ -98,16 +104,27 @@ public abstract class AbstractController {
 						}
 						scores.put(userId, score + scores.get(userId));
 					}
-				}
+				}				
 			}
 		}
 
+		// If we have a tournament winner - add points for correct winner
+		if (tournament.getWinnerTeamId() != null && !tournament.getWinnerTeamId().equals("")) {
+			for (String userid : scores.keySet()) {					
+				Coupon userCoupon = getCouponService().getCoupon(userid);
+				
+				if(userCoupon.getWinnerTeamId().equals(tournament.getWinnerTeamId())) {
+					scores.put(userid, 5 + scores.get(userid));	
+				}
+			}				
+		}
+		
 		Integer currentUserScore = scores.get(currentUser.getId());
 		Integer position = null;
 		if (currentUserScore != null) {
 			position = 1;
 			for (String key : scores.keySet()) {
-				if (scores.get(key) > currentUserScore) {
+				if (scores.get(key) > currentUserScore) {					
 					position++;
 				}
 			}
@@ -115,8 +132,72 @@ public abstract class AbstractController {
 		return position;
 	}
 
+	public List<TopListData> getToplist(final String groupId, final int num) {
+		List<User> users = groupId == null ? getUserService().getUsers() : 	getUserService().getUsers(groupId);
+		List<TopListData> toplist = new LinkedList<TopListData>();
+
+		// Get all users points and returl list with num
+		TopListData t = new TopListData();
+		t.setGroupName("Ateles");
+		t.setPoints(21);
+		t.setUserRealName("Susen Gladén");
+		toplist.add(t);
+		
+		t = new TopListData();
+		t.setGroupName("Ateles");
+		t.setPoints(21);
+		t.setUserRealName("Susen Gladén");
+		toplist.add(t);
+		t = new TopListData();
+		t.setGroupName("Ateles");
+		t.setPoints(21);
+		t.setUserRealName("Susen Gladén");
+		toplist.add(t);
+		t = new TopListData();
+		t.setGroupName("Ateles");
+		t.setPoints(21);
+		t.setUserRealName("Susen Gladén");
+		toplist.add(t);
+		t = new TopListData();
+		t.setGroupName("Ateles");
+		t.setPoints(21);
+		t.setUserRealName("Susen Gladén");
+		toplist.add(t);
+		
+		return toplist;
+		
+	}
+	
+	public List<TopListData> getToplist(final int num) {
+		return getToplist(null, num);
+	}
+
+	public List<GameFormData> getNextGames(final int num) {
+		List<Game> games = getGameService().getSortedAvailableGames();
+		List<GameFormData> nextGames = new LinkedList<GameFormData>();
+		Date now = new Date();
+
+		
+		int counter = 0;
+		for (Game game : games) {
+		    if(game.getKickoff().compareTo(now) < 1) {
+		    	String tournamentId = game.getTournamentId();
+		    	counter++;
+				GameFormData formData = new GameFormData(game);
+				formData.setAwayTeam(getTeamService().getTeam(tournamentId, game.getAwayTeamId()));
+				formData.setHomeTeam(getTeamService().getTeam(tournamentId, game.getHomeTeamId()));
+				formData.setKickoff(game.getKickoff());
+				
+				nextGames.add(formData);
+				if(counter >= num) {
+					return nextGames;
+				}
+			}
+		}
+		return nextGames;
+	}
+	
 	public boolean hasCoupon(final User user) {
-		System.out.println("Inne i has coupon:" + couponService.getCoupon(user.getId()));
 		return couponService.getCoupon(user.getId()) == null ? false : true;
 	}
 
@@ -183,15 +264,16 @@ public abstract class AbstractController {
 	}
 
 	public boolean isRegistrationOpen() {
-        TimeZone tz = TimeZone.getTimeZone("Europe/Stockholm");
+        /*TimeZone tz = TimeZone.getTimeZone("Europe/Stockholm");
         GregorianCalendar current = new GregorianCalendar();
         current.setTimeZone(tz);
         GregorianCalendar deadline = new GregorianCalendar(2012, Calendar.JUNE, 8, 12, 0);
         deadline.setTimeZone(tz);
         
-        return current.before(deadline);
+        return current.before(deadline); */
+		return false;
 	}
-
+	
 	public UserService getUserService() {
 		return userService;
 	}
