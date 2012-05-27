@@ -116,7 +116,6 @@ public abstract class AbstractController {
 	}
 
 	public boolean hasCoupon(final User user) {
-		System.out.println("Inne i has coupon:" + couponService.getCoupon(user.getId()));
 		return couponService.getCoupon(user.getId()) == null ? false : true;
 	}
 

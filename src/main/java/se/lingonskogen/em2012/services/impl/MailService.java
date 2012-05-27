@@ -55,7 +55,6 @@ public class MailService
             writer.write("\r\n");
             line = reader.readLine();
         }
-        System.out.println(writer.toString());
         Session session = Session.getDefaultInstance(new Properties(), null);
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(FROM_ADDRESS, FROM_NAME));

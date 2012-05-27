@@ -88,7 +88,6 @@ public class UserPageController extends AbstractController {
 		}
 		
 		if (result.hasErrors()) {
-			System.out.println("Formuläret innehåller fel");
 			return PAGE_NAME;
 		}
 
@@ -96,7 +95,6 @@ public class UserPageController extends AbstractController {
 		String winnerTemId = form.getWinnerTeamId();
 		// TODO: Get message from message file
 		//model.addAttribute("successMessage", "Game blev skapad");
-		System.out.println("winnerTemId: " + winnerTemId );
 		model.addAttribute("form", form);
 		model.addAttribute("submitAction", "Uppdatera");
 		
