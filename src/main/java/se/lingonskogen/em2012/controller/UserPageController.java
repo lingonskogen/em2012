@@ -119,7 +119,7 @@ public class UserPageController extends AbstractController
 
         coupon.setWinnerTeamId(form.getWinnerTeamId());
         getCouponService().updateCoupon(coupon);
-        for (PredictionFormData pfd : form.getPredictions())
+        for (PredictionFormData pfd : form.getPredictionMap().values())
         {
             Prediction prediction = getPredictionService().newInstance(groupId, userId, couponId, tournamentId, pfd.getGameId(), pfd.getHomeScore(), pfd.getAwayScore());
             getPredictionService().updatePrediction(prediction);

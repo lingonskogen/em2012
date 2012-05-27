@@ -4,4 +4,7 @@
   <!--  This variable is defined in your POM file -->
   <version>1</version>
   <sessions-enabled>true</sessions-enabled>
+  <system-properties>
+    <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+  </system-properties>
 </appengine-web-app>
