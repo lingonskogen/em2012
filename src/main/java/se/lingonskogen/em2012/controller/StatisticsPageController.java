@@ -37,6 +37,12 @@ public class StatisticsPageController extends AbstractController {
 			user = getUserService().getUser(name);
 		}
 
+		if (!hasCoupon(user))
+		{
+	        setParameters(model, principal);
+	        model.addAttribute("noCoupon", true);
+		    return PAGE_NAME;
+		}
 		if (!isRegistrationOpen()) {
 			StatisticsFormData data = new StatisticsFormData();
 			List<User> users = getUserService().getUsers(user.getGroupId());

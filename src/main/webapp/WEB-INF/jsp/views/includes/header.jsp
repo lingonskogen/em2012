@@ -69,10 +69,12 @@
 							<li <c:if test="${currentPage == 'mypage'}">class="active"</c:if>><a
 								href="mypage.html">Min sida</a>
 							</li>
-							<li
-								<c:if test="${currentPage == 'statistics'}">class="active"</c:if>><a
-								href="statistics.html">Statistik</a>
-							</li>
+							 <c:if test="${hasCoupon}">
+								<li
+									<c:if test="${currentPage == 'statistics'}">class="active"</c:if>><a
+									href="statistics.html">Statistik</a>
+								</li>
+							</c:if>
 							<li <c:if test="${currentPage == 'rules'}">class="active"</c:if>><a
 								href="rules.html">Regler</a>
 							</li>
