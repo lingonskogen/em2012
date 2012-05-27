@@ -6,6 +6,11 @@
 		<section>
 			<legend>Resultat/Tipsrader</legend>
 			<c:choose>
+			  <c:when test="${noCoupon}">
+          <div class="obs">
+            <b style="color: red;">OBS!</b> Du har inte skapat någon tipsrad än! Om det inte är försent kan du göra det på <a href="/mypage.html">Min Sida</a>
+            </div>
+			  </c:when>
 				<c:when test="${registrationOpen}">
 				 Resultat och ripsrader blir synliga när tiden för registrering har gått ut!
 				</c:when>

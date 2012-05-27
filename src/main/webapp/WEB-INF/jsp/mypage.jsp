@@ -59,7 +59,9 @@
 						commandName="form">
 						<fieldset>
 							<legend>Min tipsrad</legend>
-
+							<c:if test="${errorMessage != null}">
+							  <p class="alert alert-error">${errorMessage}</p>
+							</c:if>
 							<table class="table table-striped">
 								<tr>
 									<th>Datum</th>
@@ -76,9 +78,9 @@
 										<td>-</td>
 										<td>${predictionformdata.awayTeamName}</td>
 										<td>
-										  <input name="predictionMap[${predictionformdata.gameId}].homeScore" value="${form.predictionMap[predictionformdata.gameId].homeScore}" />
+                      <form:input path="predictionMap[${predictionformdata.gameId}].homeScore" value="${form.predictionMap[predictionformdata.gameId].homeScore}" />
 										  -
-										  <input name="predictionMap[${predictionformdata.gameId}].awayScore" value="${form.predictionMap[predictionformdata.gameId].awayScore}" />
+										  <form:input path="predictionMap[${predictionformdata.gameId}].awayScore" value="${form.predictionMap[predictionformdata.gameId].awayScore}" />
 										</td>
 									</tr>
 								</c:forEach>

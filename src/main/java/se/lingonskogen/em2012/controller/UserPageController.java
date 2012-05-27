@@ -103,9 +103,13 @@ System.out.println("Ska nu spara");
         setParameters(model, principal, user);
         setupCoupon(user, model, form);
         model.addAttribute("submitAction", "Uppdatera");
-        
-        if (result.hasErrors()) {
-        	System.out.println("FOrm has errors");
+
+        if (result.hasErrors())
+        {
+            int errorCount = result.getErrorCount();
+            String msg = "Du angav felaktiga värden (" + errorCount + " st) så tipsraden sparades inte!";
+            model.addAttribute("errorMessage", msg);
+
             return PAGE_NAME;
         }
 
@@ -188,10 +192,20 @@ System.out.println("Ska nu spara");
             }
         }
         
-        if (valueForm != null) {
-            for (String gameId : valueForm.getPredictionMap().keySet())  {
-                form.getPrediction(gameId).setHomeScore(valueForm.getPrediction(gameId).getHomeScore());
-                form.getPrediction(gameId).setAwayScore(valueForm.getPrediction(gameId).getAwayScore());
+        if (valueForm != null)
+        {
+            for (String gameId : valueForm.getPredictionMap().keySet())
+            {
+                System.out.println(gameId + ": " + valueForm.getPrediction(gameId).getHomeScore() + " -" +
+                		" " + valueForm.getPrediction(gameId).getAwayScore());
+                if (valueForm.getPrediction(gameId).getHomeScore() != null)
+                {
+                    form.getPrediction(gameId).setHomeScore(valueForm.getPrediction(gameId).getHomeScore());
+                }
+                if (valueForm.getPrediction(gameId).getAwayScore() != null)
+                {
+                    form.getPrediction(gameId).setAwayScore(valueForm.getPrediction(gameId).getAwayScore());
+                }
             }
             form.setWinnerTeamId(valueForm.getWinnerTeamId());
         }
