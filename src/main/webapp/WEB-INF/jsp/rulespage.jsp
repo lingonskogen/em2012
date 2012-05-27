@@ -11,15 +11,18 @@ Sista dag för att registrera sig eller ändra sin tipsrad är fredag den 8:e ju
 </p>
 
 <p>Varje person lägger in 100. Sedan får vinnaren hela potten.<br />
-Skulle antalet spelare bli fler än 10 så får vinnaren 80% och tvåan får 20%.
+Skulle antalet spelare bli fler än 10 så får vinnaren 80% och tvåan får 20%.<br />
+Skulle antalet spelare bli fler än 20 så får vinnaren 75%, tvåan 15% och trean 10%.
 </p>
 <p>
 Blir vi 10 st: Vinnaren får 1000, 2:an ingenting.<br />
-Blir vi 11 st: Vinnaren får 890 2:an får 220.
+Blir vi 11 st: Vinnaren får 890 2:an får 220.<br />
+Blir vi 20 st: Vinnaren får 1600 2:an får 400.<br />
+Blir vi 21 st: Vinnaren får 1 575, 2:an får 315 och 3:an får 210.<br />
 </p>
 <p>
-Man kan tippa på alla grupp-spelsmatcher samt en slutvinnare.<br /> 
-Möjlighet att tippa på slutspelsmatcherna kommer inte finnas.
+Man kan tippa på alla gruppspels-matcher samt en slutvinnare.<br /> 
+Möjlighet att tippa på slutspels-matcherna kommer inte finnas.
 </p>
 
 <p>

@@ -17,8 +17,13 @@ public class StartPageController extends AbstractController {
 	    
 	    if(isRegistrationOpen()) {
 	    	return "prestartpage";
-	    }
+	    }    
 	    
+	    // Setup toplist elements
+	    model.addAttribute("groupToplist", getToplist("ateles", 5));
+	    model.addAttribute("globalToplist", getToplist(5));
+	    
+	    model.addAttribute("nextGames", getNextGames(2));
 	    return "startpage";
 	}
 

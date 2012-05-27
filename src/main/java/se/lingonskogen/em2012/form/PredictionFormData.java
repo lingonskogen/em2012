@@ -7,6 +7,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
@@ -17,10 +18,16 @@ public class PredictionFormData {
 	private String homeTeamName;
 	private String awayTeamName;
 
+	@NotEmpty
+	@NumberFormat(style = Style.NUMBER)
 	private Long homeScore;
 
+    @NotEmpty
+    @NumberFormat(style = Style.NUMBER)
 	private Long awayScore;
 
+	public PredictionFormData() {}
+	
 	public PredictionFormData(final Long homeScore, final Long awayScore) {
 		this.homeScore = homeScore;
 		this.awayScore = awayScore;
@@ -62,6 +69,10 @@ public class PredictionFormData {
 	}
 
 	public String getKickoff() {
+	    if (kickoff == null)
+	    {
+	        return null;
+	    }
 		SimpleDateFormat format = new SimpleDateFormat("d/M HH:mm");
 		return format.format(kickoff);
 	}

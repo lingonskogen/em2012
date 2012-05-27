@@ -2,21 +2,18 @@ package se.lingonskogen.em2012.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
+import org.springframework.context.MessageSource;
 import org.springframework.ui.ModelMap;
 
 import se.lingonskogen.em2012.domain.Coupon;
 import se.lingonskogen.em2012.domain.Game;
 import se.lingonskogen.em2012.domain.Prediction;
-import se.lingonskogen.em2012.domain.Team;
 import se.lingonskogen.em2012.domain.Tournament;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.form.StatisticsFormData.TournamentFormData.GameFormData;
@@ -39,6 +36,10 @@ public abstract class AbstractController {
 	private TournamentService tournamentService;
 	private TeamService teamService;
 
+	private MessageSource messageSource;
+
+	protected static final String DEFAULT_LANG = "sv";
+	
 	public abstract String getCurrentPageId();
 
 	public void setParameters(final ModelMap model, final Principal principal) {
@@ -288,5 +289,12 @@ public abstract class AbstractController {
 
 	public void setGroupService(final GroupService groupService) {
 		this.groupService = groupService;
+	}
+
+	public void setMessageSource(final MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+	public MessageSource getMessageSource() {
+		return messageSource;
 	}
 }

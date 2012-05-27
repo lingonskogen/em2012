@@ -1,6 +1,7 @@
 package se.lingonskogen.em2012.controller;
 
 import java.security.Principal;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -48,26 +49,26 @@ public class ForgottenPasswordController extends AbstractController {
 		}
 		String userName = form.getUserName();
 		User user = getUserService().getUser(userName);
-		if (user == null)
-		{
-		    // TODO: add "no user" error
+		if (user == null) {
             model.addAttribute("form", form);
-            ObjectError err = new FieldError("form", "userName", "Invalid mail");
+            
+            ObjectError err = new FieldError("form", "userName", 
+            		getMessageSource().getMessage("pwdPage.noSuchUser", null, new Locale(DEFAULT_LANG)));
             result.addError(err);
-		    return PAGE_NAME;
+		    
+            return PAGE_NAME;
 		}
 		
 		String password = Long.toHexString(System.currentTimeMillis()).toLowerCase();
         user.setPassword(password);
         getUserService().updateUser(user);
-        System.out.println("User " + user.getUserName() + " new password " + password);
 
         MailService mailService = new MailService();
         mailService.setSubstitution(Substitution.PASSWORD, password);
         mailService.sendMail(user, Template.NEW_PWD, true);
         
 		// TODO: Msg from file
-		model.addAttribute("newPwdSent","Nytt lösenord skickat");
+		model.addAttribute("newPwdSent", getMessageSource().getMessage("pwdPage.pwdSent", null, new Locale(DEFAULT_LANG)));
 		model.addAttribute("form", form);
 		return PAGE_NAME;
 	}

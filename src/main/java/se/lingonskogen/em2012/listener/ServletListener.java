@@ -64,6 +64,13 @@ public class ServletListener implements ServletContextListener
                 group.setName(type.toString());
                 String groupId = groupDao.create(group);
 
+                User foobar = new User();
+                foobar.setGroupId(groupId);
+                foobar.setPassword("123".toLowerCase());
+                foobar.setRealName("Foo Bar");
+                foobar.setUserName("foo@bar.com");
+                userdao.create(foobar);
+
                 List<String> names = new ArrayList<String>();
                 names.add("Tobbe");
                 names.add("Susen");

@@ -36,7 +36,6 @@ public class PredictionController extends AbstractAdminController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String processForm(@ModelAttribute(value="searchForm") @Valid SearchForm searchForm, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			System.out.println("searchForm-error in Prediction Controller");
 			searchForm.setUserId(null);
 		}
 				

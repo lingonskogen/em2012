@@ -1,6 +1,7 @@
 package se.lingonskogen.em2012.controller.admin;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import se.lingonskogen.em2012.domain.Coupon;
 import se.lingonskogen.em2012.domain.DaoException;
 import se.lingonskogen.em2012.domain.Group;
 import se.lingonskogen.em2012.domain.Prediction;
+import se.lingonskogen.em2012.domain.Team;
 import se.lingonskogen.em2012.domain.Tournament;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.services.CouponService;
@@ -116,6 +118,22 @@ public abstract class AbstractAdminController {
 		
 		// Then delete the coupon
 		getCouponService().deleteCoupon(couponId, userId, groupId);
+	}
+
+	public Map<String, Team> getTeamsData() {
+		Map<String, Team> t = new LinkedHashMap<String, Team>();
+		
+		for (Team team : getTeamService().getAvailableTeams()) {
+			Tournament tournament = getTournamentService().getTournament(team.getTournamentId());
+			String tName = null;
+			if(tournament!=null) {
+				tName = tournament.getName();
+				team.setTournamentId(tName);
+			}
+			t.put(tName+team.getCode(), team);
+		}
+
+		return t;
 	}
 	
 	public void deletePrediction(final Prediction prediction) throws DaoException {

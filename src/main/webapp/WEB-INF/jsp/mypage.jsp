@@ -2,7 +2,7 @@
 <%@ include file="./views/includes/header.jsp"%>
 
 <div class="row">
-	<div class="span6">
+	<div class="span5">
 		<section>
 
 			<legend>Min sida</legend>
@@ -13,7 +13,7 @@
 					<td>${user.realName}</td>
 				</tr>
 				<tr>
-					<td>Användarnamn/email:</td>
+					<td>email:</td>
 					<td>${user.userName}</td>
 				</tr>
 				<tr>
@@ -43,7 +43,7 @@
 			</c:choose>
 		</section>
 	</div>
-	<div class="span6">
+	<div class="span7">
 		<section>
 
 			<c:choose>
@@ -66,15 +66,14 @@
 									<tr>
 										<td>${predictionformdata.kickoff}</td>
 
-										<td style="text-align: right;"><input type="hidden" name="gameId" id="gameId"
-											value="${predictionformdata.gameId}" />
-											${predictionformdata.homeTeamName}</td>
+										<td style="text-align: right;">${predictionformdata.homeTeamName}</td>
 										<td>-</td>
 										<td>${predictionformdata.awayTeamName}</td>
-										<td><input name="predictions[${status.index}].homeScore"
-											value="${predictionformdata.homeScore}" /> - <input
-											name="predictions[${status.index}].awayScore"
-											value="${predictionformdata.awayScore}" /></td>
+										<td>
+										  <input name="predictionMap[${predictionformdata.gameId}].homeScore" value="${form.predictionMap[predictionformdata.gameId].homeScore}" />
+										  -
+										  <input name="predictionMap[${predictionformdata.gameId}].awayScore" value="${form.predictionMap[predictionformdata.gameId].awayScore}" />
+										</td>
 									</tr>
 								</c:forEach>
 								<tr>

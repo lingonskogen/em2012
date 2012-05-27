@@ -123,6 +123,7 @@ public class GameController extends AbstractAdminController {
 		
 		return teams;
 	}
+	
 	private Map<String, String> getTournaments() {
 		Map<String, String> t = new LinkedHashMap<String, String>();
 		

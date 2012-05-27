@@ -11,6 +11,7 @@ public class TournamentDao extends AbstractDao<Tournament> {
 	@Override
 	protected void populateEntity(Entity entity, Tournament bean) {
 		entity.setProperty(Tournament.NAME, bean.getName());
+		entity.setProperty(Tournament.WINNERTEAM, bean.getWinnerTeamId());
 	}
 
 	@Override
@@ -18,6 +19,7 @@ public class TournamentDao extends AbstractDao<Tournament> {
 		Tournament tournament = new Tournament();
 		tournament.setId(entity.getKey().getName());
 		tournament.setName((String) entity.getProperty(Tournament.NAME));
+		tournament.setWinnerTeamId((String) entity.getProperty(Tournament.WINNERTEAM));
 		return tournament;
 	}
 

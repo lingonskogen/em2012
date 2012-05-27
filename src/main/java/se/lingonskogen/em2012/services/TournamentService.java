@@ -15,4 +15,6 @@ public interface TournamentService {
 	List<Tournament> getAvailableTournaments();
 	Tournament getTournament(final String tournamentId);
 	String getTournamentName(final String tournamentId);
+	
+	void updateTournament(final Tournament tournament) throws DaoException;
 }

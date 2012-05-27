@@ -18,8 +18,9 @@ import se.lingonskogen.em2012.form.admin.TournamentForm;
 @RequestMapping("/admin/tournamentpage.html")
 public class TournamentController extends AbstractAdminController {
 
-    final private static String TOURNAMENT_PAGE = "/admin/tournamentpage";
-
+    private final static String TOURNAMENT_PAGE = "/admin/tournamentpage";
+    private final static String UPDATE_BASE_LINK = "/admin/tournamentupdatepage.html";
+    
 	@RequestMapping(method = RequestMethod.GET)
 	public String initForm(ModelMap model) {
 
@@ -27,6 +28,7 @@ public class TournamentController extends AbstractAdminController {
 
 		setParameters(model, tForm);
 
+		model.addAttribute("updateLink", UPDATE_BASE_LINK);
 		// return form view
 		return TOURNAMENT_PAGE;
 	}
