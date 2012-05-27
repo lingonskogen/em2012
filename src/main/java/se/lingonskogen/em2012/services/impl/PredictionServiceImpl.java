@@ -13,10 +13,15 @@ public class PredictionServiceImpl implements PredictionService {
 
 	private PredictionDao predictionDao;
 	
-	@Override
-	public String createPrediction(Prediction prediction) throws DaoException {
-		return predictionDao.create(prediction);
-	}
+    @Override
+    public String createPrediction(Prediction prediction) throws DaoException {
+        return predictionDao.create(prediction);
+    }
+
+    @Override
+    public void updatePrediction(Prediction prediction) throws DaoException {
+        predictionDao.update(prediction);
+    }
 
 	@Override
 	public Prediction newInstance(String groupId, String userId,
