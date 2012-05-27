@@ -83,6 +83,7 @@ public class UserPageController extends AbstractController
         model.addAttribute("totalUsers", getTotalNumUsers(user.getGroupId()));
         model.addAttribute("hasCoupon", hasCoupon(user));
         model.addAttribute("couponUrl", getCouponUrl());
+        model.addAttribute("userPoints", getUserPoints(user));
 
         super.setParameters(model, principal);
     }
@@ -91,10 +92,11 @@ public class UserPageController extends AbstractController
     @RequestMapping(method = RequestMethod.POST)
     public String processForm(@ModelAttribute(value = "form") @Valid CouponForm form,
             BindingResult result, ModelMap model, Principal principal) throws DaoException {
-
+System.out.println("Ska nu spara");
         User user = null;
         if (principal != null)  {
-            String name = principal.getName();
+        	System.out.println("Principal INTE null");
+        	String name = principal.getName();
             user = getUserService().getUser(name);
         }
 
@@ -103,6 +105,7 @@ public class UserPageController extends AbstractController
         model.addAttribute("submitAction", "Uppdatera");
         
         if (result.hasErrors()) {
+        	System.out.println("FOrm has errors");
             return PAGE_NAME;
         }
 
@@ -111,13 +114,15 @@ public class UserPageController extends AbstractController
         Coupon coupon = getCouponService().getCoupon(user.getId());
         String tournamentId = coupon.getTournamentId();
         String couponId = coupon.getId();
-
+        System.out.println("Ska nu spara predictions");
         coupon.setWinnerTeamId(form.getWinnerTeamId());
         getCouponService().updateCoupon(coupon);
         for (PredictionFormData pfd : form.getPredictionMap().values()) {
             Prediction prediction = getPredictionService().newInstance(groupId, userId, couponId, tournamentId, pfd.getGameId(), pfd.getHomeScore(), pfd.getAwayScore());
             getPredictionService().updatePrediction(prediction);
         }
+        
+        setParameters(model, principal, user);
         return PAGE_NAME;
     }
 

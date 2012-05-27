@@ -176,6 +176,17 @@ public abstract class AbstractController {
 		return scores;
 	}
 	
+	public Integer getUserPoints(final User user) {
+		List<User> users = new ArrayList<User>();
+		Tournament tournament = getTournamentService()
+				.getAvailableTournaments().get(0);
+		users.add(user);
+		
+		Map<String, Integer> userPointsMap = getScores(users, tournament);
+		
+		return userPointsMap.get(user.getId());
+	}
+	
 	public List<TopListData> getToplist(final String groupId, final int num) {
 		List<User> users = groupId == null ? getUserService().getUsers() : 	getUserService().getUsers(groupId);
 		List<TopListData> toplist = new LinkedList<TopListData>();
