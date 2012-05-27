@@ -20,10 +20,12 @@ public class PredictionFormData {
 
 	@NotEmpty
 	@NumberFormat(style = Style.NUMBER)
+	@Min(0)
 	private Long homeScore;
 
     @NotEmpty
     @NumberFormat(style = Style.NUMBER)
+    @Min(0)
 	private Long awayScore;
 
 	public PredictionFormData() {}
