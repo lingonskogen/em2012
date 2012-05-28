@@ -24,6 +24,7 @@ public class StartPageController extends AbstractController {
 		setParameters(model, principal);
 	    
 	    if(isRegistrationOpen()) {
+	    	model.addAttribute("numRegistreredCoupons", getNumRegistreredCoupons(user.getGroupId()));
 	    	return "prestartpage";
 	    }    
 	    
@@ -32,6 +33,7 @@ public class StartPageController extends AbstractController {
 	    model.addAttribute("globalToplist", getToplist(5));
 	    
 	    model.addAttribute("nextGames", getNextGames(2));
+	    	    
 	    return "startpage";
 	}
 

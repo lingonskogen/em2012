@@ -60,11 +60,13 @@ public class UserPageController extends AbstractController
         }
 
         if (action != null && !action.equals("") && action.equals("createcoupon")) {
-        	// Create coupon for user
-            try {
-            	createDefaultCoupon(user);
-            } catch (Exception e) {
-                LOG.log(Level.WARNING, "Error when " + user.getId() + " tried to create coupon", e);
+        	// Create coupon for user - only if registration is open
+            if (isRegistrationOpen()) {
+            	try {
+            		createDefaultCoupon(user);
+            	} catch (Exception e) {
+            		LOG.log(Level.WARNING, "Error when " + user.getId() + " tried to create coupon", e);
+            	}
             }
         }
 
