@@ -21,7 +21,7 @@ public class MailService
 
     private static final String FROM_NAME = "Em-Tipset";
 
-    private static final String SITEURL = "http://em2012.appspot.com";
+    private static final String SITEURL = "http://emtipset-2012.appspot.com/";
 
     private final Map<String, String> subs = new HashMap<String, String>();
     

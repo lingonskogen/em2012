@@ -40,8 +40,10 @@ public class ForgottenPasswordController extends AbstractController {
 	
     // Process the form.
 	@RequestMapping(method = RequestMethod.POST)
-	public String processForm(@ModelAttribute(value="form") @Valid ForgottenPasswordForm form, BindingResult result, ModelMap model) throws Exception {
+	public String processForm(@ModelAttribute(value="form") @Valid ForgottenPasswordForm form, BindingResult result, ModelMap model, Principal principals) throws Exception {
 
+		setParameters(model, principals);
+		
 		if (result.hasErrors()) {
 			// command object
 			model.addAttribute("form", form);			

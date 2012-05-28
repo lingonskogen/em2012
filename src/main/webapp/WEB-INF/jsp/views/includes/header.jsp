@@ -24,7 +24,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="span4">
-				<a class="brand" href="start.html"><img
+				<a class="brand" href="/start.html"><img
 					src="/images/euro2012.png" />
 				</a>
 			</div>
@@ -41,7 +41,7 @@
 					  <br />
 					  <p style="padding-right: 20px">
 						<a href="/forgotten-password.html">Glömt lösenordet?</a><br />
-						<a href="/register.html">Registrera dig</a>
+						<c:if test="${registrationOpen}"><a href="/register.html">Registrera dig</a></c:if>
 						</p>
 						<form name='f' action='<c:url value='j_spring_security_check'/>'
 							class="form-inline" method='POST'>
@@ -72,7 +72,7 @@
 							 <c:if test="${hasCoupon}">
 								<li
 									<c:if test="${currentPage == 'statistics'}">class="active"</c:if>><a
-									href="statistics.html">Statistik</a>
+									href="statistics.html">Resultat</a>
 								</li>
 							</c:if>
 							<li <c:if test="${currentPage == 'rules'}">class="active"</c:if>><a

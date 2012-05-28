@@ -81,7 +81,6 @@ public class UserPageController extends AbstractController
         model.addAttribute("groupName", groupName);
         model.addAttribute("position", getPosition(user));
         model.addAttribute("totalUsers", getTotalNumUsers(user.getGroupId()));
-        model.addAttribute("hasCoupon", hasCoupon(user));
         model.addAttribute("couponUrl", getCouponUrl());
         model.addAttribute("userPoints", getUserPoints(user));
 
@@ -91,23 +90,28 @@ public class UserPageController extends AbstractController
     // Process the post request
     @RequestMapping(method = RequestMethod.POST)
     public String processForm(@ModelAttribute(value = "form") @Valid CouponForm form,
-            BindingResult result, ModelMap model, Principal principal) throws DaoException {
-System.out.println("Ska nu spara");
+            BindingResult result, ModelMap model, Principal principal) throws DaoException, Exception {
+
         User user = null;
         if (principal != null)  {
-        	System.out.println("Principal INTE null");
         	String name = principal.getName();
             user = getUserService().getUser(name);
         }
-
+       
         setParameters(model, principal, user);
         setupCoupon(user, model, form);
         model.addAttribute("submitAction", "Uppdatera");
 
-        if (result.hasErrors())
-        {
+        // Only allowed to update if registration is open
+        if (!isRegistrationOpen()) {
+        	String msg = "Registration is closed - you are not allowed to update";
+            model.addAttribute("errorMessage", msg);
+            return PAGE_NAME;
+        }
+        
+        if (result.hasErrors()) {
             int errorCount = result.getErrorCount();
-            String msg = "Du angav felaktiga värden (" + errorCount + " st) så tipsraden sparades inte!";
+            String msg = "You entered invalid values: Your row was not saved!";
             model.addAttribute("errorMessage", msg);
 
             return PAGE_NAME;
@@ -118,7 +122,7 @@ System.out.println("Ska nu spara");
         Coupon coupon = getCouponService().getCoupon(user.getId());
         String tournamentId = coupon.getTournamentId();
         String couponId = coupon.getId();
-        System.out.println("Ska nu spara predictions");
+
         coupon.setWinnerTeamId(form.getWinnerTeamId());
         getCouponService().updateCoupon(coupon);
         List<Prediction> predictions = new ArrayList<Prediction>(form.getPredictionMap().values().size());
@@ -127,8 +131,11 @@ System.out.println("Ska nu spara");
             Prediction prediction = getPredictionService().newInstance(groupId, userId, couponId, tournamentId, pfd.getGameId(), pfd.getHomeScore(), pfd.getAwayScore());
             predictions.add(prediction);
         }
+
         getPredictionService().updatePredictions(predictions);
-        setParameters(model, principal, user);
+        mailCoupon(user);
+        
+       //setParameters(model, principal, user);
         return PAGE_NAME;
     }
 
@@ -200,8 +207,6 @@ System.out.println("Ska nu spara");
         {
             for (String gameId : valueForm.getPredictionMap().keySet())
             {
-                System.out.println(gameId + ": " + valueForm.getPrediction(gameId).getHomeScore() + " -" +
-                		" " + valueForm.getPrediction(gameId).getAwayScore());
                 if (valueForm.getPrediction(gameId).getHomeScore() != null)
                 {
                     form.getPrediction(gameId).setHomeScore(valueForm.getPrediction(gameId).getHomeScore());
