@@ -2,6 +2,7 @@ package se.lingonskogen.em2012.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
@@ -9,6 +10,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyFactory.Builder;
 
 public class GameDao extends AbstractDao<Game> {
+	
+	private Logger LOG = Logger.getLogger(GameDao.class.getName());
+	
 	@Override
 	protected void populateEntity(Entity entity, Game game) {
 		entity.setProperty(Game.HOMETEAM, game.getHomeTeamId());
@@ -82,6 +86,15 @@ public class GameDao extends AbstractDao<Game> {
 				Tournament.class.getSimpleName(), tournamentId);
 		builder.addChild(Game.class.getSimpleName(), gameId);
 		return builder.getKey();
+	}
+	@Override
+	protected Logger getLogger() {
+		return LOG;
+	}
+
+	@Override
+	protected String getType() {
+		return "Game";
 	}
 
 }

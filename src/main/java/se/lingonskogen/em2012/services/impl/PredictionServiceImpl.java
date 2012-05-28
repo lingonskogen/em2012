@@ -3,6 +3,9 @@ package se.lingonskogen.em2012.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
+
 import se.lingonskogen.em2012.domain.DaoException;
 import se.lingonskogen.em2012.domain.Prediction;
 import se.lingonskogen.em2012.domain.PredictionDao;
@@ -13,9 +16,9 @@ public class PredictionServiceImpl implements PredictionService {
 
 	private PredictionDao predictionDao;
 	
-    @Override
+	@Override
     public String createPrediction(Prediction prediction) throws DaoException {
-        return predictionDao.create(prediction);
+    	return predictionDao.create(prediction);
     }
 
     @Override
@@ -37,7 +40,6 @@ public class PredictionServiceImpl implements PredictionService {
 		prediction.setUserId(userId);
 		return prediction;
 	}
-
 	public Prediction getPrediction(final String groupId, final String userId, final String couponId, final String predictionId) throws DaoException {
 		return predictionDao.find(groupId, userId, couponId, predictionId);
 	}

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
@@ -39,31 +41,30 @@ public class UserPageController extends AbstractController
     private static final String PAGE_NAME = "mypage";
     private static final String DEFAULT_WINNER_TEAM_ID = "sweden";
 
+    private Logger LOG = Logger.getLogger(UserPageController.class.getName());
+    
     @InitBinder
-    public void initBinder(WebDataBinder binder)
-    {
+    public void initBinder(WebDataBinder binder) {
         binder.setAutoGrowNestedPaths(false);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String showPage(
             @RequestParam(value = "action", defaultValue = "") String action,
-            final ModelMap model, final Principal principal) throws Exception
-    {
+            final ModelMap model, final Principal principal) throws Exception {
 
         User user = null;
-        if (principal != null)
-        {
+        if (principal != null) {
             String name = principal.getName();
             user = getUserService().getUser(name);
         }
 
-        if (action != null && !action.equals(""))
-        {
-            if (action.equals("createcoupon"))
-            {
-                // Create coupon for user
-                createDefaultCoupon(user);
+        if (action != null && !action.equals("") && action.equals("createcoupon")) {
+        	// Create coupon for user
+            try {
+            	createDefaultCoupon(user);
+            } catch (Exception e) {
+                LOG.log(Level.WARNING, "Error when " + user.getId() + " tried to create coupon", e);
             }
         }
 
@@ -73,8 +74,7 @@ public class UserPageController extends AbstractController
         return PAGE_NAME;
     }
 
-    private void setParameters(final ModelMap model, final Principal principal, final User user)
-    {
+    private void setParameters(final ModelMap model, final Principal principal, final User user) {
         String groupName = getGroupService().getGroupName(user.getGroupId());
 
         model.addAttribute("user", user);
@@ -83,6 +83,7 @@ public class UserPageController extends AbstractController
         model.addAttribute("totalUsers", getTotalNumUsers(user.getGroupId()));
         model.addAttribute("hasCoupon", hasCoupon(user));
         model.addAttribute("couponUrl", getCouponUrl());
+        model.addAttribute("userPoints", getUserPoints(user));
 
         super.setParameters(model, principal);
     }
@@ -90,24 +91,25 @@ public class UserPageController extends AbstractController
     // Process the post request
     @RequestMapping(method = RequestMethod.POST)
     public String processForm(@ModelAttribute(value = "form") @Valid CouponForm form,
-            BindingResult result, ModelMap model, Principal principal) throws DaoException
-    {
-
+            BindingResult result, ModelMap model, Principal principal) throws DaoException {
+System.out.println("Ska nu spara");
         User user = null;
-        if (principal != null)
-        {
-            String name = principal.getName();
+        if (principal != null)  {
+        	System.out.println("Principal INTE null");
+        	String name = principal.getName();
             user = getUserService().getUser(name);
         }
 
         setParameters(model, principal, user);
         setupCoupon(user, model, form);
         model.addAttribute("submitAction", "Uppdatera");
+
         if (result.hasErrors())
         {
             int errorCount = result.getErrorCount();
             String msg = "Du angav felaktiga värden (" + errorCount + " st) så tipsraden sparades inte!";
             model.addAttribute("errorMessage", msg);
+
             return PAGE_NAME;
         }
 
@@ -116,24 +118,23 @@ public class UserPageController extends AbstractController
         Coupon coupon = getCouponService().getCoupon(user.getId());
         String tournamentId = coupon.getTournamentId();
         String couponId = coupon.getId();
-
+        System.out.println("Ska nu spara predictions");
         coupon.setWinnerTeamId(form.getWinnerTeamId());
         getCouponService().updateCoupon(coupon);
-        for (PredictionFormData pfd : form.getPredictionMap().values())
-        {
+        for (PredictionFormData pfd : form.getPredictionMap().values()) {
             Prediction prediction = getPredictionService().newInstance(groupId, userId, couponId, tournamentId, pfd.getGameId(), pfd.getHomeScore(), pfd.getAwayScore());
             getPredictionService().updatePrediction(prediction);
         }
+        
+        setParameters(model, principal, user);
         return PAGE_NAME;
     }
 
-    private void createDefaultCoupon(final User user) throws Exception
-    {
+    private void createDefaultCoupon(final User user) throws Exception {
 
         // Check that user does not have a coupon
         Coupon coupon = getCouponService().getCoupon(user.getId());
-        if (coupon == null)
-        {
+        if (coupon == null) {
             String groupId = user.getGroupId();
             String userId = user.getId();
             String tournamentId = getTournamentService()
@@ -143,12 +144,11 @@ public class UserPageController extends AbstractController
 
             String couponId = getCouponService().createCoupon(coupon);
             if (couponId == null)
-                throw new Exception("Error when creating coupon");
+            	throw new Exception("Error when creating coupon");
 
             // Create 0 - 0 predictions for user and all games
             List<Game> games = getGameService().getAvailableGames();
-            for (Game game : games)
-            {
+            for (Game game : games) {
                 Prediction prediction = getPredictionService().newInstance(
                         groupId, userId, couponId, tournamentId,
                         game.getId(), Long.valueOf(0), Long.valueOf(0));
@@ -167,28 +167,26 @@ public class UserPageController extends AbstractController
         form = new CouponForm();
         form.setTeams(getTeamService().getAvailableTeams());
 
-        for (int i = 0; i < games.size(); i++)
-        {
+        for (int i = 0; i < games.size(); i++) {
             Game game = games.get(i);
             String homeTeamName = getTeamService().getTeamName(tournamentId, game.getHomeTeamId());
             String awayTeamName = getTeamService().getTeamName(tournamentId, game.getAwayTeamId());
             PredictionFormData formData = new PredictionFormData(game.getId(), game.getKickoff(), homeTeamName, awayTeamName, 0L, 0L);
             form.putPredictionFormData(game.getId(), formData);
         }
+        
         form.setWinnerTeamId(DEFAULT_WINNER_TEAM_ID);
         model.addAttribute("form", form);
 
         // Get user coupon - if any
         Coupon coupon = getCouponService().getCoupon(user.getId());
-        if (coupon != null)
-        {
+        if (coupon != null) {
             form.setWinnerTeamId(coupon.getWinnerTeamId());
 
             String couponId = coupon.getId();
 
             List<Prediction> predictions = getPredictionService().getPredictions(user.getGroupId(),user.getId(), couponId);
-            for (Prediction prediction : predictions)
-            {
+            for (Prediction prediction : predictions) {
                 form.getPrediction(prediction.getGameId()).setHomeScore(prediction.getHomeScore());
                 form.getPrediction(prediction.getGameId()).setAwayScore(prediction.getAwayScore());
             }

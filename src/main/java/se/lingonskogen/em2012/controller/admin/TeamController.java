@@ -33,22 +33,6 @@ public class TeamController extends AbstractAdminController {
 		return TEAM_PAGE;
 	}
 
-	private Map<String, Team> getTeams() {
-		Map<String, Team> t = new LinkedHashMap<String, Team>();
-		
-		for (Team team : getTeamService().getAvailableTeams()) {
-			Tournament tournament = getTournamentService().getTournament(team.getTournamentId());
-			String tName = null;
-			if(tournament!=null) {
-				tName = tournament.getName();
-				team.setTournamentId(tName);
-			}
-			t.put(tName+team.getCode(), team);
-		}
-
-		return t;
-	}
-	
 	// Process the form.
 	@RequestMapping(method = RequestMethod.POST)
 	public String processForm(@ModelAttribute(value="teamForm") @Valid TeamForm teamForm, BindingResult result, ModelMap model) {
@@ -83,7 +67,7 @@ public class TeamController extends AbstractAdminController {
 	private void setParameters(final ModelMap model, final TeamForm teamForm) {
 		super.setParameters(model);
 		
-		Map<String, Team> availableTeams = getTeams();
+		Map<String, Team> availableTeams = getTeamsData();
 		Map<String, String> availableTournaments = getTournaments();
 		// command object
 		model.addAttribute("teamForm", teamForm);

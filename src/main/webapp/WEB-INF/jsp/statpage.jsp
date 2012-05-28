@@ -99,21 +99,14 @@
 
 						<tr>
 							<td />
-							<th>Hemma</th>
+							<th>Match</th>
 							<c:forEach items="${data.gameFormDataList2}" var="gameFormData"
 								varStatus="status">
 								<td style="text-align: center;"><img
-									src="/images/${gameFormData.homeTeam.code}.png" /><br />${gameFormData.homeTeam.name}</td>
-							</c:forEach>
-						</tr>
-
-						<tr>
-							<td />
-							<th>Borta</th>
-							<c:forEach items="${data.gameFormDataList2}" var="gameFormData"
-								varStatus="status">
-								<td style="text-align: center;"><img
-									src="/images/${gameFormData.awayTeam.code}.png" /><br />${gameFormData.awayTeam.name}</td>
+									src="/images/${gameFormData.homeTeam.code}.png"
+									title="${gameFormData.homeTeam.name}" /> - <img
+									src="/images/${gameFormData.awayTeam.code}.png"
+									title="${gameFormData.awayTeam.name}" /></td>
 							</c:forEach>
 						</tr>
 
@@ -157,21 +150,14 @@
 
 						<tr>
 							<td />
-							<th>Hemma</th>
+							<th>Match</th>
 							<c:forEach items="${data.gameFormDataList3}" var="gameFormData"
 								varStatus="status">
 								<td style="text-align: center;"><img
-									src="/images/${gameFormData.homeTeam.code}.png" /><br />${gameFormData.homeTeam.name}</td>
-							</c:forEach>
-						</tr>
-
-						<tr>
-							<td />
-							<th>Borta</th>
-							<c:forEach items="${data.gameFormDataList3}" var="gameFormData"
-								varStatus="status">
-								<td style="text-align: center;"><img
-									src="/images/${gameFormData.awayTeam.code}.png" /><br />${gameFormData.awayTeam.name}</td>
+									src="/images/${gameFormData.homeTeam.code}.png"
+									title="${gameFormData.homeTeam.name}" /> - <img
+									src="/images/${gameFormData.awayTeam.code}.png"
+									title="${gameFormData.awayTeam.name}" /></td>
 							</c:forEach>
 						</tr>
 

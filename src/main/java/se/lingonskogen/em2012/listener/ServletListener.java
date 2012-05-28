@@ -72,10 +72,10 @@ public class ServletListener implements ServletContextListener
                 userdao.create(foobar);
 
                 List<String> names = new ArrayList<String>();
-//                names.add("Tobbe");
-//                names.add("Susen");
-//                names.add("Kalle");
-//                names.add("Adam");
+                names.add("Tobbe");
+                names.add("Susen");
+                names.add("Kalle");
+                names.add("Adam");
 
                 for (String firstname : names)
                 {

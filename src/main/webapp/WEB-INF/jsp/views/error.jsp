@@ -5,7 +5,7 @@
 		<section>
 			<legend>Error Page</legend>
 			<p>
-			Ooops! Nu kom du visst lite fel. Gå till <a href="start.html">Startsidan</a> istället!
+			Ooops! Nu kom du visst lite fel. Gå till <a href="/start.html">Startsidan</a> istället!
 		</p>
 		</section>
 	</div>

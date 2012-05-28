@@ -1,6 +1,7 @@
 package se.lingonskogen.em2012.domain;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
@@ -8,6 +9,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyFactory.Builder;
 
 public class PredictionDao extends AbstractDao<Prediction> {
+
+	private Logger LOG = Logger.getLogger(PredictionDao.class.getName());
+	
 	@Override
 	protected void populateEntity(Entity entity, Prediction prediction) {
 		entity.setProperty(Prediction.TOURNAMENT, prediction.getTournamentId());
@@ -124,6 +128,15 @@ public class PredictionDao extends AbstractDao<Prediction> {
 		builder.addChild(Coupon.class.getSimpleName(), couponId);
 		builder.addChild(Prediction.class.getSimpleName(), predictionId);
 		return builder.getKey();
+	}
+	@Override
+	protected Logger getLogger() {
+		return LOG;
+	}
+
+	@Override
+	protected String getType() {
+		return "Prediction";
 	}
 
 }

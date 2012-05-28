@@ -3,7 +3,7 @@ package se.lingonskogen.em2012.form;
 public class TopListData {
 
 	private String userRealName;
-	private String userId;
+	private String groupName;
 	private int points;
 	
 	public String getUserRealName() {
@@ -12,11 +12,11 @@ public class TopListData {
 	public void setUserRealName(String userRealName) {
 		this.userRealName = userRealName;
 	}
-	public String getUserId() {
-		return userId;
+	public String getGroupName() {
+		return groupName;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 	public int getPoints() {
 		return points;

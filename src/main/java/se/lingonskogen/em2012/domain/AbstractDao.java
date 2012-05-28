@@ -4,6 +4,7 @@ import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -18,8 +19,13 @@ public abstract class AbstractDao<T extends Bean> {
 
 	protected abstract T createBean(Entity entity);
 
+	protected abstract Logger getLogger();
+	protected abstract String getType();
+	
 	protected void create(Key key, T bean) throws DaoException {
 		DatastoreService store = DatastoreServiceFactory.getDatastoreService();
+	
+		getLogger().info("Create " + getType());
 		try {
 			store.get(key);
 			throw new DaoException("Key is not unique");
@@ -33,6 +39,7 @@ public abstract class AbstractDao<T extends Bean> {
 
 	protected void update(Key key, T bean) throws DaoException {
 		DatastoreService store = DatastoreServiceFactory.getDatastoreService();
+		getLogger().info("Update " + getType());
 		Entity entity = null;
 		try {
 			entity = store.get(key);
@@ -46,6 +53,7 @@ public abstract class AbstractDao<T extends Bean> {
 
 	protected void delete(Key key) throws DaoException {
 		DatastoreService store = DatastoreServiceFactory.getDatastoreService();
+		getLogger().info("Delete " + getType());
 		try {
 			store.get(key);
 		} catch (EntityNotFoundException e) {
@@ -56,6 +64,7 @@ public abstract class AbstractDao<T extends Bean> {
 
 	protected T find(Key key) throws DaoException {
 		DatastoreService store = DatastoreServiceFactory.getDatastoreService();
+		getLogger().info("Find: " + getType());
 		Entity entity = null;
 		try {
 			entity = store.get(key);
@@ -66,6 +75,7 @@ public abstract class AbstractDao<T extends Bean> {
 	}
 
 	protected List<T> findAll(String kind, Key parentKey) {
+		getLogger().info("FindAll: " + getType());
 		Query query = parentKey != null ? new Query(kind, parentKey)
 				: new Query(kind);
 		DatastoreService store = DatastoreServiceFactory.getDatastoreService();

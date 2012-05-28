@@ -1,6 +1,7 @@
 package se.lingonskogen.em2012.domain;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
@@ -8,6 +9,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyFactory.Builder;
 
 public class TeamDao extends AbstractDao<Team> {
+	
+	private Logger LOG = Logger.getLogger(TeamDao.class.getName());
+	
 	@Override
 	protected void populateEntity(Entity entity, Team bean) {
 		entity.setProperty(Team.NAME, bean.getName());
@@ -76,4 +80,14 @@ public class TeamDao extends AbstractDao<Team> {
 		builder.addChild(Team.class.getSimpleName(), teamId);
 		return builder.getKey();
 	}
+	@Override
+	protected Logger getLogger() {
+		return LOG;
+	}
+
+	@Override
+	protected String getType() {
+		return "Team";
+	}
+
 }
