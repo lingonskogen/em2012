@@ -71,8 +71,8 @@ public class ServletListener implements ServletContextListener
     public void contextInitialized(ServletContextEvent event)
     {
     	
-    	createGroups();
-        /*try
+    	/*createGroups();
+        try
         {
         	
         	// Create a tournament

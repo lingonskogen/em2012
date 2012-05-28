@@ -24,7 +24,9 @@ public class StartPageController extends AbstractController {
 		setParameters(model, principal);
 	    
 	    if(isRegistrationOpen()) {
+	    	String groupName = getGroupService().getGroupName(user.getGroupId());
 	    	model.addAttribute("numRegistreredCoupons", getNumRegistreredCoupons(user.getGroupId()));
+	    	model.addAttribute("groupName", groupName);
 	    	return "prestartpage";
 	    }    
 	    

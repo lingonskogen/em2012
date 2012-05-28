@@ -13,7 +13,7 @@
 			</c:choose>	
 			
 			<p style="padding-top: 15px;">
-				<b>Antal Ateles-registrerade rader hittills: ${numRegistreredCoupons} st</b>
+				<b>Antal ${groupName}-registrerade rader hittills: ${numRegistreredCoupons} st</b>
 			</p>
 			
 			<p style="padding-top: 15px;">Statistik och rader blir synligt
