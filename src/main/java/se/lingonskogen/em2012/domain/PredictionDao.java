@@ -1,5 +1,6 @@
 package se.lingonskogen.em2012.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -38,6 +39,23 @@ public class PredictionDao extends AbstractDao<Prediction> {
 		return prediction;
 	}
 
+    public void create(List<Prediction> predictions) throws DaoException
+    {
+//        List<Key> keys = new ArrayList<Key>(predictions.size());
+//        for (Prediction prediction : predictions)
+//        {
+//            String predictionId = createId(prediction);
+//            Key key = createKey(prediction.getGroupId(), prediction.getUserId(),
+//                    prediction.getCouponId(), predictionId);
+//            keys.add(key);
+//        }
+//        super.create(keys, predictions);
+        for (Prediction prediction : predictions)
+        {
+            create(prediction);
+        }
+    }
+	
 	public String create(Prediction prediction) throws DaoException {
 		String predictionId = createId(prediction);
 		Key key = createKey(prediction.getGroupId(), prediction.getUserId(),
@@ -45,6 +63,23 @@ public class PredictionDao extends AbstractDao<Prediction> {
 		super.create(key, prediction);
 		return predictionId;
 	}
+
+    public void update(List<Prediction> predictions) throws DaoException
+    {
+//        List<Key> keys = new ArrayList<Key>(predictions.size());
+//        for (Prediction prediction : predictions)
+//        {
+//            String predictionId = createId(prediction);
+//            Key key = createKey(prediction.getGroupId(), prediction.getUserId(),
+//                    prediction.getCouponId(), predictionId);
+//            keys.add(key);
+//        }
+//        super.update(keys, predictions);
+        for (Prediction prediction : predictions)
+        {
+            update(prediction);
+        }
+    }
 
 	public void update(Prediction prediction) throws DaoException {
 		String predictionId = createId(prediction);
