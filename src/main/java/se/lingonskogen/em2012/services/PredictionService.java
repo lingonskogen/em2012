@@ -8,7 +8,9 @@ import se.lingonskogen.em2012.form.PredictionFormData;
 
 public interface PredictionService {
     String createPrediction(final Prediction prediction) throws DaoException;
+    void createPredictions(List<Prediction> predictions) throws DaoException;
     void updatePrediction(final Prediction prediction) throws DaoException;
+    void updatePredictions(List<Prediction> predictions) throws DaoException;
 	Prediction newInstance(final String groupId, final String userId, final String couponId, 
 			final String tournamentId, final String gameId, final Long homeScore, final Long awayScore);
 	

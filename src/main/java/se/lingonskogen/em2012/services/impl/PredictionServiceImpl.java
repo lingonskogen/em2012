@@ -1,6 +1,5 @@
 package se.lingonskogen.em2012.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.appengine.api.memcache.MemcacheService;
@@ -9,7 +8,6 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import se.lingonskogen.em2012.domain.DaoException;
 import se.lingonskogen.em2012.domain.Prediction;
 import se.lingonskogen.em2012.domain.PredictionDao;
-import se.lingonskogen.em2012.form.PredictionFormData;
 import se.lingonskogen.em2012.services.PredictionService;
 
 public class PredictionServiceImpl implements PredictionService {
@@ -22,8 +20,20 @@ public class PredictionServiceImpl implements PredictionService {
     }
 
     @Override
+    public void createPredictions(List<Prediction> predictions) throws DaoException
+    {
+        predictionDao.create(predictions);
+    }
+    
+    @Override
     public void updatePrediction(Prediction prediction) throws DaoException {
         predictionDao.update(prediction);
+    }
+
+    @Override
+    public void updatePredictions(List<Prediction> predictions) throws DaoException
+    {
+        predictionDao.update(predictions);
     }
 
 	@Override
@@ -87,4 +97,5 @@ public class PredictionServiceImpl implements PredictionService {
 	public void setPredictionDao(final PredictionDao predictionDao) {
 		this.predictionDao = predictionDao;
 	}
+
 }
