@@ -74,12 +74,12 @@ public class ServletListener implements ServletContextListener
                 foobar.setRealName("Foo Bar");
                 foobar.setUserName("foo@bar.com");
                 userdao.create(foobar);
-                break;
-                //List<String> names = new ArrayList<String>();
-//                names.add("Tobbe");
-//                names.add("Susen");
-//                names.add("Kalle");
-//                names.add("Adam");
+
+                List<String> names = new ArrayList<String>();
+                names.add("Tobbe");
+                names.add("Susen");
+                names.add("Kalle");
+                names.add("Adam");
 
 //                for (String firstname : names)
 //                {

@@ -22,6 +22,9 @@ public class TournamentServiceImpl implements TournamentService {
 		return tournamentDao.create(tournament);
 	}
 
+	public void updateTournament(final Tournament tournament) throws DaoException {
+		tournamentDao.update(tournament);
+	}
 
 	@Override
 	public Tournament newInstance(String name) {

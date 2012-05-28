@@ -21,6 +21,12 @@
 					<td>${groupName}</td>
 				</tr>
 				<tr>
+				<td>Poäng:</td>
+				<td><c:choose>
+							<c:when test="${hasCoupon}">${userPoints}</c:when>
+						</c:choose></td>
+				</tr>
+				<tr>
 					<td>Statistik:</td>
 					<td><c:choose>
 							<c:when test="${hasCoupon}">Du har plats ${position} av ${totalUsers}</c:when>

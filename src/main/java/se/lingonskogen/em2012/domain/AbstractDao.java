@@ -25,6 +25,10 @@ public abstract class AbstractDao<T extends Bean> {
     
 	protected abstract void populateEntity(Entity entity, T bean);
 
+    protected abstract String getType();
+
+    protected abstract Logger getLogger();
+
 	protected abstract T createBean(Entity entity);
 
 	protected void create(List<Key> keys, List<T> beans) throws DaoException {
@@ -106,6 +110,7 @@ public abstract class AbstractDao<T extends Bean> {
 	
 	protected void delete(Key key) throws DaoException {
 		DatastoreService store = DatastoreServiceFactory.getDatastoreService();
+		getLogger().info("Delete " + getType());
 		try {
 			store.get(key);
 		} catch (EntityNotFoundException e) {
@@ -116,7 +121,7 @@ public abstract class AbstractDao<T extends Bean> {
         clearCache(key.getKind());
 	}
 
-	protected T find(Key key) throws DaoException {
+    protected T find(Key key) throws DaoException {
         List<Entity> entities = getAllEntities(key.getKind());
         for (Entity entity : entities)
         {

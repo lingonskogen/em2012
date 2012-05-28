@@ -94,6 +94,18 @@ public class StatisticsPageController extends AbstractController {
 					gData.setKickoff(game.getKickoff());
 					tData.addGameFormData(gData);
 				}
+				
+				// If we have a tournament winner - add points for correct winner
+				if (tournament.getWinnerTeamId() != null && !tournament.getWinnerTeamId().equals("")) {
+					for (String userid : scores.keySet()) {					
+						Coupon userCoupon = getCouponService().getCoupon(userid);
+						
+						if(userCoupon.getWinnerTeamId().equals(tournament.getWinnerTeamId())) {
+							scores.put(userid, 5 + scores.get(userid));	
+						}
+					}				
+				}
+				
 				for (String userid : scores.keySet()) {
 					User u = getUserService()
 							.getUser(user.getGroupId(), userid);

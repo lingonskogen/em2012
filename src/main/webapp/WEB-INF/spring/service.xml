@@ -61,6 +61,7 @@
 		<property name="teamService" ref="teamService" />
 		<property name="predictionService" ref="predictionService" />
 		<property name="gameService" ref="gameService" />
+		<property name="messageSource" ref="messageSource" />
 	</bean>
 	
 	<bean id="abstractAdminController" class="se.lingonskogen.em2012.controller.admin.AbstractAdminController"
@@ -90,6 +91,9 @@
 	
 	
 	<!-- Admin controllers -->
+	<bean name="tournamentUpdateController" parent="abstractAdminController"
+		class="se.lingonskogen.em2012.controller.admin.TournamentUpdateController">
+	</bean>
 	<bean name="groupController" parent="abstractAdminController"
 		class="se.lingonskogen.em2012.controller.admin.GroupController">
 	</bean>

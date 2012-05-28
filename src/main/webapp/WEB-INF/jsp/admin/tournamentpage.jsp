@@ -18,10 +18,12 @@
 			<table class="table table-striped">
 				<tr>
 					<th>Tournament name</th>
+					<th />
 				</tr>
 				<c:forEach var="entry" items="${availableTournaments}">
 					<tr>
 						<td>${entry.value}</td>
+						<td><a href="${updateLink}?tournamentId=${entry.key}">Uppdatera</a></td>
 					</tr>
 				</c:forEach>
 			</table>

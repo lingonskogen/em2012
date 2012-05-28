@@ -1,6 +1,7 @@
 package se.lingonskogen.em2012.domain;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
@@ -8,6 +9,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyFactory.Builder;
 
 public class CouponDao extends AbstractDao<Coupon> {
+	
+	private Logger LOG = Logger.getLogger(CouponDao.class.getName());
+	
 	@Override
 	protected void populateEntity(Entity entity, Coupon coupon) {
 		entity.setProperty(Coupon.TOURNAMENT, coupon.getTournamentId());
@@ -34,7 +38,7 @@ public class CouponDao extends AbstractDao<Coupon> {
 
 	public void update(Coupon coupon) throws DaoException {
 		String couponId = createId(coupon);
-		Key key = createKey(coupon.getGroupId(), coupon.getUserId(), couponId);
+		Key key = createKey(coupon.getGroupId(), coupon.getUserId(), couponId);		
 		super.update(key, coupon);
 	}
 
@@ -94,6 +98,16 @@ public class CouponDao extends AbstractDao<Coupon> {
 		builder.addChild(User.class.getSimpleName(), userId);
 		builder.addChild(Coupon.class.getSimpleName(), couponId);
 		return builder.getKey();
+	}
+
+	@Override
+	protected Logger getLogger() {
+		return LOG;
+	}
+
+	@Override
+	protected String getType() {
+		return "Coupon";
 	}
 
 }

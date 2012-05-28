@@ -1,60 +1,99 @@
 <%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
 <%@ include file="./views/includes/header.jsp"%>
 
-<div class="content">
 
-	<H1>User Page</H1>
+<div class="row">
+	<div class="span8">
+		<section>
 
-	<div class="toplist">
-		<div class="header">Topplista Ateles</div>
-		<div class="data">
-			<table>
-				<tr><td>1.</td><td>Susen</td><td>10 p</td><td></td></tr>
-				<tr><td>2.</td><td>Tobbe</td><td>5 p</td><td></td></tr>
-				<tr><td>3.</td><td>Katten</td><td>4 p</td><td></td></tr>
-				<tr><td>4.</td><td>Marcus</td><td>3 p</td><td></td></tr>								
-				<tr><td>5.</td><td>Kissen</td><td>2 p</td><td></td></tr>
-				<tr><td>6.</td><td>Kissen</td><td>2 p</td><td></td></tr>
-				<tr><td>7.</td><td>Kissen</td><td>0 p</td><td></td></tr>
-				<tr><td>8.</td><td>Kissen</td><td>0 p</td><td></td></tr>
-				<tr><td>9.</td><td>Kissen</td><td>0 p</td><td></td></tr>
-				<tr><td>10.</td><td>Kissen</td><td>0 p</td><td></td></tr>
+			<legend>Topplista</legend>
+
+			<table class="table">
+			<tr><td><table class="table table-striped">
+				<tbody>
+					<tr><td colspan="4">${groupName} Topplista</td></tr>
+					<tr>
+						<th></th>
+						<th>Groupp</th>
+						<th>Namn</th>
+						<th>Poäng</th>
+					</tr>
+					
+					<c:forEach items="${groupToplist}" var="toplistData" varStatus="status">
+					<tr>
+						<td>${status.count}.</td>
+						<td>${toplistData.groupName}</td>
+						<td>${toplistData.userRealName}</td>
+						<td>${toplistData.points}</td>
+					</tr>				
+					</c:forEach>					
+				</tbody>
 			</table>
-		</div>
+			</td>
+			<td></td>
+			<td><table class="table table-striped">
+				<tbody>
+					<tr><td colspan="4">Global Topplista</td></tr>
+					<tr>
+						<th></th>
+						<th>Groupp</th>
+						<th>Namn</th>
+						<th>Poäng</th>
+					</tr>
+					
+					<c:forEach items="${globalToplist}" var="toplistData" varStatus="status">
+					<tr>
+						<td>${status.count}.</td>
+						<td>${toplistData.groupName}</td>
+						<td>${toplistData.userRealName}</td>
+						<td>${toplistData.points}</td>
+					</tr>				
+					</c:forEach>				
+				</tbody>
+			</table>
+			</td></tr>
+			</table>
+		</section>
 	</div>
 
-	<div class="result">
-		<div class="header">Resultat</div>
-		<table>
-			<th><td>Match</td><td>Resultat</td><td>Susen</td><td>Marcus</td></th>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-			<tr><td>Ukraina-Sverige</td><td>2-0</td><td class="correct">2-0</td><td class="err">0-2</td></tr>
-		</table>
+	<div class="span4">
+		<section>
+			<legend>Nästa match</legend>
+			<table class="table">
+				<tbody>
+					<c:forEach items="${nextGames}" var="gameData" varStatus="status">
+					<tr>
+						<td></td>
+						<td style="text-align: center;" colspan="3">${gameData.kickoff}</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td style="text-align: center;"><img title="${gameData.homeTeam.name}"
+							src="/images/${gameData.homeTeam.code}.png"></td>
+						<td></td>
+						<td style="text-align: center;"><img title="${gameData.awayTeam.name}"
+							src="/images/${gameData.awayTeam.code}.png"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td style="text-align: center;">${gameData.homeTeam.name}</td>
+						<td>-</td>
+						<td style="text-align: center;">${gameData.awayTeam.name}</td>
+						<td></td>
+					</tr>
+
+
+					<tr>
+						<td style="padding-top: 10px;" colspan="5"></td>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			</table>
+		</section>
 	</div>
-
-
 </div>
 
 <%@ include file="./views/includes/footer.jsp"%>
