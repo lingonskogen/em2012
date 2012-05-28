@@ -109,14 +109,13 @@ public class UserPageController extends AbstractController
             return PAGE_NAME;
         }
         
-        if (result.hasErrors()) {
-            int errorCount = result.getErrorCount();
+        if (result.hasErrors() || !isValid(form)) {
             String msg = "You entered invalid values: Your row was not saved!";
             model.addAttribute("errorMessage", msg);
 
             return PAGE_NAME;
         }
-
+        System.out.println("result: " + result.getModel().toString());
         String groupId = user.getGroupId();
         String userId = user.getId();
         Coupon coupon = getCouponService().getCoupon(user.getId());
@@ -133,10 +132,28 @@ public class UserPageController extends AbstractController
         }
 
         getPredictionService().updatePredictions(predictions);
-        mailCoupon(user);
+        //mailCoupon(user);
         
        //setParameters(model, principal, user);
         return PAGE_NAME;
+    }
+
+    private boolean isValid(CouponForm form)
+    {
+        for (PredictionFormData formData : form.getPredictionMap().values())
+        {
+            Long homeScore = formData.getHomeScore();
+            if (homeScore == null || homeScore < 0L)
+            {
+                return false;
+            }
+            Long awayScore = formData.getAwayScore();
+            if (awayScore == null || awayScore < 0L)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void createDefaultCoupon(final User user) throws Exception {
@@ -166,7 +183,7 @@ public class UserPageController extends AbstractController
                 predictions.add(prediction);
             }
             getPredictionService().createPredictions(predictions);
-            mailCoupon(user);
+            //mailCoupon(user);
         }
     }
 

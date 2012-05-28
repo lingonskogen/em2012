@@ -96,6 +96,7 @@ public class RegisterController extends AbstractController {
 			Map<String, String> groups = getGroups();
 			model.addAttribute("register", register);			
 			model.addAttribute("groupList", groups);
+            model.addAttribute("errorMessage", "Det gick inte att registrera! Du kanske redan har registrerat dig?");
 			return PAGE_NAME;
 		}
 	
