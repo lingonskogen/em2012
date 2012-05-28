@@ -2,13 +2,16 @@ package se.lingonskogen.em2012.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Logger;
 
 import org.springframework.context.MessageSource;
@@ -112,39 +115,6 @@ public abstract class AbstractController {
 		List<User> users = getUserService().getUsers(groupId);
 
 		Map<String, Integer> scores = getScores(users, tournament);
-		
-		
-		//Map<String, Integer> scores = new HashMap<String, Integer>();
-		
-		/*for (Game game : games) {
-			for (User user : users) {
-				String userId = user.getId();
-
-				List<Prediction> userPredictions = getPredictionService()
-						.getPredictions(groupId, userId);
-
-				for (Prediction prediction : userPredictions) {
-					if (game.getId().equals(prediction.getGameId())) {
-						Integer score = calcScore(game, prediction);
-						if (!scores.containsKey(userId)) {
-							scores.put(userId, 0);
-						}
-						scores.put(userId, score + scores.get(userId));
-					}
-				}				
-			}
-		}
-
-		// If we have a tournament winner - add points for correct winner
-		if (tournament.getWinnerTeamId() != null && !tournament.getWinnerTeamId().equals("")) {
-			for (String userid : scores.keySet()) {					
-				Coupon userCoupon = getCouponService().getCoupon(userid);
-				
-				if(userCoupon.getWinnerTeamId().equals(tournament.getWinnerTeamId())) {
-					scores.put(userid, 5 + scores.get(userid));	
-				}
-			}				
-		}*/
 		
 		Integer currentUserScore = scores.get(currentUser.getId());
 		Integer position = null;
@@ -282,7 +252,7 @@ public abstract class AbstractController {
 		
 		int counter = 0;
 		for (Game game : games) {
-		    if(game.getKickoff().compareTo(now) < 1) {
+		    if(game.getKickoff().compareTo(now) > 1) {
 		    	String tournamentId = game.getTournamentId();
 		    	counter++;
 				GameFormData formData = new GameFormData(game);
@@ -371,15 +341,21 @@ public abstract class AbstractController {
 		this.teamService = teamService;
 	}
 
+	public int getNumRegistreredCoupons(final String groupId) {
+		List<Coupon> coupons = getCouponService().getCoupons(groupId);
+		if (coupons == null) return 0;
+		
+		return coupons.size();
+	}
+	
 	public boolean isRegistrationOpen() {
-        /*TimeZone tz = TimeZone.getTimeZone("Europe/Stockholm");
+        TimeZone tz = TimeZone.getTimeZone("Europe/Stockholm");
         GregorianCalendar current = new GregorianCalendar();
         current.setTimeZone(tz);
         GregorianCalendar deadline = new GregorianCalendar(2012, Calendar.JUNE, 8, 12, 0);
         deadline.setTimeZone(tz);
         
-        return current.before(deadline); */
-		return false;
+        return current.before(deadline);
 	}
 	
 	public UserService getUserService() {

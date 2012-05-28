@@ -47,15 +47,16 @@ public class ServletListener implements ServletContextListener
     	GroupDao groupDao = new GroupDao();
     	
     	try {
-    		Group group = new Group();
+    		/*Group group = new Group();
+    		
     		group.setName("Ateles");        
 			groupDao.create(group);
 			
 			group = new Group();
     		group.setName("Sigma");        
 			groupDao.create(group);
-
-			group = new Group();
+*/
+			Group group = new Group();
     		group.setName("Friend");        
 			groupDao.create(group);
 			
@@ -69,11 +70,14 @@ public class ServletListener implements ServletContextListener
     @Override
     public void contextInitialized(ServletContextEvent event)
     {
+    	
+    	/*createGroups();
         try
         {
-            // Create a tournament
+        	
+        	// Create a tournament
             String tourId = createTournaments();
-//            createGroups();
+            createGroups();
             GameDao gameDao = new GameDao();
             List<Game> games = gameDao.findAll(tourId);
 
@@ -144,7 +148,7 @@ public class ServletListener implements ServletContextListener
         catch (DaoException e)
         {
             // jaha
-        }
+        }*/
     }
 
     private String createTournaments() throws DaoException
