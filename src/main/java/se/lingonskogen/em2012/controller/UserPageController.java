@@ -119,11 +119,13 @@ public class UserPageController extends AbstractController
 
         coupon.setWinnerTeamId(form.getWinnerTeamId());
         getCouponService().updateCoupon(coupon);
+        List<Prediction> predictions = new ArrayList<Prediction>(form.getPredictionMap().values().size());
         for (PredictionFormData pfd : form.getPredictionMap().values())
         {
             Prediction prediction = getPredictionService().newInstance(groupId, userId, couponId, tournamentId, pfd.getGameId(), pfd.getHomeScore(), pfd.getAwayScore());
-            getPredictionService().updatePrediction(prediction);
+            predictions.add(prediction);
         }
+        getPredictionService().updatePredictions(predictions);
         return PAGE_NAME;
     }
 
@@ -147,14 +149,15 @@ public class UserPageController extends AbstractController
 
             // Create 0 - 0 predictions for user and all games
             List<Game> games = getGameService().getAvailableGames();
+            List<Prediction> predictions = new ArrayList<Prediction>(games.size());
             for (Game game : games)
             {
                 Prediction prediction = getPredictionService().newInstance(
                         groupId, userId, couponId, tournamentId,
                         game.getId(), Long.valueOf(0), Long.valueOf(0));
-
-                getPredictionService().createPrediction(prediction);
+                predictions.add(prediction);
             }
+            getPredictionService().createPredictions(predictions);
             mailCoupon(user);
         }
     }

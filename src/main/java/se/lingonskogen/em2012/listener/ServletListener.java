@@ -10,6 +10,9 @@ import java.util.Random;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
+
 import se.lingonskogen.em2012.domain.Coupon;
 import se.lingonskogen.em2012.domain.CouponDao;
 import se.lingonskogen.em2012.domain.DaoException;
@@ -43,7 +46,6 @@ public class ServletListener implements ServletContextListener
     @Override
     public void contextInitialized(ServletContextEvent event)
     {
-
         try
         {
             // Create a tournament
@@ -58,6 +60,8 @@ public class ServletListener implements ServletContextListener
 
             PredictionDao predictionDao = new PredictionDao();
 
+            MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
+            cache.clearAll();
             for (GroupType type : GroupType.values())
             {
                 Group group = new Group();
@@ -70,47 +74,47 @@ public class ServletListener implements ServletContextListener
                 foobar.setRealName("Foo Bar");
                 foobar.setUserName("foo@bar.com");
                 userdao.create(foobar);
-
-                List<String> names = new ArrayList<String>();
+                break;
+                //List<String> names = new ArrayList<String>();
 //                names.add("Tobbe");
 //                names.add("Susen");
 //                names.add("Kalle");
 //                names.add("Adam");
 
-                for (String firstname : names)
-                {
-                    for (String lastname : names)
-                    {
-                        lastname = lastname + "sson";
-                        // Create users
-                        User user = new User();
-                        user.setGroupId(groupId);
-                        user.setPassword("123".toLowerCase());
-                        user.setRealName(firstname + " " + lastname);
-                        user.setUserName(firstname.toLowerCase() + "." + lastname.toLowerCase() + "@home.se");
-                        String userId = userdao.create(user);
-
-                        Coupon coupon = new Coupon();
-                        coupon.setTournamentId(tourId);
-                        coupon.setGroupId(groupId);
-                        coupon.setUserId(userId);
-                        coupon.setWinnerTeamId(teamIds.get(Math.abs(random.nextInt(teamIds.size()))));
-                        String couponId = couponDao.create(coupon);
-
-                        for (Game game : games)
-                        {
-                            Prediction prediction = new Prediction();
-                            prediction.setGroupId(groupId);
-                            prediction.setUserId(userId);
-                            prediction.setCouponId(couponId);
-                            prediction.setTournamentId(game.getTournamentId());
-                            prediction.setGameId(game.getId());
-                            prediction.setHomeScore(Math.abs(random.nextLong()) % 5);
-                            prediction.setAwayScore(Math.abs(random.nextLong()) % 5);
-                            predictionDao.create(prediction);
-                        }
-                    }
-                }
+//                for (String firstname : names)
+//                {
+//                    for (String lastname : names)
+//                    {
+//                        lastname = lastname + "sson";
+//                        // Create users
+//                        User user = new User();
+//                        user.setGroupId(groupId);
+//                        user.setPassword("123".toLowerCase());
+//                        user.setRealName(firstname + " " + lastname);
+//                        user.setUserName(firstname.toLowerCase() + "." + lastname.toLowerCase() + "@home.se");
+//                        String userId = userdao.create(user);
+//
+//                        Coupon coupon = new Coupon();
+//                        coupon.setTournamentId(tourId);
+//                        coupon.setGroupId(groupId);
+//                        coupon.setUserId(userId);
+//                        coupon.setWinnerTeamId(teamIds.get(Math.abs(random.nextInt(teamIds.size()))));
+//                        String couponId = couponDao.create(coupon);
+//
+//                        for (Game game : games)
+//                        {
+//                            Prediction prediction = new Prediction();
+//                            prediction.setGroupId(groupId);
+//                            prediction.setUserId(userId);
+//                            prediction.setCouponId(couponId);
+//                            prediction.setTournamentId(game.getTournamentId());
+//                            prediction.setGameId(game.getId());
+//                            prediction.setHomeScore(Math.abs(random.nextLong()) % 5);
+//                            prediction.setAwayScore(Math.abs(random.nextLong()) % 5);
+//                            predictionDao.create(prediction);
+//                        }
+//                    }
+//                }
             }
         }
         catch (DaoException e)

@@ -8,8 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.logging.Logger;
 
 import org.springframework.ui.ModelMap;
+
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.google.appengine.api.memcache.Stats;
 
 import se.lingonskogen.em2012.domain.Game;
 import se.lingonskogen.em2012.domain.Prediction;
@@ -25,6 +30,8 @@ import se.lingonskogen.em2012.services.UserService;
 
 public abstract class AbstractController {
 
+    private static final Logger LOG = Logger.getLogger(AbstractController.class.getName());
+    
 	private UserService userService;
 	private GroupService groupService;
 	private CouponService couponService;
@@ -51,6 +58,10 @@ public abstract class AbstractController {
 
 		model.addAttribute("registrationOpen", isRegistrationOpen());
 		model.addAttribute("currentPage", getCurrentPageId());
+		
+		MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
+		Stats statistics = cache.getStatistics();
+		LOG.info(statistics.toString());
 	}
 
 	public Integer calcScore(Game game, Prediction prediction) {
