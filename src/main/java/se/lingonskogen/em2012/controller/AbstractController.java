@@ -9,12 +9,17 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.logging.Logger;
 
 import org.springframework.context.MessageSource;
 import org.springframework.ui.ModelMap;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.appengine.api.memcache.Stats;
@@ -25,7 +30,6 @@ import se.lingonskogen.em2012.domain.Prediction;
 import se.lingonskogen.em2012.domain.Tournament;
 import se.lingonskogen.em2012.domain.User;
 import se.lingonskogen.em2012.form.StatisticsFormData.TournamentFormData.GameFormData;
-import se.lingonskogen.em2012.form.PredictionFormData;
 import se.lingonskogen.em2012.form.TopListData;
 import se.lingonskogen.em2012.services.CouponService;
 import se.lingonskogen.em2012.services.GameService;
@@ -64,11 +68,12 @@ public abstract class AbstractController {
 					model.addAttribute("loggedIn", true);
 					model.addAttribute("userName", user.getRealName());
 				}
+				model.addAttribute("hasCoupon", hasCoupon(user));
 			}
 		}
 
 		model.addAttribute("registrationOpen", isRegistrationOpen());
-		model.addAttribute("currentPage", getCurrentPageId());
+		model.addAttribute("currentPage", getCurrentPageId());		
 		
 		MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
 		Stats statistics = cache.getStatistics();
@@ -77,14 +82,15 @@ public abstract class AbstractController {
 
 	public Integer calcScore(Game game, Prediction prediction) {
 		boolean sane = true;
+		
 		sane &= game.getHomeScore() != null;
 		sane &= game.getAwayScore() != null;
 		sane &= prediction.getHomeScore() != null;
 		sane &= prediction.getAwayScore() != null;
 		int score = 0;
 		if (sane) {
-			score += game.getHomeScore() == prediction.getHomeScore() ? 1 : 0;
-			score += game.getAwayScore() == prediction.getAwayScore() ? 1 : 0;
+			score += game.getHomeScore().equals(prediction.getHomeScore()) ? 1 : 0;
+			score += game.getAwayScore().equals(prediction.getAwayScore()) ? 1 : 0;
 			score += (game.getHomeScore() < game.getAwayScore() && prediction
 					.getHomeScore() < prediction.getAwayScore()) ? 1 : 0;
 			score += (game.getHomeScore() > game.getAwayScore() && prediction
@@ -92,6 +98,7 @@ public abstract class AbstractController {
 			score += (game.getHomeScore() == game.getAwayScore() && prediction
 					.getHomeScore() == prediction.getAwayScore()) ? 1 : 0;
 		}
+				
 		return score;
 	}
 
@@ -144,6 +151,8 @@ public abstract class AbstractController {
 		if (currentUserScore != null) {
 			position = 1;
 			for (String key : scores.keySet()) {
+				if (scores.get(key) == null) continue;
+				
 				if (scores.get(key) > currentUserScore) {					
 					position++;
 				}
@@ -153,6 +162,28 @@ public abstract class AbstractController {
 	}
 
 	private Map<String, Integer> getScores(List<User> users, final Tournament tournament) {
+		
+		// Get users scores from cache - if exists
+        String cacheKey = "user_scores_list";
+        MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
+        if (!cache.contains(cacheKey)) {
+            LOG.info("getScores " + cacheKey);
+            Map<String, Integer> scores = new HashMap<String, Integer>();
+            scores = getUserScoresList(tournament);
+            cache.put(cacheKey, scores);
+        }
+        Map<String, Integer> userScores = (Map<String, Integer>) cache.get(cacheKey);
+        Map<String, Integer> tmpList = new HashMap<String, Integer>();
+        for(User user : users) {
+        	tmpList.put(user.getId(), userScores.get(user.getId()));
+        }
+        
+        return tmpList;
+    }
+	
+	private Map<String, Integer> getUserScoresList(final Tournament tournament) {
+		// Get all users
+		List<User> users = getUserService().getUsers();
 		List<Game> games = getGameService().getAvailableGames(tournament.getId());
 		Map<String, Integer> scores = new HashMap<String, Integer>();
 		
@@ -208,10 +239,14 @@ public abstract class AbstractController {
 		Map<String, Integer> userPointsMap = getScores(users, tournament);
 		
 		for (String key : userPointsMap.keySet()) {
+			
+			if (userPointsMap.get(key) == null) continue;
+			
 			TopListData t = new TopListData();
 			
 			User user = groupId == null ? getUserService().getUserById(key) : getUserService().getUser(groupId, key);
 			String groupName = getGroupService().getGroupName(user.getGroupId());
+			
 			t.setGroupName(groupName);
 			t.setPoints(userPointsMap.get(key));
 			t.setUserRealName(user.getRealName());
@@ -290,6 +325,12 @@ public abstract class AbstractController {
 		return getTotalUsers(groupId).size();
 	}
 
+    private void clearCache(String kind) {
+        LOG.info("clear( " + kind + ")");
+        MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
+        cache.delete(kind);
+    }	
+    
 	public CouponService getCouponService() {
 		return couponService;
 	}

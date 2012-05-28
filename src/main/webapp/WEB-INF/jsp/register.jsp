@@ -4,6 +4,10 @@
 <div class="row">
 	<div class="span8">
 		<section>
+		
+		<c:choose>
+				<c:when test="${registrationOpen}">
+						
 			<c:choose>
 				<c:when test="${registreradOk}">
 				
@@ -72,6 +76,12 @@
 					</form:form>
 
 				</c:otherwise>
+			</c:choose>
+			</c:when>
+			<c:otherwise>
+				<h2>Registrering stängd!</h2>
+				<p>Du kan tyvärr inte registrera dig längre!</p>
+			</c:otherwise>
 			</c:choose>
 		</section>
 	</div>

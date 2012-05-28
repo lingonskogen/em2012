@@ -21,15 +21,15 @@
 					<td>${groupName}</td>
 				</tr>
 				<tr>
-				<td>Poäng:</td>
-				<td><c:choose>
+					<td>Poäng:</td>
+					<td><c:choose>
 							<c:when test="${hasCoupon}">${userPoints}</c:when>
 						</c:choose></td>
 				</tr>
 				<tr>
 					<td>Statistik:</td>
 					<td><c:choose>
-							<c:when test="${hasCoupon}">Du har plats ${position} av ${totalUsers}</c:when>
+							<c:when test="${hasCoupon && !registrationOpen}">Du har plats ${position} av ${totalUsers}</c:when>
 						</c:choose></td>
 				</tr>
 				<tr>
@@ -39,12 +39,14 @@
 			</table>
 
 			<c:choose>
-				<c:when test="${hasCoupon}">
+				<c:when test="${hasCoupon && registrationOpen}">
 				</c:when>
 				<c:otherwise>
 					<div class="obs">
-						<b style="color: red;">OBS!</b> Du har inte skapat någon tipsrad än: <a href="${couponUrl}" class="btn btn-primary">Skapa tipsrad</a>
-						</div>
+						<b style="color: red;">OBS!</b> Du har inte skapat någon tipsrad
+						än: <a href="${couponUrl}" class="btn btn-primary">Skapa
+							tipsrad</a>
+					</div>
 				</c:otherwise>
 			</c:choose>
 		</section>
@@ -55,51 +57,71 @@
 			<c:choose>
 				<c:when test="${hasCoupon}">
 					<div class="myTipForm">
-					<form:form class="form-horizontal" action="mypage.html"
-						commandName="form">
-						<fieldset>
-							<legend>Min tipsrad</legend>
-							<c:if test="${errorMessage != null}">
-							  <p class="alert alert-error">${errorMessage}</p>
-							</c:if>
-							<table class="table table-striped">
-								<tr>
-									<th>Datum</th>
-									<th colspan="3">Match</th>
-									<th>Resultat</th>
-								</tr>
-
-								<c:forEach items="${form.predictions}" var="predictionformdata"
-									varStatus="status">
+						<form:form class="form-horizontal" action="mypage.html"
+							commandName="form">
+							<fieldset>
+								<legend>Min tipsrad</legend>
+								<c:if test="${errorMessage != null}">
+									<p class="alert alert-error">${errorMessage}</p>
+								</c:if>
+								<table class="table table-striped">
 									<tr>
-										<td>${predictionformdata.kickoff}</td>
-
-										<td style="text-align: right;">${predictionformdata.homeTeamName}</td>
-										<td>-</td>
-										<td>${predictionformdata.awayTeamName}</td>
-										<td>
-                      <form:input path="predictionMap[${predictionformdata.gameId}].homeScore" value="${form.predictionMap[predictionformdata.gameId].homeScore}" />
-										  -
-										  <form:input path="predictionMap[${predictionformdata.gameId}].awayScore" value="${form.predictionMap[predictionformdata.gameId].awayScore}" />
-										</td>
+										<th>Datum</th>
+										<th colspan="3">Match</th>
+										<th>Resultat</th>
 									</tr>
-								</c:forEach>
-								<tr>
-									<td colspan="5"></td>
-								</tr>
-								<tr>
-									<td colspan="4"><b>Slutvinnare: </b> <select id="winnerTeamId" name="winnerTeamId">
-											<c:forEach items="${form.teams}" var="team">
-												<option value="${team.id}"
-													<c:if test="${form.winnerTeamId == team.id}">selected="selected"</c:if>>${team.name}</option>
-											</c:forEach>
-									</select></td>
-									<td><button class="btn btn-primary" type="submit">${submitAction}</button></td>
-								</tr>
 
-							</table>
-						</fieldset>
-					</form:form>
+									<c:forEach items="${form.predictions}" var="predictionformdata"
+										varStatus="status">
+										<tr>
+											<td>${predictionformdata.kickoff}</td>
+
+											<td style="text-align: right;">${predictionformdata.homeTeamName}</td>
+											<td>-</td>
+											<td>${predictionformdata.awayTeamName}</td>
+											<td>
+											<c:choose>											
+											<c:when test="${registrationOpen}">
+											<form:input path="predictionMap[${predictionformdata.gameId}].homeScore"
+															value="${form.predictionMap[predictionformdata.gameId].homeScore}" />
+										  	-
+										  	<form:input path="predictionMap[${predictionformdata.gameId}].awayScore"
+												value="${form.predictionMap[predictionformdata.gameId].awayScore}" />
+											</c:when>
+											<c:otherwise>										
+                      						${form.predictionMap[predictionformdata.gameId].homeScore}
+										  	-
+										 	${form.predictionMap[predictionformdata.gameId].awayScore}
+											</c:otherwise>
+										</c:choose></td>
+										</tr>
+									</c:forEach>
+									<tr>
+										<td colspan="5"></td>
+									</tr>
+									<tr>
+										<td colspan="4"><b>Slutvinnare: </b>
+										
+										<c:choose>											
+											<c:when test="${registrationOpen}">
+											<select id="winnerTeamId" name="winnerTeamId">
+												<c:forEach items="${form.teams}" var="team">
+													<option value="${team.id}"
+														<c:if test="${form.winnerTeamId == team.id}">selected="selected"</c:if>>${team.name}</option>
+												</c:forEach>
+											</select>
+											</c:when>
+											<c:otherwise>										
+                      						${form.winnerTeamId}
+											</c:otherwise>
+										</c:choose>
+										</td>
+										<td><c:if test="${registrationOpen}"><button class="btn btn-primary" type="submit">${submitAction}</button></c:if></td>
+									</tr>
+
+								</table>
+							</fieldset>
+						</form:form>
 					</div>
 				</c:when>
 				<c:otherwise>

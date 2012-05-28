@@ -12,7 +12,7 @@
             </div>
 			  </c:when>
 				<c:when test="${registrationOpen}">
-				 Resultat och ripsrader blir synliga när tiden för registrering har gått ut!
+				 Resultat och tipsrader blir synliga när tiden för registrering har gått ut!
 				</c:when>
 				<c:otherwise>
 					<table class="table table-striped">
