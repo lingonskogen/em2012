@@ -31,19 +31,6 @@ section {
   background-color: #FFFFCC; 
 }
 
-.table tbody tr:hover td.score0, .table tbody tr:hover th.score0 {
-  background-color: #FFF; 
-}
-.table tbody tr:hover td.score1, .table tbody tr:hover th.score1 {
-  background-color: #CCFFCC; 
-}
-.table tbody tr:hover td.score2, .table tbody tr:hover th.score2 {
-  background-color: #FFE5FF; 
-}
-.table tbody tr:hover td.score3, .table tbody tr:hover th.score3 {
-  background-color: #FFFFCC;
-}
-
 .loginHeader {
 	padding: 20px;	
 }

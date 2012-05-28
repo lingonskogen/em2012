@@ -8,19 +8,22 @@
 
 			<h2>Välkommen till EM-tipset 2012!</h2>
 				
-			<c:when test="${!hasCoupon}"><p><div style="font-color: red">OBS! </div>Du har inte skapat någon kupong ännu. Gå till min sida och gör det nu!</p></c:when>	
+			<c:choose>
+			<c:when test="${!hasCoupon}"><p style="padding-top: 15px;"><div style="color: red; font-weight: bold;">OBS! </div>Du har inte skapat någon kupong ännu. Gå till min sida och gör det nu!</p></c:when>
+			</c:choose>	
+			
+			<p style="padding-top: 15px;">
+				<b>Antal ${groupName}-registrerade rader hittills: ${numRegistreredCoupons} st</b>
+			</p>
 			
 			<p style="padding-top: 15px;">Statistik och rader blir synligt
 				när det inte är tillåtet att registrera sig längre.</p>
 
-			<p>
-				<b>Antal Ateles registrerade rader hittills: 6 st</b>
-			</p>
-
-
+			
 			<p>Tid kvar av registreringen:</p>
 			<%@ include file="./views/includes/countdown.jsp"%>
 
+			<table class="table"><tr><td><img style="width: 300px;" alt="EM2012" src="/images/kram.jpg"></td><td><img style="width: 300px;" alt="EM2012" src="/images/team1.jpg"></td></tr></table>
 		</section>
 	</div>
 	<div class="span4">

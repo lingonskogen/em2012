@@ -39,15 +39,13 @@
 			</table>
 
 			<c:choose>
-				<c:when test="${hasCoupon && registrationOpen}">
-				</c:when>
-				<c:otherwise>
+				<c:when test="${!hasCoupon && registrationOpen}">		
 					<div class="obs">
 						<b style="color: red;">OBS!</b> Du har inte skapat någon tipsrad
 						än: <a href="${couponUrl}" class="btn btn-primary">Skapa
 							tipsrad</a>
 					</div>
-				</c:otherwise>
+				</c:when>
 			</c:choose>
 		</section>
 	</div>
