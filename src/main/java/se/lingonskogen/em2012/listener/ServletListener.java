@@ -43,6 +43,29 @@ public class ServletListener implements ServletContextListener
         // Do nothing
     }
 
+    private void createGroups(){
+    	GroupDao groupDao = new GroupDao();
+    	
+    	try {
+    		Group group = new Group();
+    		group.setName("Ateles");        
+			groupDao.create(group);
+			
+			group = new Group();
+    		group.setName("Sigma");        
+			groupDao.create(group);
+
+			group = new Group();
+    		group.setName("Friend");        
+			groupDao.create(group);
+			
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+    }
+    
     @Override
     public void contextInitialized(ServletContextEvent event)
     {
@@ -50,6 +73,7 @@ public class ServletListener implements ServletContextListener
         {
             // Create a tournament
             String tourId = createTournaments();
+//            createGroups();
             GameDao gameDao = new GameDao();
             List<Game> games = gameDao.findAll(tourId);
 
@@ -81,40 +105,40 @@ public class ServletListener implements ServletContextListener
                 names.add("Kalle");
                 names.add("Adam");
 
-//                for (String firstname : names)
-//                {
-//                    for (String lastname : names)
-//                    {
-//                        lastname = lastname + "sson";
-//                        // Create users
-//                        User user = new User();
-//                        user.setGroupId(groupId);
-//                        user.setPassword("123".toLowerCase());
-//                        user.setRealName(firstname + " " + lastname);
-//                        user.setUserName(firstname.toLowerCase() + "." + lastname.toLowerCase() + "@home.se");
-//                        String userId = userdao.create(user);
-//
-//                        Coupon coupon = new Coupon();
-//                        coupon.setTournamentId(tourId);
-//                        coupon.setGroupId(groupId);
-//                        coupon.setUserId(userId);
-//                        coupon.setWinnerTeamId(teamIds.get(Math.abs(random.nextInt(teamIds.size()))));
-//                        String couponId = couponDao.create(coupon);
-//
-//                        for (Game game : games)
-//                        {
-//                            Prediction prediction = new Prediction();
-//                            prediction.setGroupId(groupId);
-//                            prediction.setUserId(userId);
-//                            prediction.setCouponId(couponId);
-//                            prediction.setTournamentId(game.getTournamentId());
-//                            prediction.setGameId(game.getId());
-//                            prediction.setHomeScore(Math.abs(random.nextLong()) % 5);
-//                            prediction.setAwayScore(Math.abs(random.nextLong()) % 5);
-//                            predictionDao.create(prediction);
-//                        }
-//                    }
-//                }
+                for (String firstname : names)
+                {
+                    for (String lastname : names)
+                    {
+                        lastname = lastname + "sson";
+                        // Create users
+                        User user = new User();
+                        user.setGroupId(groupId);
+                        user.setPassword("123".toLowerCase());
+                        user.setRealName(firstname + " " + lastname);
+                        user.setUserName(firstname.toLowerCase() + "." + lastname.toLowerCase() + "@home.se");
+                        String userId = userdao.create(user);
+
+                        Coupon coupon = new Coupon();
+                        coupon.setTournamentId(tourId);
+                        coupon.setGroupId(groupId);
+                        coupon.setUserId(userId);
+                        coupon.setWinnerTeamId(teamIds.get(Math.abs(random.nextInt(teamIds.size()))));
+                        String couponId = couponDao.create(coupon);
+
+                        for (Game game : games)
+                        {
+                            Prediction prediction = new Prediction();
+                            prediction.setGroupId(groupId);
+                            prediction.setUserId(userId);
+                            prediction.setCouponId(couponId);
+                            prediction.setTournamentId(game.getTournamentId());
+                            prediction.setGameId(game.getId());
+                            prediction.setHomeScore(Math.abs(random.nextLong()) % 5);
+                            prediction.setAwayScore(Math.abs(random.nextLong()) % 5);
+                            predictionDao.create(prediction);
+                        }
+                    }
+                }
             }
         }
         catch (DaoException e)
@@ -138,37 +162,37 @@ public class ServletListener implements ServletContextListener
     private void createTeams(String tourId) throws DaoException
     {
         TeamDao teamDao = new TeamDao();
-        String croId = teamDao.create(makeTeam(tourId, "Croatia", "CRO"));
+        String croId = teamDao.create(makeTeam(tourId, "Kroatien", "CRO"));
         teamIds.add(croId);
-        String czeId = teamDao.create(makeTeam(tourId, "Czech", "CZE"));
+        String czeId = teamDao.create(makeTeam(tourId, "Tjeckien", "CZE"));
         teamIds.add(czeId);
-        String denId = teamDao.create(makeTeam(tourId, "Denmark", "DEN"));
+        String denId = teamDao.create(makeTeam(tourId, "Danmark", "DEN"));
         teamIds.add(denId);
         String engId = teamDao.create(makeTeam(tourId, "England", "ENG"));
         teamIds.add(engId);
-        String fraId = teamDao.create(makeTeam(tourId, "France", "FRA"));
+        String fraId = teamDao.create(makeTeam(tourId, "Frankrike", "FRA"));
         teamIds.add(fraId);
-        String gerId = teamDao.create(makeTeam(tourId, "Germany", "GER"));
+        String gerId = teamDao.create(makeTeam(tourId, "Tyskland", "GER"));
         teamIds.add(gerId);
-        String greId = teamDao.create(makeTeam(tourId, "Greece", "GRE"));
+        String greId = teamDao.create(makeTeam(tourId, "Grekland", "GRE"));
         teamIds.add(gerId);
-        String itaId = teamDao.create(makeTeam(tourId, "Italy", "ITA"));
+        String itaId = teamDao.create(makeTeam(tourId, "Italien", "ITA"));
         teamIds.add(itaId);
-        String nedId = teamDao.create(makeTeam(tourId, "Netherlands", "NED"));
+        String nedId = teamDao.create(makeTeam(tourId, "Holland", "NED"));
         teamIds.add(nedId);
-        String polId = teamDao.create(makeTeam(tourId, "Poland", "POL"));
+        String polId = teamDao.create(makeTeam(tourId, "Polen", "POL"));
         teamIds.add(polId);
         String porId = teamDao.create(makeTeam(tourId, "Portugal", "POR"));
         teamIds.add(polId);
-        String irlId = teamDao.create(makeTeam(tourId, "Ireland", "IRL"));
+        String irlId = teamDao.create(makeTeam(tourId, "Irland", "IRL"));
         teamIds.add(irlId);
-        String rusId = teamDao.create(makeTeam(tourId, "Russia", "RUS"));
+        String rusId = teamDao.create(makeTeam(tourId, "Ryssland", "RUS"));
         teamIds.add(rusId);
-        String espId = teamDao.create(makeTeam(tourId, "Spain", "ESP"));
+        String espId = teamDao.create(makeTeam(tourId, "Spanien", "ESP"));
         teamIds.add(engId);
-        String sweId = teamDao.create(makeTeam(tourId, "Sweden", "SWE"));
+        String sweId = teamDao.create(makeTeam(tourId, "Sverige", "SWE"));
         teamIds.add(sweId);
-        String ukrId = teamDao.create(makeTeam(tourId, "Ukrain", "UKR"));
+        String ukrId = teamDao.create(makeTeam(tourId, "Ukraina", "UKR"));
         teamIds.add(ukrId);
 
         createGame(tourId, polId, greId, "8 jun 18:00");

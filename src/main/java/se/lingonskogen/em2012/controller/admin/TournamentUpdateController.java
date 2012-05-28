@@ -73,7 +73,6 @@ public class TournamentUpdateController extends AbstractAdminController {
 				// TODO: Get error message from message file
 				String errorMessage = "Det gick inte att uppdatera";
 			
-				System.out.println("Could not update");
 				//	setParameters(model, tournamentForm);			
 				model.addAttribute("errorMessage", errorMessage);
 				setParameters(model, tournament);

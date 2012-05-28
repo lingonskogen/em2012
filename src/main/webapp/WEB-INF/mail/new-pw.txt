@@ -1,11 +1,11 @@
-Hej REALNAME!
+Hi REALNAME!
 
-Här kommer ditt nya lösenord till em-tipset.
-Det går tyvärr inte att ändra på lösenordet så lägg det på minnet :)
+Here is your new password to EM-tipset.
+Sorry, but you can not change the password so try to remember it :)
 
-Ditt nya lösenord är: PASSWORD
+Your new password is: PASSWORD
 
-mvh
+Regards,
 em-tipset
 
 SITEURL

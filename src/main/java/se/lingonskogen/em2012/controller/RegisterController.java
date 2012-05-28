@@ -34,11 +34,16 @@ public class RegisterController extends AbstractController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String initForm(final ModelMap model, final Principal principals) {
 
+		setParameters(model, principals);
+		
+		// Only allowed to register if registration is open
+		if (!isRegistrationOpen()) {		
+			return PAGE_NAME;
+		}
+		
 		RegisterForm register = new RegisterForm();
 
 		Map<String, String> groups = getGroups();
-		
-		setParameters(model, principals);
 		
 		// command object
 		model.addAttribute("register", register);
@@ -62,13 +67,14 @@ public class RegisterController extends AbstractController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String processForm(@ModelAttribute(value="register") @Valid RegisterForm register, BindingResult result, 
 			ModelMap model, Principal principals) {
-
+		
 		// set custom Validation by user
 		validator.validate(register, result);
+		
+		setParameters(model, principals);
+
 		if (result.hasErrors()) {
 			Map<String, String> groups = getGroups();			
-			
-			setParameters(model, principals);
 			
 			// command object
 			model.addAttribute("register", register);			

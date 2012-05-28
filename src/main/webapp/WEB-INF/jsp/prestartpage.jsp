@@ -7,8 +7,9 @@
 		<section>
 
 			<h2>Välkommen till EM-tipset 2012!</h2>
-
-
+				
+			<c:when test="${!hasCoupon}"><p><div style="font-color: red">OBS! </div>Du har inte skapat någon kupong ännu. Gå till min sida och gör det nu!</p></c:when>	
+			
 			<p style="padding-top: 15px;">Statistik och rader blir synligt
 				när det inte är tillåtet att registrera sig längre.</p>
 

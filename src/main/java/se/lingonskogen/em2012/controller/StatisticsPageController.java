@@ -55,9 +55,9 @@ public class StatisticsPageController extends AbstractController {
 				data.addTournamentFormDataList(tData);
 				Map<String, List<Prediction>> map = new HashMap<String, List<Prediction>>();
 				for (User u : users) {
+					if (coupon.getId() == null) continue;
 					try {
-						getCouponService().getCoupon(u.getGroupId(), u.getId(),
-								coupon.getId());
+						getCouponService().getCoupon(u.getGroupId(), u.getId(), coupon.getId());
 						List<Prediction> predictions = getPredictionService()
 								.getPredictions(u.getGroupId(), u.getId(),
 										coupon.getId());
