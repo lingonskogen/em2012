@@ -39,8 +39,11 @@ public class MailService
     public void sendMail(User user, Template template, boolean toUser) throws Exception
     {
         subs.put(Substitution.SITEURL.name(), SITEURL);
-        subs.put(Substitution.USERNAME.name(), user.getUserName());
-        subs.put(Substitution.REALNAME.name(), user.getRealName());
+        if (user != null)
+        {
+            subs.put(Substitution.USERNAME.name(), user.getUserName());
+            subs.put(Substitution.REALNAME.name(), user.getRealName());
+        }
         String filename = "WEB-INF/mail/" + template.getFilename();
         StringWriter writer = new StringWriter();
         BufferedReader reader = new BufferedReader(new FileReader(filename));
@@ -79,7 +82,7 @@ public class MailService
     public enum Template
     {
         NEW_PWD("new-pw.txt", "Ditt nya lösenord"),
-        UPD_COUPON("upd-coupon.txt", "Uppdaterad kupong");
+        UPD_COUPON("upd-coupon.txt", "Predictions");
         
         private final String title;
         

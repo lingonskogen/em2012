@@ -65,8 +65,8 @@
 								<table class="table table-striped">
 									<tr>
 										<th>Datum</th>
-										<th colspan="3">Match</th>
-										<th>Resultat</th>
+										<th  style="text-align: center;" colspan="3">Match</th>
+										<th style="text-align: right;">Resultat</th>
 									</tr>
 
 									<c:forEach items="${form.predictions}" var="predictionformdata"
@@ -75,9 +75,9 @@
 											<td>${predictionformdata.kickoff}</td>
 
 											<td style="text-align: right;">${predictionformdata.homeTeamName}</td>
-											<td>-</td>
-											<td>${predictionformdata.awayTeamName}</td>
-											<td>
+											<td style="text-align: center;">-</td>
+											<td style="text-align: left;">${predictionformdata.awayTeamName}</td>
+											<td style="text-align: right;">
 											<c:choose>											
 											<c:when test="${registrationOpen}">
 											<form:input path="predictionMap[${predictionformdata.gameId}].homeScore"

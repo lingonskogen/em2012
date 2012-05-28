@@ -21,6 +21,9 @@
 					<form:form action="register.html" class="form-horizontal"
 						commandName="register">
 						<fieldset>
+              <c:if test="${errorMessage != null}">
+                <p class="alert alert-error">${errorMessage}</p>
+              </c:if>
 
 							<div class="control-group">
 								<label class="control-label"><fmt:message

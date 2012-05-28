@@ -52,6 +52,17 @@
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
 
+  <servlet>
+    <servlet-name>mailer</servlet-name>
+    <servlet-class>se.lingonskogen.em2012.MailerServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>mailer</servlet-name>
+    <url-pattern>/admin/mailer</url-pattern>
+  </servlet-mapping>
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
