@@ -109,6 +109,16 @@ public class MailerServlet extends HttpServlet
                     {
                         writer.write(map.get(date));
                     }
+                    String winnerTeamId = coupon.getWinnerTeamId();
+                    if (winnerTeamId != null)
+                    {
+                        Team winner = teamMap.get(coupon.getTournamentId()).get(winnerTeamId);
+                        writer.write(String.format("Vinnare   : %s", winner.getName()));
+                    }
+                    else
+                    {
+                        writer.write(String.format("Champion  : <missing>"));
+                    }
                     writer.write("\r\n");
                     writer.write("\r\n");
                 }

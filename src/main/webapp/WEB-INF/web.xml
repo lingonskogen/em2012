@@ -8,7 +8,7 @@
 	<display-name>Spring3MVC</display-name>
 
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>start.html</welcome-file>
 	</welcome-file-list>
 
 	<context-param>
@@ -67,10 +67,12 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+  <!-- this listener installs stuff!!!
 	<listener>
 		<listener-class>se.lingonskogen.em2012.listener.ServletListener</listener-class>
 	</listener>
-
+   -->
+   
 	<security-constraint>
 		<web-resource-collection>
 			<url-pattern>/admin/*</url-pattern>
