@@ -2,6 +2,7 @@ package se.lingonskogen.em2012;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -49,10 +50,12 @@ public class MailerServlet extends HttpServlet
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("text/plain");
         final StringWriter writer = new StringWriter();
-        
+
         TournamentDao tournamentDao = new TournamentDao();
         TeamDao teamDao = new TeamDao();
         GameDao gameDao = new GameDao();
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
         
         // set up maps
         List<Tournament> tournaments = tournamentDao.findAll();
@@ -91,7 +94,7 @@ public class MailerServlet extends HttpServlet
                     writer.write(String.format("[%s] %s (%s) - %s\r\n", group.getName(), user.getRealName(), user.getUserName(), coupon.getTournamentId()));
                     writer.write("\r\n");
                     List<Prediction> predictions = predictionDao.findAll(group.getId(), user.getId(), coupon.getId());
-                    Map<Date, String> map = new HashMap<Date, String>();
+                    Map<String, String> map = new HashMap<String, String>();
                     for (Prediction prediction : predictions)
                     {
                         Game game = gameMap.get(prediction.getTournamentId()).get(prediction.getGameId());
@@ -101,11 +104,13 @@ public class MailerServlet extends HttpServlet
                         Long awayScore = prediction.getAwayScore();
                         String homeScoreStr = homeScore == null ? " " : homeScore.toString();
                         String awayScoreStr = awayScore == null ? " " : awayScore.toString();
-                        map.put(game.getKickoff(), String.format("%s - %s : %s - %s\r\n", home.getCode(), away.getCode(), homeScoreStr, awayScoreStr));
+                        String kickoff = sdf.format(game.getKickoff());
+                        String key = String.format(kickoff + "-%s", game.getId());
+                        map.put(key, String.format("%s - %s : %s - %s\r\n", home.getCode(), away.getCode(), homeScoreStr, awayScoreStr));
                     }
-                    ArrayList<Date> dates = new ArrayList<Date>(map.keySet());
+                    ArrayList<String> dates = new ArrayList<String>(map.keySet());
                     Collections.sort(dates);
-                    for (Date date : dates)
+                    for (String date : dates)
                     {
                         writer.write(map.get(date));
                     }
@@ -122,6 +127,7 @@ public class MailerServlet extends HttpServlet
                     writer.write("\r\n");
                     writer.write("\r\n");
                 }
+                writer.flush();
             }
         }
         
