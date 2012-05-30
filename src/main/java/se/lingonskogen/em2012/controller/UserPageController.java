@@ -39,7 +39,7 @@ public class UserPageController extends AbstractController
 {
 
     private static final String PAGE_NAME = "mypage";
-    private static final String DEFAULT_WINNER_TEAM_ID = "sweden";
+    private static final String DEFAULT_WINNER_TEAM_ID = "sverige";
 
     private Logger LOG = Logger.getLogger(UserPageController.class.getName());
     
