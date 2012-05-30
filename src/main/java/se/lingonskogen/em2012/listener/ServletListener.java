@@ -47,7 +47,7 @@ public class ServletListener implements ServletContextListener
     	GroupDao groupDao = new GroupDao();
     	
     	try {
-    		/*Group group = new Group();
+    		Group group = new Group();
     		
     		group.setName("Ateles");        
 			groupDao.create(group);
@@ -55,8 +55,8 @@ public class ServletListener implements ServletContextListener
 			group = new Group();
     		group.setName("Sigma");        
 			groupDao.create(group);
-*/
-			Group group = new Group();
+
+			group = new Group();
     		group.setName("Friend");        
 			groupDao.create(group);
 			
@@ -70,8 +70,7 @@ public class ServletListener implements ServletContextListener
     @Override
     public void contextInitialized(ServletContextEvent event)
     {
-    	
-    	/*createGroups();
+    	/*
         try
         {
         	

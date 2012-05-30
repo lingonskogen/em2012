@@ -87,6 +87,7 @@
 	<bean name="startPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.StartPageController" />
 	<bean name="rulesPageController" parent="abstractController" class="se.lingonskogen.em2012.controller.RulesPageController" />
 	<bean name="forgottenPasswordController" parent="abstractController" class="se.lingonskogen.em2012.controller.ForgottenPasswordController" />
+	<bean name="deleteDataController" parent="abstractController" class="se.lingonskogen.em2012.controller.DeleteDataController" />
 	
 	
 	
