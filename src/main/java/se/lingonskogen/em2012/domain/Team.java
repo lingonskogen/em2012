@@ -5,12 +5,16 @@ public class Team extends Bean {
     
     public static final String CODE = "code";
 
+    public static final String GROUP = "group";
+    
 	private String tournamentId;
 
 	private String name;
 	
 	private String code;
 
+	private String group;
+	
 	public String getTournamentId() {
 		return tournamentId;
 	}
@@ -35,6 +39,16 @@ public class Team extends Bean {
     public String getCode()
     {
         return code;
+    }
+
+    public String getGroup()
+    {
+        return group;
+    }
+
+    public void setGroup(String group)
+    {
+        this.group = group;
     }
 
 }
